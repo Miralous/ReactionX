@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 import { cn } from '~/lib/utils';
 
-// 本地缓存时长 (24小时)
-const CACHE_DURATION = 24 * 60 * 60 * 1000; 
+const CACHE_DURATION = 60 * 60 * 1000; // 1 hour
 
 interface ProjectStatsProps {
   repoUrl?: string;
@@ -21,13 +20,9 @@ export default function ProjectStats({ repoUrl, initialStar = 0, initialFork = 0
       return;
     }
 
-    // 1. 提取 repo 路径 (兼容末尾斜杠)
-    // https://github.com/user/repo -> user/repo
     const repoPath = repoUrl.replace(/^https?:\/\/github\.com\//, '').replace(/\/$/, '');
-    
-    // 简单的格式检查
+
     if (!repoPath || !repoPath.includes('/')) {
-        console.warn(`[Stats] Invalid Repo URL: ${repoUrl}`);
         setLoading(false);
         return;
     }
@@ -36,39 +31,31 @@ export default function ProjectStats({ repoUrl, initialStar = 0, initialFork = 0
 
     const fetchStats = async () => {
       try {
-        // 2. 检查 LocalStorage 缓存
         const cached = localStorage.getItem(cacheKey);
         if (cached) {
           const { data, timestamp } = JSON.parse(cached);
           if (Date.now() - timestamp < CACHE_DURATION) {
-            // console.log(`[Stats] Loaded from cache: ${repoPath}`);
             setStats(data);
             setLoading(false);
             return;
           }
         }
 
-        // 3. 请求我们自己的代理 API (解决速率限制问题)
-        // console.log(`[Stats] Fetching: ${repoPath}`);
-        const res = await fetch(`/api/repo-stats?repo=${repoPath}`);
-        
+        const res = await fetch(`https://api.github.com/repos/${repoPath}`);
+
         if (!res.ok) {
-            // 如果 403/429，说明即使是后端也限流了，或者 Token 无效
-            console.error(`[Stats] API Error ${res.status} for ${repoPath}`);
-            throw new Error('API Failed');
+            throw new Error('GitHub API Error');
         }
-        
+
         const data = await res.json();
 
-        // 4. 更新状态
         const newStats = {
-          stars: data.stars,
-          forks: data.forks
+          stars: data.stargazers_count ?? data.stars ?? 0,
+          forks: data.forks_count ?? data.forks ?? 0
         };
 
         setStats(newStats);
-        
-        // 5. 写入缓存
+
         localStorage.setItem(cacheKey, JSON.stringify({
           data: newStats,
           timestamp: Date.now()
@@ -76,7 +63,6 @@ export default function ProjectStats({ repoUrl, initialStar = 0, initialFork = 0
 
       } catch (e) {
         setError(true);
-        // 出错时保持默认值，不破坏 UI
       } finally {
         setLoading(false);
       }
@@ -88,7 +74,7 @@ export default function ProjectStats({ repoUrl, initialStar = 0, initialFork = 0
   return (
     <div className={cn("flex gap-4 transition-all duration-500", loading ? "opacity-50" : "opacity-100")}>
       <div className="flex items-center gap-1" title="Stars">
-        <span className={cn("icon-[ph--star-fill] size-3", error ? "text-muted-foreground" : "text-yellow-500/80")}></span>
+        <span className={cn("icon-[ph--star-fill] size-3", error ? "text-muted-foreground" : "text-ctp-yellow/80")}></span>
         <span className="font-mono">{stats.stars}</span>
       </div>
       <div className="flex items-center gap-1" title="Forks">

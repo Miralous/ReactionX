@@ -2,32 +2,28 @@ import { defineCollection } from 'astro:content'
 import { glob } from 'astro/loaders'
 import { z } from 'astro/zod'
 import { POSTS_CONFIG } from './config'
-import fs from 'node:fs/promises'
-import path from 'node:path'
 
-function createJsonLoader(filePath: string) {
-  return {
-    name: "auto-json-id-loader",
-    load: async ({ store, logger, parseData }: any) => {
-      logger.info(`Loading data from: ${filePath}`);
-      const absolutePath = path.resolve(filePath);
-      const rawContents = await fs.readFile(absolutePath, 'utf-8');
-      const json = JSON.parse(rawContents);
+const friends = defineCollection({
+  loader: glob({ pattern: '**/*.yaml', base: './src/content/data/friends' }),
+  schema: z.object({
+    name: z.string(),
+    url: z.string(),
+    author: z.string(),
+    description: z.string(),
+    avatar: z.string(),
+  }),
+})
 
-      if (Array.isArray(json)) {
-        for (const [index, item] of json.entries()) {
-          const entryId = String(item.id || item.name || item.title || index);
-          // 使用 collection 的 schema 校验数据
-          const data = await parseData({ id: entryId, data: item });
-          // 存入 Astro 的内容仓库
-          store.set({ id: entryId, data });
-        }
-      } else {
-        logger.error(`Expected an array in ${filePath}, but got ${typeof json}`);
-      }
-    }
-  };
-}
+const dynamic = defineCollection({
+  loader: glob({ pattern: '**/*.yaml', base: './src/content/data/dynamic' }),
+  schema: z.object({
+    id: z.string(),
+    content: z.string(),
+    date: z.string(),
+    mood: z.string(),
+    link: z.string().nullable(),
+  }),
+})
 
 const posts = defineCollection({
   loader: glob({ pattern: '**/[^_]*.md', base: './src/content/posts' }),
@@ -53,29 +49,4 @@ const posts = defineCollection({
   }),
 })
 
-const friends = defineCollection({
-  loader: createJsonLoader('./src/content/data/friends.json'),
-  schema: z.object({
-    name: z.string(),
-    url: z.string(),
-    author: z.string(),
-    description: z.string(),
-    avatar: z.string(),
-  }),
-})
-
-const projects = defineCollection({
-  loader: createJsonLoader('./src/content/data/projects.json'),
-  schema: z.object({
-    name: z.string(),
-    description: z.string(),
-    githubUrl: z.string().nullable().optional(),
-    website: z.string().nullable().optional(),
-    type: z.string(),
-    icon: z.string(),
-    star: z.union([z.string(), z.number()]).transform(v => String(v)),
-    fork: z.union([z.string(), z.number()]).transform(v => String(v)),
-  }),
-})
-
-export const collections = { posts, friends, projects }
+export const collections = { posts, friends, dynamic }

@@ -143,70 +143,12 @@ const { class: className } = Astro.props;
       </style>
 
       <script is:inline src="/js/waline.umd.js" defer></script>
-      <script is:inline define:vars={{ serverURL: WALINE_CONFIG.serverURL, uploadToken: WALINE_CONFIG.uploadToken, imgbedURL: WALINE_CONFIG.imgbedURL, enableImgUpload: WALINE_CONFIG.enableImgUpload }}>
-        
-        async function handleImageUpload(file) {
-          try {
-            const MAX_SIZE = 1024 * 1024;
-            let fileToUpload = file.size > MAX_SIZE ? await compressImage(file, MAX_SIZE) : file;
-            const formData = new FormData();
-            formData.append('file', fileToUpload);
-
-            const response = await fetch(imgbedURL, {
-              method: 'POST',
-              headers: { Authorization: `Bearer ${uploadToken}` },
-              body: formData
-            });
-            if (!response.ok) throw new Error(`Upload failed: ${response.status}`);
-            return (await response.json()).url;
-          } catch (error) {
-            console.error('[Waline] Upload error:', error);
-            alert('Upload Failed. Check console.');
-            throw error;
-          }
-        }
-
-        function compressImage(file, maxSize) {
-          return new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = (e) => {
-              const img = new Image();
-              img.src = e.target.result;
-              img.onload = () => {
-                const canvas = document.createElement('canvas');
-                let { width, height } = img;
-                if (width > 1920 || height > 1920) {
-                  const ratio = Math.min(1920 / width, 1920 / height);
-                  width = Math.round(width * ratio);
-                  height = Math.round(height * ratio);
-                }
-                canvas.width = width;
-                canvas.height = height;
-                canvas.getContext('2d').drawImage(img, 0, 0, width, height);
-                
-                let quality = 0.8;
-                const attempt = () => canvas.toBlob(blob => {
-                  if(!blob) return reject(new Error('Canvas error'));
-                  if(blob.size <= maxSize || quality <= 0.2) {
-                    resolve(new File([blob], file.name, { type: 'image/jpeg' }));
-                  } else {
-                    quality -= 0.15;
-                    attempt();
-                  }
-                }, 'image/jpeg', quality);
-                attempt();
-              };
-              img.onerror = () => reject(new Error('Image load failed'));
-            };
-            reader.onerror = () => reject(new Error('File read failed'));
-          });
-        }
+      <script is:inline define:vars={{ serverURL: WALINE_CONFIG.serverURL }}>
 
         function initWaline() {
           const container = document.querySelector('#waline-container');
           if (!container || window.__walineInstance) return;
-          
+
           container.innerHTML = '';
           const walineEl = document.createElement('div');
           walineEl.id = 'waline';
@@ -220,7 +162,7 @@ const { class: className } = Astro.props;
               dark: 'html.dark',
               emoji: false,
               search: false,
-              imageUploader: enableImgUpload ? handleImageUpload : null,
+              imageUploader: false,
               locale: { placeholder: 'Write a comment...' }
             });
           } catch (e) {

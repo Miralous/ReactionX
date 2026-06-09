@@ -1,17 +1,11 @@
 ---
-import rawFriendsList from '~/content/data/friends.json'
+import { getCollection } from 'astro:content'
 import { FRIENDS_CONFIG, FRIENDS_CONTACT } from '~/config'
 import Layout from '~/layouts/Layout.astro'
 import Comments from '~/components/posts/base/Comments.astro'
 
-interface Friend {
-  name: string
-  url: string
-  author: string
-  description: string
-  avatar: string
-}
-const FRIENDS_LIST = rawFriendsList as Friend[]
+const friendsEntries = await getCollection('friends')
+const FRIENDS_LIST = friendsEntries.map(e => ({ id: e.id, ...e.data }))
 const { title, description, introduce, enableAdd } = FRIENDS_CONFIG
 const { sitename, email, author, sitelink, siteavatar, description: myDescription } = FRIENDS_CONTACT
 const totalLinks = FRIENDS_LIST.length.toString().padStart(2, '0')
@@ -28,11 +22,11 @@ const SECTION_NUM_CLASS =
       <div class="flex flex-1 lg:overflow-y-auto scrollbar-hide flex-col">
         <div class="p-6 lg:p-8 xl:p-12 pb-0 shrink-0 fade-up">
           <span
-            class="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/10 px-3 py-1 text-xs font-medium text-emerald-600 select-none"
+            class="inline-flex items-center gap-1.5 rounded-full bg-ctp-green/10 px-3 py-1 text-xs font-medium text-ctp-green select-none"
           >
             <span class="relative flex h-1.5 w-1.5">
-              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-ctp-green opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-ctp-green"></span>
             </span>
             Connected
           </span>
@@ -150,19 +144,19 @@ const SECTION_NUM_CLASS =
                       <ul class="space-y-3 text-sm text-muted-foreground">
                         <li class="flex items-start gap-2.5">
                           <span class="icon-[ph--check-circle-fill] size-4 text-primary shrink-0 mt-0.5" />
-                          <span>内容必须符合行业规范，且不包含工作场合不宜的内容。</span>
+                          <span>Content must comply with industry standards and contain no NSFW material.</span>
                         </li>
                         <li class="flex items-start gap-2.5">
                           <span class="icon-[ph--check-circle-fill] size-4 text-primary shrink-0 mt-0.5" />
-                          <span>申请友情链接前，请先将本站添加到您的网站链接中。</span>
+                          <span>Before applying, please add this site to your link list.</span>
                         </li>
                         <li class="flex items-start gap-2.5">
                           <span class="icon-[ph--check-circle-fill] size-4 text-primary shrink-0 mt-0.5" />
-                          <span>优先考虑科技、设计与独立博客。</span>
+                          <span>Priority given to tech, design, and indie blogs.</span>
                         </li>
                         <li class="flex items-start gap-2.5">
-                          <span class="icon-[ph--warning-circle-fill] size-4 text-amber-500 shrink-0 mt-0.5" />
-                          <span>不活跃的节点将被定期清理。</span>
+                          <span class="icon-[ph--warning-circle-fill] size-4 text-ctp-yellow shrink-0 mt-0.5" />
+                          <span>Inactive nodes will be periodically cleaned.</span>
                         </li>
                       </ul>
                     </div>
@@ -232,7 +226,7 @@ const SECTION_NUM_CLASS =
               <div class="rounded-lg border border-border/40 bg-muted/10 p-12 text-center flex flex-col items-center justify-center min-h-[250px]">
                 <span class="icon-[ph--link-break] size-10 text-muted-foreground/40 mb-4 block mx-auto" />
                 <p class="text-foreground font-medium mb-2">System Disabled</p>
-                <p class="text-muted-foreground text-sm">友链申请通道已离线，如有需要请通过邮件联系站长。</p>
+                <p class="text-muted-foreground text-sm">Link request channel is offline. Contact the owner via email if needed.</p>
               </div>
             </div>
           )
@@ -279,7 +273,7 @@ const SECTION_NUM_CLASS =
             if (text) text.textContent = 'Copied!'
 
             newBtn.classList.remove('bg-foreground', 'text-background')
-            newBtn.classList.add('bg-emerald-500', 'text-white')
+            newBtn.classList.add('bg-emerald-500', 'text-background')
 
             setTimeout(() => {
               if (icon) icon.className = 'icon-[ph--copy] size-4'

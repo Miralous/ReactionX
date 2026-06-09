@@ -49,9 +49,19 @@ const ThemeToggle = () => {
     // 执行变色，并短暂禁用原生过渡以防全局闪烁
     const root = document.documentElement
     root.classList.add('disable-transition')
-    
+
     const isDark = theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches)
     root.classList.toggle('dark', isDark)
+
+    // Catppuccin surface variant
+    var ctpVariants = ['latte', 'frappe', 'macchiato', 'mocha'];
+    var lightVariant = root.getAttribute('data-ctp-light') || 'latte';
+    var darkVariant = root.getAttribute('data-ctp-dark') || 'macchiato';
+    root.dataset.ctp = isDark ? darkVariant : lightVariant
+
+    // Accent color — stays same regardless of light/dark
+    var accent = root.getAttribute('data-accent') || 'lavender';
+    root.dataset.accent = accent
     
     // 使用 requestAnimationFrame 保证样式应用完毕后再恢复过渡
     requestAnimationFrame(() => {

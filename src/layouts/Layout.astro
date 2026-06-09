@@ -1,11 +1,10 @@
 ---
 import '~/styles/global.css'
 import '~/styles/pro.css'
-import { SITE, Holiday_Effects } from '~/config'
+import { SITE, CATPPUCCIN, ACCENT_COLOR } from '~/config'
 import Head from '~/components/base/Head.astro'
 import Header from './Header.astro'
 import Footer from './Footer.astro'
-import HolidayTheme from '~/components/base/HolidayTheme.astro'
 
 type Props = {
   title: string
@@ -14,22 +13,30 @@ type Props = {
 }
 
 const { title, description, image }: Props = Astro.props
+const darkVariant = CATPPUCCIN.dark
+const lightVariant = CATPPUCCIN.light
+const accent = ACCENT_COLOR
 ---
 
 <!doctype html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-ctp-light={lightVariant} data-ctp-dark={darkVariant} data-accent={accent}>
   <head>
     <Head title={`${title} | ${SITE.title}`} {description} {image} />
     <script is:inline>
-      // 在样式加载前预设背景色，避免白闪
-      const theme = localStorage.getItem('theme') || 'system'
-      const isDark = theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches)
-      document.documentElement.style.backgroundColor = isDark ? '#0a0a0a' : '#fafafa'
+      // Catppuccin variant + accent classes
+      (function() {
+        var darkVariant = '${darkVariant}'
+        var lightVariant = '${lightVariant}'
+        var accent = '${accent}'
+        var theme = localStorage.getItem('theme') || 'system'
+        var isDark = theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches)
+        var variant = isDark ? darkVariant : lightVariant
+        document.documentElement.dataset.ctp = variant
+        document.documentElement.dataset.accent = accent
+      })()
     </script>
   </head>
   <body>
-    
-    {Holiday_Effects.enableHolidayEffects && <HolidayTheme />}
 
     <div class="select-text selection:bg-foreground/20 selection:text-foreground">
       <div class="relative z-10 bg-background">

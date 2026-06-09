@@ -10,14 +10,24 @@ import type {
   TagsConfig,
 } from '~/types'
 
+// Catppuccin 配色主题
+export const CATPPUCCIN = {
+  light: 'latte',
+  dark: 'mocha',
+}
+
+// 强调色
+export const ACCENT_COLOR = 'mauve'
+
 // 站点全局配置
 export const SITE: Site = {
-  title: 'RefactX Project',
-  description: '又是又是……又是借口 / Another another... Another excuse.',
-  website: 'https://www.refact.cc/',
+  title: "Silvaire's Blog",
+  description: 'Per Aspera Ad Astra',
+  website: 'https://qwq.blue',
   base: '/',
-  author: 'Refact',
-  ogImage: '/og-image.webp',
+  author: 'Silvaire',
+  ogImage:
+    'https://wsrv.nl/?url=avatars.githubusercontent.com/u/184231508?s=400&u=0a370792ba6bbb95a04d309171b562bcd7283a0f&v=4&mask=circle',
   version: '1.8',
   footerText: 'Designed and engineered for the digital void.',
   footerText2: 'Minimalist layout, maximum focus. Data persistence guaranteed.',
@@ -25,7 +35,7 @@ export const SITE: Site = {
 
 // 顶部导航菜单
 export const HEADER_LINKS: Link[] = [
-  { name: '文章', url: '/posts' },
+  { name: '主页', url: '/posts' },
   { name: '动态', url: '/dynamic' },
   { name: '项目', url: '/projects' },
   { name: '关于', url: '/about' },
@@ -46,7 +56,7 @@ export const FOOTER_LINKS: Link[] = [
 export const SOCIAL_LINKS: SocialLink[] = [
   {
     name: 'GitHub',
-    url: 'https://github.com/Refac7',
+    url: 'https://github.com/Miralous',
     icon: 'icon-[ri--arrow-left-up-line]',
   },
   {
@@ -58,35 +68,37 @@ export const SOCIAL_LINKS: SocialLink[] = [
 
 // 技能展示矩阵配置
 export const SKILLSSHOWCASE_CONFIG: SkillsShowcaseConfig = {
-  SKILLS_ENABLED: true, // 是否启用主页技能墙
+  SKILLS_ENABLED: true,
   SKILLS_DATA: [
     {
       direction: 'left',
       skills: [
-        { name: 'JavaScript', icon: 'icon-[mdi--language-javascript]' },
+        { name: 'Arch Linux', icon: 'icon-[mdi--language-javascript]' },
         { name: 'CSS', icon: 'icon-[mdi--language-css3]' },
         { name: 'HTML', icon: 'icon-[mdi--language-html5]' },
         { name: 'TypeScript', icon: 'icon-[mdi--language-typescript]' },
+        { name: 'Vue', icon: 'icon-[mdi--vuejs]' },
+        { name: 'JavaScript', icon: 'icon-[mdi--language-javascript]' },
       ],
     },
     {
       direction: 'right',
       skills: [
-        { name: 'Astro', icon: 'icon-[lineicons--astro]' },
+        { name: 'Vite', icon: 'icon-[lineicons--astro]' },
         { name: 'Node.js', icon: 'icon-[mdi--nodejs]' },
-        { name: 'React', icon: 'icon-[mdi--react]' },
-        { name: 'Next.js', icon: 'icon-[devicon--nextjs]' },
         { name: 'Tailwind CSS', icon: 'icon-[mdi--tailwind]' },
-        { name: 'Iconify', icon: 'icon-[line-md--iconify2-static]' },
+        { name: 'Docker', icon: 'icon-[mdi--docker]' },
+        { name: 'PNPM', icon: 'icon-[lineicons--vercel]' },
+        { name: 'Vim', icon: 'icon-[line-md--iconify2-static]' },
       ],
     },
     {
       direction: 'left',
       skills: [
-        { name: 'Debian', icon: 'icon-[mdi--debian]' },
         { name: 'Git', icon: 'icon-[mdi--git]' },
-        { name: 'MongoDB', icon: 'icon-[lineicons--mongodb]' },
-        { name: 'Vercel', icon: 'icon-[lineicons--vercel]' },
+        { name: 'Neovim', icon: 'icon-[lineicons--mongodb]' },
+        { name: 'Windows', icon: 'icon-[lineicons--vercel]' },
+        { name: 'Linux', icon: 'icon-[lineicons--vercel]' },
       ],
     },
   ],
@@ -94,21 +106,22 @@ export const SKILLSSHOWCASE_CONFIG: SkillsShowcaseConfig = {
 
 // GitHub 贡献图配置
 export const GITHUB_CONFIG: GithubConfig = {
-  ENABLED: true,           // 是否启用贡献图
-  GITHUB_USERNAME: 'Refac7', // GitHub 用户名
-  TOOLTIP_ENABLED: true    // 是否开启悬浮提示
+  ENABLED: true,
+  GITHUB_USERNAME: 'silvaire-qwq',
+  TOOLTIP_ENABLED: true,
 }
 
 // 文章页面配置
 export const POSTS_CONFIG: PostConfig = {
   title: 'Posts',
-  description: 'Refact 的文章',
+  description: 'Silvaire 的文章',
   introduce: '不定时更新维护文章，可订阅 RSS 获取最新更新状态。',
-  author: 'Refact',
+  author: 'Silvaire',
   homePageConfig: { size: 3, type: 'compact' },
   postPageConfig: { size: 8, type: 'image' },
   tagsPageConfig: { size: 5, type: 'time-line' },
-  defaultHeroImage: '/og-image.webp',
+  defaultHeroImage:
+    'https://wsrv.nl/?url=avatars.githubusercontent.com/u/184231508?s=400&u=0a370792ba6bbb95a04d309171b562bcd7283a0f&v=4&mask=circle',
   defaultHeroImageAspectRatio: '16/9',
   postType: 'jap',
   imageDarkenInDark: true,
@@ -118,142 +131,157 @@ export const POSTS_CONFIG: PostConfig = {
   tocText: '目录导航',
   backToPostsText: '返回文章列表',
   nextPostText: '下一篇',
-  prevPostText: '上一篇'
+  prevPostText: '上一篇',
 }
 
 // 标签页面配置
 export const TAGS_CONFIG: TagsConfig = {
   title: 'Tags',
   description: '所有文章标签',
-  introduce: '所有文章标签均在此处，点击即可筛选。'
+  introduce: '所有文章标签均在此处，点击即可筛选。',
 }
 
 // 项目页面配置
 export const PROJECTS_CONFIG: ProjectConfig = {
   title: 'Projs',
   description: '我的项目案例',
-  introduce: '以下是我的项目案例展示，不定期维护项目。'
+  introduce: '以下是我的项目案例展示，不定期维护项目。',
 }
 
 // 动态页面配置
 export const DYNAMIC_CONFIG: DynamicConfig = {
   title: 'Dynamic',
   description: '我的动态',
-  introduce: '实时信号、简短想法和开发更新，直接从 Notion 工作区同步。'
+  introduce: '实时信号、简短想法和开发更新。',
 }
 
 // 关于页面配置
 export const ABOUT_CONFIG = {
   title: 'About',
   description: 'Who am I?',
-  introduce: ' 我那丑陋的情感，就不要表现出来啊。',
-  
+  introduce: 'A student who is learning frontend development',
+
   // 个人档案
   profile: {
-    name: 'Refac7',
-    avatar: '/avatar.png',
-    role: 'Creative Developer / UI Designer',
-    bio: '又是又是……又是借口 / Another another... Another excuse. \n\n某计科专业在读，高数苦手。喜欢电子音乐，熟悉以下所有技术栈的拼写，熟练使用剪贴板和cmd c和cmd v. 如果你和我有共同爱好，欢迎随时使用你能找到的所有渠道联系我哦～',
+    name: 'Silvaire',
+    avatar:
+      'https://wsrv.nl/?url=avatars.githubusercontent.com/u/184231508?s=400&u=0a370792ba6bbb95a04d309171b562bcd7283a0f&v=4&mask=circle',
+    role: 'A student who is learning frontend development',
+    bio: 'Per Aspera Ad Astra.',
   },
 
   // 附加信息
   physicalAttributes: [
-    { label: 'Height', value: '175 cm', icon: 'icon-[ph--ruler]' },
-    { label: 'Weight', value: '65 kg', icon: 'icon-[ph--barbell]' },
-    { label: 'Blood Type', value: 'A+', icon: 'icon-[ph--drop]' },
-    { label: 'MBTI', value: 'INTJ', icon: 'icon-[ph--brain]' },
-    { label: 'Birthdate', value: '2007-03-31', icon: 'icon-[ph--cake]' },
-    { label: 'Gender', value: 'Non-binary', icon: 'icon-[ph--gender-nonbinary]' },
-    { label: 'Location', value: 'Luoyang, China', icon: 'icon-[ph--map-pin]' },
-    { label: 'status', value: 'Single', icon: 'icon-[ph--heart]' },
-  ],
-  
-  // 技能矩阵
-  skills: [
-    { category: 'Frontend // 前端', items: ['JavaScript', 'React', 'Astro', 'TypeScript', 'Tailwind CSS'] },
-    { category: 'Backend // 后端', items: ['Node.js', 'Python', 'PostgreSQL', 'Redis'] },
-    { category: 'Design // 设计', items: ['Figma', 'Photoshop', 'AE'] },
-    { category: 'Others // 杂项', items: ['VSCode', 'Git', 'Docker', 'Linux'] },
-    { category: 'Learning // 学习中', items: ['Java', 'Rust', 'Go'] },
-  ],
-  
-  // 硬件清单
-  equipment: [
-    { type: 'Workstation', name: 'Desktop', desc: 'Xeon E5 2660v2 / NVIDIA Geforce GTX 1060 / 32GB DDR3' },
-    { type: 'Laptop', name: 'DELL Inspiron 3576', desc: 'Intel Core i5-8250U / AMD Radeon R5 M435 / 8GB DDR4' },
-    { type: 'Phone', name: 'iPhone 12 mini', desc: 'A14 / 128GB' },
-    { type: 'Pad', name: 'iPad', desc: 'A16 / 256GB' },
-    { type: 'Monitor', name: 'HKC T2755U', desc: '27" / 4K / Standard Glass' },
-    { type: 'Keyboard', name: 'Lenovo GK10', desc: 'Black / Mechanical / Red axis' },
-    { type: 'Mouse', name: 'Lenovo Xiaoxin M2', desc: 'Grey / Wireless / Muted' },
-    { type: 'Audio', name: 'CMF Buds 2Plus', desc: '-50dB Noise Cancellation' },
+    { label: 'Height', value: '144 CM', icon: 'icon-[ph--ruler]' },
+    { label: 'Weight', value: '43 KG', icon: 'icon-[ph--barbell]' },
+    { label: 'Birthday', value: 'May 30, 2013', icon: 'icon-[ph--cake]' },
+    { label: 'Location', value: 'Tianjin', icon: 'icon-[ph--map-pin]' },
   ],
 
-  // 游戏日志
-  games: [
-    { title: 'Rhythm Doctor', platform: 'PC / Steam', status: 'Playing', hours: '100h+', color: 'text-yellow-500' },
-    { title: 'Muse Dash', platform: 'PC / Steam', status: 'Paused', hours: '20h+', color: 'text-green-500' },
+  // 技能矩阵
+  skills: [
+    { category: 'Frontend', items: ['JavaScript', 'Vue', 'TypeScript', 'Tailwind CSS', 'HTML', 'CSS'] },
+    { category: 'Tools', items: ['Vite', 'Node.js', 'Git', 'Docker', 'PNPM', 'Yarn', 'NPM'] },
+    { category: 'Editors', items: ['VSCode', 'VSCodium', 'Vim', 'Neovim'] },
+    { category: 'OS', items: ['Arch Linux', 'Windows', 'Linux'] },
+    { category: 'Learning', items: ['Astro', 'React'] },
   ],
+
+  // 硬件清单
+  equipment: [],
+
+  // 游戏日志
+  games: [],
 
   // 课程表
   courseSchedule: [
     {
       day: 'MON',
-      label: '周一',
+      label: 'Mon',
       courses: [
-        { time: '09:50-12:10 | 2-17周', name: 'Python语言程序设计', location: '土楼328机房' },
-        { time: '14:30-16:00 | 1-18周', name: '排球2', location: '场地未排/待定' }
-      ]
+        { time: '07:30-07:50', name: 'English' },
+        { time: '08:00-08:45', name: 'Chinese' },
+        { time: '09:15-10:00', name: 'Biology' },
+        { time: '10:15-11:00', name: 'Geography' },
+        { time: '11:15-12:00', name: 'English' },
+        { time: '13:30-14:15', name: 'Maths' },
+        { time: '14:30-15:15', name: 'PE' },
+        { time: '15:30-16:15', name: 'English' },
+        { time: '16:45-17:30', name: 'English' },
+        { time: '17:45-18:20', name: 'Drama' },
+      ],
     },
     {
       day: 'TUE',
-      label: '周二',
+      label: 'Tue',
       courses: [
-        { time: '08:00-09:30 | 2-17周', name: '离散数学', location: 'B合四' },
-        { time: '09:50-12:10 | 2-17周', name: '线性代数A', location: 'E-318' },
-        { time: '14:30-16:00 | 2-17周', name: '面向对象程序设计', location: '信工107' },
-        { time: '16:10-17:50 | 2-17周', name: '高等数学A2', location: 'B合十四' }
-      ]
+        { time: '07:30-07:50', name: 'Maths' },
+        { time: '08:00-08:45', name: 'Maths' },
+        { time: '09:15-10:00', name: 'English' },
+        { time: '10:15-11:00', name: 'PE' },
+        { time: '11:15-12:00', name: 'Biology' },
+        { time: '13:30-14:15', name: 'Political Ed' },
+        { time: '14:30-15:15', name: 'Labor' },
+        { time: '15:30-16:15', name: 'Chinese' },
+        { time: '16:45-17:30', name: 'Geography' },
+        { time: '17:45-18:20', name: 'History' },
+      ],
     },
     {
       day: 'WED',
-      label: '周三',
+      label: 'Wed',
       courses: [
-        { time: '08:00-09:30 | 2-17周', name: '高等数学A2', location: 'B合十四' },
-        { time: '09:50-11:20 | 2-17周', name: '大学生心理健康教育', location: 'E-309' },
-        { time: '14:30-16:00 | 2-17周', name: '中国近现代史纲要', location: '艺术楼-208' },
-        { time: '16:10-17:50 | 2-17周', name: '军事理论', location: 'C-401' }
-      ]
+        { time: '07:30-07:50', name: 'Geography' },
+        { time: '08:00-08:45', name: 'Chinese' },
+        { time: '09:15-10:00', name: 'Political Ed' },
+        { time: '10:15-11:00', name: 'Maths' },
+        { time: '11:15-12:00', name: 'Maths' },
+        { time: '13:30-14:15', name: 'Chinese' },
+        { time: '14:30-15:15', name: 'PE (Public)' },
+        { time: '15:30-16:15', name: 'Geography' },
+        { time: '16:45-17:30', name: 'Maths' },
+        { time: '17:45-18:20', name: 'Maths' },
+      ],
     },
     {
       day: 'THU',
-      label: '周四',
+      label: 'Thu',
       courses: [
-        { time: '08:00-09:30 | 2-17周', name: '面向对象程序设计', location: '土楼334机房' },
-        { time: '09:50-11:20 | 2-17周', name: '大学英语2(非艺体)', location: 'B3-202' },
-        { time: '14:30-16:00 | 2-17周', name: '离散数学', location: 'E-404' },
-        { time: '16:10-17:50 | 3-06周', name: '形势与政策(二)', location: 'E-304' }
-      ]
+        { time: '07:30-07:50', name: 'Chinese' },
+        { time: '08:00-08:45', name: 'English' },
+        { time: '09:15-10:00', name: 'IT' },
+        { time: '10:15-11:00', name: 'Music' },
+        { time: '11:15-12:00', name: 'History' },
+        { time: '13:30-14:15', name: 'PE' },
+        { time: '14:30-15:15', name: 'Chinese' },
+        { time: '15:30-16:15', name: 'Chinese' },
+        { time: '16:45-17:30', name: 'Chinese' },
+        { time: '17:45-18:20', name: 'Chinese' },
+      ],
     },
     {
       day: 'FRI',
-      label: '周五',
+      label: 'Fri',
       courses: [
-        { time: '08:00-09:30 | 2-17周', name: '高等数学A2', location: 'B合十四' },
-        { time: '09:50-11:20 | 双周 2-16', name: '大学英语2(非艺体)', location: 'D-504 语音室' }
-      ]
-    }
+        { time: '07:30-07:50', name: 'English' },
+        { time: '08:00-08:45', name: 'Art' },
+        { time: '09:15-10:00', name: 'Biology' },
+        { time: '10:15-11:00', name: 'Political Ed' },
+        { time: '11:15-12:00', name: 'History' },
+        { time: '13:30-14:15', name: 'English' },
+        { time: '14:30-15:15', name: 'Maths' },
+        { time: '15:30-16:15', name: 'PE (Public)' },
+        { time: '16:45-17:30', name: 'English' },
+        { time: '17:45-18:20', name: 'English' },
+      ],
+    },
   ],
 
   // 待办清单
   todos: [
-    { task: '重构个人博客风格 UI', completed: true },
-    { task: '活着（到目前为止）', completed: true },
-    { task: '重构项目结构，将pages页面统一框架', completed: false },
-    { task: '重写博客配置文档', completed: false },
-    { task: '完成基于 Astro 的文档系统部署', completed: false },
-    { task: '期末不挂科', completed: false },
-    { task: '保持项目存活并稳定更新', completed: false },
+    { task: 'Write more articles', completed: true },
+    { task: 'Miracle v2', completed: false },
+    { task: 'Make more friends', completed: false },
   ],
 }
 
@@ -262,41 +290,22 @@ export const FRIENDS_CONFIG = {
   title: 'Friends',
   description: '我的朋友们都在这里，欢迎互访～',
   introduce: '已获取星图定位，正在前往友链星系的路上……',
-  enableAdd: false,
+  enableAdd: true,
 }
 
 // 博主专属友链卡片信息
 export const FRIENDS_CONTACT = {
-  sitename: 'RefactX Project',
-  email: 'i@refact.cc',
-  author: 'Refac7',
-  sitelink: 'https://www.refact.cc',
-  siteavatar: 'https://img.refact.cc/base/avatar.jpg',
-  description: 'Another, another… another excuse.', 
+  sitename: "Silvaire's Blog",
+  email: 'silvaire_qwq@outlook.com',
+  author: 'Silvaire',
+  sitelink: 'https://qwq.blue',
+  siteavatar:
+    'https://wsrv.nl/?url=avatars.githubusercontent.com/u/184231508?s=400&u=0a370792ba6bbb95a04d309171b562bcd7283a0f&v=4&mask=circle',
+  description: 'Per Aspera Ad Astra',
 }
 
 // Waline 评论系统配置
 export const WALINE_CONFIG = {
   enableComment: true,
-  serverURL: import.meta.env.PUBLIC_WALINE_SERVER_URL || "https://waline.refact.cc",
-  uploadToken: import.meta.env.PUBLIC_UPLOAD_TOKEN,
-  imgbedURL: import.meta.env.PUBLIC_IMG_BED_URL || "https://img.refact.cc/upload",
-  enableImgUpload: true, // true: 上传至图片服务器 / false: 存入数据库(限 128KiB)
-};
-
-// CMS 内容管理配置
-// 需在部署平台设置环境变量: PUBLIC_UPLOAD_TOKEN (如需管理后台则添加 GITHUB_TOKEN, ADMIN_PASSWORD)
-// 数据源提醒: v1.6.1 及之后版本，友链/项目/照片数据须转为 JSON 存放在 content/data 目录下
-export const CMS_CONFIG = {
-  enableCMS: true,
-  owner: 'Refac7',   // GitHub 仓库所有者
-  repo: 'RefactX',   // GitHub 仓库名称
-  branch: 'main',    // 目标分支
-  pathPrefix: 'src/content/posts/' // 相对路径前缀
-};
-
-// 节日特效配置
-// 样式修改: src/components/base/HolidayTheme.astro & global.css
-export const Holiday_Effects = {
-  enableHolidayEffects: true,
+  serverURL: 'https://waline.qwq.blue',
 }

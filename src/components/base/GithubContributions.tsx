@@ -131,7 +131,7 @@ export default function GithubContributions({ username, tooltipEnabled }: Props)
 
           <div className="flex flex-col items-end">
              <div className="flex items-center gap-1.5 mb-0.5">
-               <span className={cn("size-1.5 rounded-full", loading ? "bg-yellow-500" : error ? "bg-red-500" : "bg-emerald-500")} />
+               <span className={cn("size-1.5 rounded-full", loading ? "bg-ctp-yellow" : error ? "bg-ctp-red" : "bg-ctp-green")} />
                <span className="text-xs text-muted-foreground font-medium">Contributions</span>
              </div>
              <span className="text-sm font-semibold text-foreground">{loading ? '---' : totalCount} <span className="text-xs font-normal text-muted-foreground">in last year</span></span>

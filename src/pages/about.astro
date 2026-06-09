@@ -16,11 +16,11 @@ const SECTION_NUM_CLASS =
       <div class="flex flex-1 lg:overflow-y-auto scrollbar-hide flex-col">
         <div class="p-6 lg:p-8 xl:p-12 pb-0 shrink-0 fade-up">
           <span
-            class="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/10 px-3 py-1 text-xs font-medium text-emerald-600 select-none"
+            class="inline-flex items-center gap-1.5 rounded-full bg-ctp-green/10 px-3 py-1 text-xs font-medium text-ctp-green select-none"
           >
             <span class="relative flex h-1.5 w-1.5">
-              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-ctp-green opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-ctp-green"></span>
             </span>
             Alive
           </span>
@@ -44,7 +44,7 @@ const SECTION_NUM_CLASS =
         <div
           class="flex-1 flex flex-col items-start justify-center p-8 lg:p-10 xl:p-14 bg-background border-r border-border/40 hover:bg-muted/30 transition-colors"
         >
-          <span class="text-lg font-semibold text-foreground tracking-tight">Carbon-based</span>
+          <span class="text-lg font-semibold text-foreground tracking-tight">Carbon-based / Form</span>
           <span class="text-xs text-muted-foreground mt-1">Form</span>
         </div>
         <div class="flex-1 flex flex-col items-start justify-center p-8 lg:p-10 xl:p-14 bg-background hover:bg-muted/30 transition-colors">
@@ -85,7 +85,7 @@ const SECTION_NUM_CLASS =
                 {profile.bio}
               </div>
 
-              <div class="mt-8 pt-6 border-t border-border/40 grid grid-cols-2 sm:grid-cols-4 gap-3">
+              <div class="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-3">
                 {
                   ABOUT_CONFIG.physicalAttributes.map((attr) => (
                     <div class="flex flex-col p-3 rounded-lg bg-background border border-border/40 hover:bg-muted/30 transition-colors">
@@ -130,49 +130,63 @@ const SECTION_NUM_CLASS =
               <span class={SECTION_NUM_CLASS}>03</span><h2 class={SECTION_TITLE_CLASS}>Hardware Loadout</h2>
             </div>
           </div>
-          <div class="border border-border/40 bg-background/50 rounded-lg overflow-hidden">
-            {
-              equipment.map((item, index) => (
-                <div
-                  class={`flex flex-col sm:flex-row sm:items-center justify-between px-4 py-3  hover:bg-muted/30 transition-all ${index !== equipment.length - 1 ? 'border-b border-border/40' : ''}`}
-                >
-                  <div class="flex items-center gap-4 mb-2 sm:mb-0 shrink-0">
-                    <span class="text-sm font-medium text-muted-foreground/40 w-6">{(index + 1).toString().padStart(2, '0')}</span>
-                    <span class="text-sm font-medium text-foreground w-24">{item.type}</span>
+          {
+            equipment.length > 0 ? (
+              <div class="border border-border/40 bg-background/50 rounded-lg overflow-hidden">
+                {equipment.map((item: any, index: number) => (
+                  <div
+                    class={`flex flex-col sm:flex-row sm:items-center justify-between px-4 py-3  hover:bg-muted/30 transition-all ${index !== equipment.length - 1 ? 'border-b border-border/40' : ''}`}
+                  >
+                    <div class="flex items-center gap-4 mb-2 sm:mb-0 shrink-0">
+                      <span class="text-sm font-medium text-muted-foreground/40 w-6">{(index + 1).toString().padStart(2, '0')}</span>
+                      <span class="text-sm font-medium text-foreground w-24">{item.type}</span>
+                    </div>
+                    <div class="flex flex-col sm:items-end sm:text-right pl-10 sm:pl-0 shrink-0">
+                      <span class="text-sm font-semibold text-foreground tracking-tight">{item.name}</span>
+                      <span class="text-xs text-muted-foreground">{item.desc}</span>
+                    </div>
                   </div>
-                  <div class="flex flex-col sm:items-end sm:text-right pl-10 sm:pl-0 shrink-0">
-                    <span class="text-sm font-semibold text-foreground tracking-tight">{item.name}</span>
-                    <span class="text-xs text-muted-foreground">{item.desc}</span>
-                  </div>
-                </div>
-              ))
-            }
-          </div>
+                ))}
+              </div>
+            ) : (
+              <div class="flex flex-col items-center justify-center py-16 text-muted-foreground border border-border/40 rounded-lg bg-background/50">
+                <span class="icon-[ph--desktop] size-10 mb-3 text-muted-foreground/40" />
+                <p class="text-sm">No hardware info yet</p>
+              </div>
+            )
+          }
         </div>
 
         <div class="mb-20 fade-up" style="animation-delay: 300ms">
           <div class={SECTION_HEADER_CLASS}>
             <div class="flex items-center"><span class={SECTION_NUM_CLASS}>04</span><h2 class={SECTION_TITLE_CLASS}>Gaming Log</h2></div>
           </div>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {
-              games.map((game) => (
-                <div class="p-5 rounded-lg border border-border/40 bg-background/50 hover:bg-muted/20 hover:shadow-xs transition-all flex flex-col justify-between min-h-[120px] hover:-translate-y-0.5">
-                  <div class="flex justify-between items-start mb-4">
-                    <span class="text-base font-semibold text-foreground tracking-tight">{game.title}</span>
-                    <span class="text-xs font-medium text-muted-foreground bg-muted/60 px-2 py-0.5 rounded-full">{game.hours}</span>
-                  </div>
-                  <div class="flex items-center justify-between mt-auto">
-                    <span class="text-sm text-muted-foreground">{game.platform}</span>
-                    <div class="flex items-center gap-1.5">
-                      <div class={`size-2 rounded-full ${game.color} ${game.status === 'Playing' ? 'animate-pulse' : ''}`} />
-                      <span class="text-xs font-medium text-muted-foreground">{game.status}</span>
+          {
+            games.length > 0 ? (
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {games.map((game: any) => (
+                  <div class="p-5 rounded-lg border border-border/40 bg-background/50 hover:bg-muted/20 hover:shadow-xs transition-all flex flex-col justify-between min-h-[120px] hover:-translate-y-0.5">
+                    <div class="flex justify-between items-start mb-4">
+                      <span class="text-base font-semibold text-foreground tracking-tight">{game.title}</span>
+                      <span class="text-xs font-medium text-muted-foreground bg-muted/60 px-2 py-0.5 rounded-full">{game.hours}</span>
+                    </div>
+                    <div class="flex items-center justify-between mt-auto">
+                      <span class="text-sm text-muted-foreground">{game.platform}</span>
+                      <div class="flex items-center gap-1.5">
+                        <div class={`size-2 rounded-full ${game.color} ${game.status === 'Playing' ? 'animate-pulse' : ''}`} />
+                        <span class="text-xs font-medium text-muted-foreground">{game.status}</span>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))
-            }
-          </div>
+                ))}
+              </div>
+            ) : (
+              <div class="flex flex-col items-center justify-center py-16 text-muted-foreground border border-border/40 rounded-lg bg-background/50">
+                <span class="icon-[ph--game-controller] size-10 mb-3 text-muted-foreground/40" />
+                <p class="text-sm">No gaming log yet</p>
+              </div>
+            )
+          }
         </div>
 
         <div class="mb-20 fade-up" style="animation-delay: 350ms">
@@ -189,14 +203,16 @@ const SECTION_NUM_CLASS =
                   </div>
                   <div class="p-4 flex flex-col gap-4 flex-1">
                     {dayData.courses.length > 0 ? (
-                      dayData.courses.map((course) => (
+                      dayData.courses.map((course: any) => (
                         <div class="relative pl-3 border-l-2 border-muted-foreground/20 hover:border-primary transition-colors">
                           <span class="inline-block text-xs font-medium text-muted-foreground mb-1">{course.time}</span>
                           <span class="block text-sm font-semibold text-foreground leading-tight mb-1">{course.name}</span>
-                          <span class="flex items-center gap-1 text-xs text-muted-foreground">
-                            <span class="icon-[ph--map-pin] size-3" />
-                            {course.location}
-                          </span>
+                          {course.location ? (
+                            <span class="flex items-center gap-1 text-xs text-muted-foreground">
+                              <span class="icon-[ph--map-pin] size-3" />
+                              {course.location}
+                            </span>
+                          ) : null}
                         </div>
                       ))
                     ) : (

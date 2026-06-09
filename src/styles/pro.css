@@ -5,37 +5,20 @@
 
 /* ===== Color Variables | 颜色变量 ===== */
 .markdown {
-  --text: #3f3f46; /* zinc-700 */
-  --text-deep: #09090b; /* zinc-950 */
-  --heading: #09090b; /* zinc-950 */
-  --links: #09090b; /* zinc-950 */
-  --links-border: #e4e4e7; /* zinc-200 */
-  --links-hover-border: #a1a1aa; /* zinc-400 */
-  --anchor: var(--color-primary); /* blue-500 */
-  --hr-color: #e4e4e7; /* zinc-200 */
-  --blockquote-border: #e4e4e7; /* zinc-200 */
-  --blockquote-bg: #fafafa; /* zinc-50 */
-  --table-text: #18181b; /* zinc-900 */
-  --inline-code-bg: #f4f4f5; /* zinc-100 */
-  --inline-code-text: #18181b; /* zinc-900 */
-  --inline-code-border: #e4e4e7; /* zinc-200 */
-}
-
-.dark .markdown {
-  --text: #a1a1aa; /* zinc-400 */
-  --text-deep: #fafafa; /* zinc-50 */
-  --heading: #fafafa; /* zinc-50 */
-  --links: #fafafa; /* zinc-50 */
-  --links-border: #3f3f46; /* zinc-700 */
-  --links-hover-border: #a1a1aa; /* zinc-400 */
-  --anchor: var(--color-primary); /* blue-400 */
-  --hr-color: #27272a; /* zinc-800 */
-  --blockquote-border: #3f3f46; /* zinc-700 */
-  --blockquote-bg: #18181b; /* zinc-900 */
-  --table-text: #fafafa; /* zinc-50 */
-  --inline-code-bg: #27272a; /* zinc-800 */
-  --inline-code-text: #e4e4e7; /* zinc-200 */
-  --inline-code-border: #3f3f46; /* zinc-700 */
+  --text: hsl(var(--foreground));
+  --text-deep: hsl(var(--foreground));
+  --heading: hsl(var(--foreground));
+  --links: hsl(var(--foreground));
+  --links-border: hsl(var(--border));
+  --links-hover-border: hsl(var(--muted-foreground));
+  --anchor: var(--color-primary);
+  --hr-color: hsl(var(--border));
+  --blockquote-border: hsl(var(--border));
+  --blockquote-bg: hsl(var(--muted));
+  --table-text: hsl(var(--foreground));
+  --inline-code-bg: hsl(var(--muted));
+  --inline-code-text: hsl(var(--foreground));
+  --inline-code-border: hsl(var(--border));
 }
 
 /* ===== Base Styles | 基础样式 ===== */
@@ -511,6 +494,18 @@
   padding-right: 4px;
 }
 
+/* Catppuccin callout colors */
+[data-callout='note'] { background-color: color-mix(in srgb, hsl(var(--ctp-blue)) 14%, transparent); }
+[data-callout='tip'] { background-color: color-mix(in srgb, hsl(var(--ctp-teal)) 14%, transparent); }
+[data-callout='important'] { background-color: color-mix(in srgb, hsl(var(--ctp-mauve)) 14%, transparent); }
+[data-callout='warning'] { background-color: color-mix(in srgb, hsl(var(--ctp-yellow)) 14%, transparent); }
+[data-callout='caution'] { background-color: color-mix(in srgb, hsl(var(--ctp-red)) 14%, transparent); }
+.dark [data-callout='note'] { background-color: color-mix(in srgb, hsl(var(--ctp-blue)) 16%, transparent); }
+.dark [data-callout='tip'] { background-color: color-mix(in srgb, hsl(var(--ctp-teal)) 16%, transparent); }
+.dark [data-callout='important'] { background-color: color-mix(in srgb, hsl(var(--ctp-mauve)) 16%, transparent); }
+.dark [data-callout='warning'] { background-color: color-mix(in srgb, hsl(var(--ctp-yellow)) 16%, transparent); }
+.dark [data-callout='caution'] { background-color: color-mix(in srgb, hsl(var(--ctp-red)) 16%, transparent); }
+
 .dark .img-light {
   display: none;
 }
@@ -556,8 +551,8 @@ html:not(.dark) .img-dark {
 }
 
 [data-badge='n'] {
-  --badge-color-light: #ef4444;
-  --badge-color-dark: #fca5a5;
+  --badge-color-light: hsl(var(--ctp-red));
+  --badge-color-dark: hsl(var(--ctp-red));
 }
 
 .new-tab-icon {

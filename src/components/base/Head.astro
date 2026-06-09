@@ -16,31 +16,34 @@ const ogImage = new URL(image || SITE.ogImage, Astro.url)
 
 <script is:inline>
 (function() {
-  const STORAGE_KEY = 'theme';
-  const root = document.documentElement;
-  const saved = localStorage.getItem(STORAGE_KEY) || 'system';
+  var STORAGE_KEY = 'theme';
+  var root = document.documentElement;
+  var saved = localStorage.getItem(STORAGE_KEY) || 'system';
 
-  // 超轻量执行，0 重排 0 阻塞
-  const isDark = saved === 'dark' || (saved === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+  function applyTheme() {
+    var isDark = saved === 'dark' || (saved === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+    root.dataset.theme = isDark ? 'dark' : 'light';
+    root.classList.toggle('dark', isDark);
 
-  root.dataset.theme = isDark ? 'dark' : 'light';
-  root.classList.toggle('dark', isDark);
+    // Catppuccin surface variant
+    var ctpMode = isDark ? darkVariant : lightVariant;
+    root.dataset.ctp = ctpMode;
 
-  // 只在必要时监听
-  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
-    if (localStorage.getItem(STORAGE_KEY) === 'system') {
-      const nowDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      root.dataset.theme = nowDark ? 'dark' : 'light';
-      root.classList.toggle('dark', nowDark);
-    }
+    // Accent color
+    var accent = root.getAttribute('data-accent') || 'lavender';
+    root.dataset.accent = accent;
+  }
+
+  applyTheme();
+
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function() {
+    if (localStorage.getItem(STORAGE_KEY) === 'system') { applyTheme(); }
   });
 
-  // Astro 路由同步
-  document.addEventListener('astro:after-swap', () => {
-    const theme = localStorage.getItem(STORAGE_KEY) || 'system';
-    const dark = theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
-    root.dataset.theme = dark ? 'dark' : 'light';
-    root.classList.toggle('dark', dark);
+  document.addEventListener('astro:after-swap', function() {
+    var theme = localStorage.getItem(STORAGE_KEY) || 'system';
+    saved = theme;
+    applyTheme();
   });
 })();
 </script>

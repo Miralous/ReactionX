@@ -13,6 +13,7 @@
   --font-mono: var(--font-geist-mono);
 
   --color-border: hsl(var(--border));
+  --color-border-primary: hsl(var(--border));
   --color-ring: hsl(var(--ring));
   --color-background: hsl(var(--background));
   --color-foreground: hsl(var(--foreground));
@@ -28,166 +29,327 @@
   --color-tag-text: hsl(var(--tag-text));
   --color-scrollbar: hsl(var(--scrollbar));
   --color-scrollbar-bg: hsl(var(--scrollbar-bg));
+  --color-ctp-rosewater: hsl(var(--ctp-rosewater));
+  --color-ctp-flamingo: hsl(var(--ctp-flamingo));
+  --color-ctp-pink: hsl(var(--ctp-pink));
+  --color-ctp-mauve: hsl(var(--ctp-mauve));
+  --color-ctp-red: hsl(var(--ctp-red));
+  --color-ctp-maroon: hsl(var(--ctp-maroon));
+  --color-ctp-peach: hsl(var(--ctp-peach));
+  --color-ctp-yellow: hsl(var(--ctp-yellow));
+  --color-ctp-green: hsl(var(--ctp-green));
+  --color-ctp-teal: hsl(var(--ctp-teal));
+  --color-ctp-blue: hsl(var(--ctp-blue));
+  --color-ctp-lavender: hsl(var(--ctp-lavender));
+  --color-red-500: hsl(var(--ctp-red));
+  --color-green-500: hsl(var(--ctp-green));
+  --color-yellow-500: hsl(var(--ctp-yellow));
+  --color-amber-500: hsl(var(--ctp-yellow));
+  --color-emerald-400: hsl(var(--ctp-green));
+  --color-emerald-500: hsl(var(--ctp-green));
+  --color-emerald-600: hsl(var(--ctp-green));
+  --color-slate-500: hsl(var(--ctp-mauve));
+  --color-slate-700: hsl(var(--ctp-mauve));
+  --color-slate-300: hsl(var(--ctp-lavender));
+  --color-blue-500: hsl(var(--ctp-blue));
+  --color-indigo-500: hsl(var(--ctp-mauve));
+  --color-zinc-50: hsl(var(--ctp-mauve));
+  --color-zinc-900: hsl(var(--ctp-mauve));
 }
 
 /* ===== 字体配置 ===== */
 @layer base {
-  @font-face { font-family: 'Numbers'; src: url('/fonts/GeistVF.woff2') format('woff2'); font-display: swap; }
-  @font-face { font-family: 'CJKEmDash'; unicode-range: U+2014, U+2E3A-2E3B; src: url('/fonts/ZhudouSansVF-subset.woff2') format('woff2'); font-display: swap; }
-  @font-face { font-family: 'Lexend'; src: url('/fonts/Lexend-VariableFont_wght.woff2') format('woff2'); font-display: swap; }
-  @font-face { font-family: 'GeistMono'; src: url('/fonts/GeistMono.woff2') format('woff2'); font-display: swap; }
+  @font-face {
+    font-family: 'Numbers';
+    src: url('/fonts/GeistVF.woff2') format('woff2');
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'CJKEmDash';
+    unicode-range: U+2014, U+2E3A-2E3B;
+    src: url('/fonts/ZhudouSansVF-subset.woff2') format('woff2');
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Lexend';
+    src: url('/fonts/Lexend-VariableFont_wght.woff2') format('woff2');
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'GeistMono';
+    src: url('/fonts/GeistMono.woff2') format('woff2');
+    font-display: swap;
+  }
 }
 
-/* ===== 颜色变量 & 节日主题 ===== */
+/* ===== Catppuccin 4 variants ===== */
 @layer base {
   :root {
     --font-lexend: 'Lexend', 'CJKEmDash', 'Numbers', 'ShangguSansSC-VF', ui-sans-serif, system-ui, sans-serif;
     --font-sans: 'CJKEmDash', 'Numbers', 'ShangguSansSC-VF', ui-sans-serif, system-ui, sans-serif;
     --font-geist-mono: 'GeistMono', 'Input Mono', 'Fira Code', 'ShangguSansSC-VF', monospace;
-
-    --background: 255 100% 100%;
-    --foreground: 225 15% 12%;
-    --accent: 220 25% 94%;
-    --accent-foreground: 225 15% 12%;
-    --primary: 225 15% 12%;
-    --primary-foreground: 220 30% 98%;
-    --muted: 220 25% 92%;
-    --muted-foreground: 225 10% 40%;
-    --border: 220 20% 90%;
-    --ring: 225 15% 12%;
-    --tag-bg: 220 25% 96%;
-    --tag-bg-hover: 220 25% 92%;
-    --tag-border: 220 25% 90%;
-    --tag-text: 225 15% 35%;
-    --scrollbar: 220 20% 80%;
-    --scrollbar-bg: 220 25% 95%;
   }
 
-  .dark {
-    --background: 255 0% 0%;
-    --foreground: 0 0% 98%;
-    --accent: 240 3.7% 15.9%;
-    --accent-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
-    --primary-foreground: 240 5.9% 10%;
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
-    --border: 240 3.7% 15.9%;
-    --ring: 240 4.9% 83.9%;
-    --tag-bg: 240 20% 13%;
-    --tag-bg-hover: 240 20% 16%;
-    --tag-border: 240 20% 20%;
-    --tag-text: 240 15% 85%;
-    --scrollbar: 240 10% 30%;
-    --scrollbar-bg: 240 10% 15%;
+  [data-ctp='latte'] {
+    --background: 220 23.077% 94.902%;
+    --foreground: 233.793 16.022% 35.49%;
+    --muted: 222.857 15.909% 82.745%;
+    --muted-foreground: 231.429 10.048% 59.02%;
+    --border: 225 13.559% 76.863%;
+    --scrollbar: 226.667 12.162% 70.98%;
+    --scrollbar-bg: 222.857 15.909% 82.745%;
+    --tag-bg: 222.857 15.909% 82.745%;
+    --tag-bg-hover: 225 13.559% 76.863%;
+    --tag-border: 226.667 12.162% 70.98%;
+    --ctp-rosewater: 10.8 58.824% 66.667%;
+    --ctp-flamingo: 0 59.763% 66.863%;
+    --ctp-pink: 316.034 73.418% 69.02%;
+    --ctp-mauve: 266.044 85.047% 58.039%;
+    --ctp-red: 347.077 86.667% 44.118%;
+    --ctp-maroon: 354.783 76.303% 58.627%;
+    --ctp-peach: 21.975 99.184% 51.961%;
+    --ctp-yellow: 34.948 76.984% 49.412%;
+    --ctp-green: 109.231 57.635% 39.804%;
+    --ctp-teal: 183.231 73.864% 34.51%;
+    --ctp-blue: 219.907 91.489% 53.922%;
+    --ctp-lavender: 230.935 97.203% 71.961%;
   }
 
-  /* 新年/国庆节 */
-  html.theme-red {
-    --primary: 350 85% 45%;
-    --primary-foreground: 0 0% 100%;
-    --accent: 350 80% 95%;
-    --accent-foreground: 350 85% 45%;
-    --ring: 350 85% 45%;
-    --tag-bg: 350 80% 95%;
-    --tag-bg-hover: 350 80% 90%;
-    --tag-border: 350 80% 85%;
-    --tag-text: 350 85% 45%;
-  }
-  html.dark.theme-red {
-    --primary: 350 85% 55%;
-    --primary-foreground: 0 0% 100%;
-    --accent: 350 40% 15%;
-    --accent-foreground: 350 85% 75%;
-    --ring: 350 85% 55%;
-    --tag-bg: 350 40% 12%;
-    --tag-bg-hover: 350 40% 18%;
-    --tag-border: 350 40% 25%;
-    --tag-text: 350 85% 75%;
-  }
-
-  /* 端午节 */
-  html.theme-green {
-    --primary: 150 70% 35%;
-    --primary-foreground: 0 0% 100%;
-    --accent: 150 60% 95%;
-    --accent-foreground: 150 70% 35%;
-    --ring: 150 70% 35%;
-    --tag-bg: 150 60% 95%;
-    --tag-bg-hover: 150 60% 90%;
-    --tag-border: 150 60% 85%;
-    --tag-text: 150 70% 35%;
-  }
-  html.dark.theme-green {
-    --primary: 150 60% 50%;
-    --primary-foreground: 0 0% 100%;
-    --accent: 150 40% 15%;
-    --accent-foreground: 150 60% 70%;
-    --ring: 150 60% 50%;
-    --tag-bg: 150 40% 12%;
-    --tag-bg-hover: 150 40% 18%;
-    --tag-border: 150 40% 25%;
-    --tag-text: 150 60% 70%;
+  [data-ctp='frappe'] {
+    --background: 229.091 18.644% 23.137%;
+    --foreground: 227.234 70.149% 86.863%;
+    --muted: 230 15.584% 30.196%;
+    --muted-foreground: 226.667 16.981% 58.431%;
+    --border: 227.143 14.737% 37.255%;
+    --scrollbar: 228 13.274% 44.314%;
+    --scrollbar-bg: 230 15.584% 30.196%;
+    --tag-bg: 230 15.584% 30.196%;
+    --tag-bg-hover: 227.143 14.737% 37.255%;
+    --tag-border: 228 13.274% 44.314%;
+    --ctp-rosewater: 10.286 57.377% 88.039%;
+    --ctp-flamingo: 0 58.537% 83.922%;
+    --ctp-pink: 316 73.171% 83.922%;
+    --ctp-mauve: 276.667 59.016% 76.078%;
+    --ctp-red: 358.812 67.785% 70.784%;
+    --ctp-maroon: 357.778 65.854% 75.882%;
+    --ctp-peach: 20.331 79.085% 70%;
+    --ctp-yellow: 39.529 62.044% 73.137%;
+    --ctp-green: 95.833 43.902% 67.843%;
+    --ctp-teal: 171.549 39.227% 64.51%;
+    --ctp-blue: 221.633 74.242% 74.118%;
+    --ctp-lavender: 238.909 66.265% 83.725%;
   }
 
-  /* 中秋节 */
-  html.theme-gold {
-    --primary: 35 90% 45%;
-    --primary-foreground: 0 0% 100%;
-    --accent: 35 80% 95%;
-    --accent-foreground: 35 90% 45%;
-    --ring: 35 90% 45%;
-    --tag-bg: 35 80% 95%;
-    --tag-bg-hover: 35 80% 90%;
-    --tag-border: 35 80% 85%;
-    --tag-text: 35 90% 45%;
+  [data-ctp='macchiato'] {
+    --background: 231.818 23.404% 18.431%;
+    --foreground: 227.442 68.254% 87.647%;
+    --muted: 230.4 18.797% 26.078%;
+    --muted-foreground: 227.647 15.455% 56.863%;
+    --border: 231.111 15.607% 33.922%;
+    --scrollbar: 229.655 13.744% 41.373%;
+    --scrollbar-bg: 230.4 18.797% 26.078%;
+    --tag-bg: 230.4 18.797% 26.078%;
+    --tag-bg-hover: 231.111 15.607% 33.922%;
+    --tag-border: 229.655 13.744% 41.373%;
+    --ctp-rosewater: 10 57.692% 89.804%;
+    --ctp-flamingo: 0 58.333% 85.882%;
+    --ctp-pink: 316.071 73.684% 85.098%;
+    --ctp-mauve: 266.512 82.692% 79.608%;
+    --ctp-red: 351.176 73.913% 72.941%;
+    --ctp-maroon: 355.059 71.429% 76.667%;
+    --ctp-peach: 21.356 85.507% 72.941%;
+    --ctp-yellow: 40.253 69.912% 77.843%;
+    --ctp-green: 105.217 48.252% 71.961%;
+    --ctp-teal: 171.081 46.835% 69.02%;
+    --ctp-blue: 220.189 82.813% 74.902%;
+    --ctp-lavender: 234.462 82.278% 84.51%;
   }
-  html.dark.theme-gold {
-    --primary: 35 90% 55%;
-    --primary-foreground: 0 0% 100%;
-    --accent: 35 40% 15%;
-    --accent-foreground: 35 90% 70%;
-    --ring: 35 90% 55%;
-    --tag-bg: 35 40% 12%;
-    --tag-bg-hover: 35 40% 18%;
-    --tag-border: 35 40% 25%;
-    --tag-text: 35 90% 70%;
+
+  [data-ctp='mocha'] {
+    --background: 240 21.053% 14.902%;
+    --foreground: 226.154 63.934% 88.039%;
+    --muted: 236.842 16.239% 22.941%;
+    --muted-foreground: 229.655 12.775% 55.49%;
+    --border: 234.286 13.208% 31.176%;
+    --scrollbar: 232.5 12% 39.216%;
+    --scrollbar-bg: 236.842 16.239% 22.941%;
+    --tag-bg: 236.842 16.239% 22.941%;
+    --tag-bg-hover: 234.286 13.208% 31.176%;
+    --tag-border: 232.5 12% 39.216%;
+    --ctp-rosewater: 9.6 55.556% 91.176%;
+    --ctp-flamingo: 0 58.73% 87.647%;
+    --ctp-pink: 316.471 71.831% 86.078%;
+    --ctp-mauve: 267.407 83.505% 80.98%;
+    --ctp-red: 343.269 81.25% 74.902%;
+    --ctp-maroon: 350.4 65.217% 77.451%;
+    --ctp-peach: 22.957 92% 75.49%;
+    --ctp-yellow: 41.351 86.047% 83.137%;
+    --ctp-green: 115.455 54.098% 76.078%;
+    --ctp-teal: 170 57.353% 73.333%;
+    --ctp-blue: 217.168 91.87% 75.882%;
+    --ctp-lavender: 231.892 97.368% 85.098%;
   }
 }
 
-/* 清明/公祭日 */
-html.theme-mourning { filter: grayscale(100%) !important; }
+/* ===== Accent colors ===== */
+@layer base {
+  [data-accent='rosewater'] {
+    --primary: var(--ctp-rosewater);
+    --primary-foreground: 0 0% 0%;
+    --accent: var(--ctp-rosewater);
+    --accent-foreground: 0 0% 0%;
+    --ring: var(--ctp-rosewater);
+    --tag-text: var(--ctp-rosewater);
+  }
+  [data-accent='flamingo'] {
+    --primary: var(--ctp-flamingo);
+    --primary-foreground: 0 0% 0%;
+    --accent: var(--ctp-flamingo);
+    --accent-foreground: 0 0% 0%;
+    --ring: var(--ctp-flamingo);
+    --tag-text: var(--ctp-flamingo);
+  }
+  [data-accent='pink'] {
+    --primary: var(--ctp-pink);
+    --primary-foreground: 0 0% 0%;
+    --accent: var(--ctp-pink);
+    --accent-foreground: 0 0% 0%;
+    --ring: var(--ctp-pink);
+    --tag-text: var(--ctp-pink);
+  }
+  [data-accent='mauve'] {
+    --primary: var(--ctp-mauve);
+    --primary-foreground: 0 0% 0%;
+    --accent: var(--ctp-mauve);
+    --accent-foreground: 0 0% 0%;
+    --ring: var(--ctp-mauve);
+    --tag-text: var(--ctp-mauve);
+  }
+  [data-accent='red'] {
+    --primary: var(--ctp-red);
+    --primary-foreground: 0 0% 0%;
+    --accent: var(--ctp-red);
+    --accent-foreground: 0 0% 0%;
+    --ring: var(--ctp-red);
+    --tag-text: var(--ctp-red);
+  }
+  [data-accent='maroon'] {
+    --primary: var(--ctp-maroon);
+    --primary-foreground: 0 0% 0%;
+    --accent: var(--ctp-maroon);
+    --accent-foreground: 0 0% 0%;
+    --ring: var(--ctp-maroon);
+    --tag-text: var(--ctp-maroon);
+  }
+  [data-accent='peach'] {
+    --primary: var(--ctp-peach);
+    --primary-foreground: 0 0% 0%;
+    --accent: var(--ctp-peach);
+    --accent-foreground: 0 0% 0%;
+    --ring: var(--ctp-peach);
+    --tag-text: var(--ctp-peach);
+  }
+  [data-accent='yellow'] {
+    --primary: var(--ctp-yellow);
+    --primary-foreground: 0 0% 0%;
+    --accent: var(--ctp-yellow);
+    --accent-foreground: 0 0% 0%;
+    --ring: var(--ctp-yellow);
+    --tag-text: var(--ctp-yellow);
+  }
+  [data-accent='green'] {
+    --primary: var(--ctp-green);
+    --primary-foreground: 0 0% 0%;
+    --accent: var(--ctp-green);
+    --accent-foreground: 0 0% 0%;
+    --ring: var(--ctp-green);
+    --tag-text: var(--ctp-green);
+  }
+  [data-accent='teal'] {
+    --primary: var(--ctp-teal);
+    --primary-foreground: 0 0% 0%;
+    --accent: var(--ctp-teal);
+    --accent-foreground: 0 0% 0%;
+    --ring: var(--ctp-teal);
+    --tag-text: var(--ctp-teal);
+  }
+  [data-accent='blue'] {
+    --primary: var(--ctp-blue);
+    --primary-foreground: 0 0% 0%;
+    --accent: var(--ctp-blue);
+    --accent-foreground: 0 0% 0%;
+    --ring: var(--ctp-blue);
+    --tag-text: var(--ctp-blue);
+  }
+  [data-accent='lavender'] {
+    --primary: var(--ctp-lavender);
+    --primary-foreground: 0 0% 0%;
+    --accent: var(--ctp-lavender);
+    --accent-foreground: 0 0% 0%;
+    --ring: var(--ctp-lavender);
+    --tag-text: var(--ctp-lavender);
+  }
+}
 
 /* ===== 基础样式 ===== */
 @layer base {
-  * { @apply border-border; }
+  * {
+    @apply border-border;
+  }
   html {
     color-scheme: light;
     background-color: var(--color-background);
     font-family: var(--font-sans);
     scroll-behavior: smooth;
-    @variant dark { color-scheme: dark; }
+    @variant dark {
+      color-scheme: dark;
+    }
   }
-  body { @apply min-h-screen bg-background text-foreground; }
-  h1, h2, h3, h4, h5, h6 { @apply font-serif font-medium; }
-  a { @apply underline-offset-4; }
-  .pro { @apply prose prose-zinc dark:prose-invert; }
+  body {
+    @apply min-h-screen bg-background text-foreground;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-serif font-medium;
+  }
+  a {
+    @apply underline-offset-4;
+  }
+  .pro {
+    @apply prose prose-zinc dark:prose-invert;
+  }
 }
 
 @layer base {
   .fade-up {
     opacity: 0;
-    transform: translate3d(0, 2rem, 0); 
+    transform: translate3d(0, 2rem, 0);
     animation: fadeUp 0.6s cubic-bezier(0.2, 0, 0.2, 1) forwards;
     backface-visibility: hidden;
   }
   @keyframes fadeUp {
-    from { opacity: 0; transform: translate3d(0, 2rem, 0); }
-    to { opacity: 1; transform: translate3d(0, 0, 0); }
+    from {
+      opacity: 0;
+      transform: translate3d(0, 2rem, 0);
+    }
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
   }
-  .animation-delay-100 { animation-delay: 100ms; }
-  .animation-delay-150 { animation-delay: 150ms; }
-  .animation-delay-200 { animation-delay: 200ms; }
+  .animation-delay-100 {
+    animation-delay: 100ms;
+  }
+  .animation-delay-150 {
+    animation-delay: 150ms;
+  }
+  .animation-delay-200 {
+    animation-delay: 200ms;
+  }
 
   html.disable-transition,
   html.disable-transition * {
@@ -196,52 +358,3 @@ html.theme-mourning { filter: grayscale(100%) !important; }
     --astro-view-transition: none !important;
   }
 }
-
-/* ===== 滚动条与工具类 ===== */
-@supports (scrollbar-width: auto) {
-  * { scrollbar-width: auto; scrollbar-color: hsl(var(--scrollbar)) hsl(var(--scrollbar-bg)); }
-}
-@supports selector(::-webkit-scrollbar) {
-  ::-webkit-scrollbar { width: 8px; }
-  ::-webkit-scrollbar:horizontal { height: 8px; }
-  ::-webkit-scrollbar-track { border-radius: 10px; background: hsl(var(--scrollbar-bg)); }
-  ::-webkit-scrollbar-thumb { border-radius: 10px; background: hsl(var(--scrollbar)); }
-  ::-webkit-scrollbar-thumb:hover { background: hsl(var(--scrollbar) / 0.8); }
-}
-.no-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
-.no-scrollbar::-webkit-scrollbar { display: none; }
-
-.perspective-1000 { perspective: 1000px; }
-@keyframes slide-down {
-  0% { opacity: 0; transform: translateY(-10px); }
-  100% { opacity: 1; transform: translateY(0px); }
-}
-.animate-slide-down { animation: slide-down 0.3s ease-out forwards; }
-.markdown a { overflow-wrap: anywhere; word-break: break-word; white-space: normal; }
-
-/* ===== 搜索与图片懒加载 ===== */
-#search-input::-webkit-search-decoration, #search-input::-webkit-search-cancel-button, #search-input::-webkit-search-results-button, #search-input::-webkit-search-results-decoration { -webkit-appearance: none; }
-#search-input::-ms-clear { display: none; width: 0; height: 0; }
-input[type='search']::-moz-search-cancel-button { display: none; }
-#search-results { padding: 0.25rem; }
-.search-results-item { display: block; padding: 0.875rem 1rem; border-bottom: 1px solid hsl(var(--border) / 0.7); transition: background-color 0.18s ease, transform 0.12s ease, color 0.18s ease; }
-.search-results-item:not(.sub-result) + .search-results-item:not(.sub-result) { margin-top: 0.375rem; }
-.search-results-item.sub-result + .search-results-item:not(.sub-result) { margin-top: 0.5rem; }
-.search-results-item:hover { background-color: hsl(var(--accent) / 0.6); }
-.search-results-item:focus-visible { outline: 2px solid hsl(var(--ring)); outline-offset: 2px; background-color: hsl(var(--accent) / 0.7); }
-.search-results-item:active { transform: scale(0.997); }
-.search-results-item.sub-result { padding-left: 1.25rem; border-left: 2px solid hsl(var(--accent)); margin-left: 0.75rem; font-size: 0.875rem; opacity: 0.9; }
-.search-results-title { font-size: 1rem; font-weight: 600; color: hsl(var(--foreground)); margin-bottom: 0.375rem; display: -webkit-box; line-clamp: 1; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
-.search-results-item:hover .search-results-title { color: hsl(var(--primary)); }
-.search-results-item.sub-result .search-results-title { font-weight: 500; font-size: 0.9375rem; }
-.search-results-excerpt { font-size: 0.875rem; color: hsl(var(--muted-foreground)); line-height: 1.6; display: -webkit-box; line-clamp: 2; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-.search-results-excerpt mark { background-color: hsl(var(--accent)); color: hsl(var(--accent-foreground)); padding: 0.1em 0.25em; border-radius: 0.25em; font-weight: 600; }
-.search-panel-show { animation: searchPanelShow 0.3s cubic-bezier(0.21, 1.02, 0.73, 1) forwards; }
-@keyframes searchPanelShow { 0% { opacity: 0; transform: translate(0%, -2rem); } 100% { opacity: 1; transform: translate(0%, 0); } }
-
-.lazy-image { filter: blur(4px) !important; opacity: 0.8; transition: filter 0.3s ease-out, opacity 0.3s ease-out; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent); background-size: 200% 100%; animation: shimmer 1.5s infinite; }
-.lazy-image-loaded { filter: none !important; opacity: 1 !important; animation: none !important; }
-.lazy-image[complete], .lazy-image[loaded] { filter: blur(0) !important; opacity: 1 !important; animation: none !important; }
-.lazy-image:hover:not(.lazy-image-loaded) { filter: blur(4px) !important; opacity: 0.8 !important; }
-@keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
-.dark .lazy-image { background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent); }
