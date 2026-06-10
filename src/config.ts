@@ -298,6 +298,13 @@ export const FRIENDS_CONFIG = {
   enableAdd: true,
 }
 
+// Directory ordering for friend groups. Groups listed here appear in order; groups not listed appear after.
+export const FRIENDS_DIRECTORIES: { key: string; label: string; num?: string }[] = [
+  { key: 'Developer', label: 'Developer', num: '00' },
+  { key: 'Friend', label: 'Friend', num: '01' },
+  { key: '', label: 'Normal', num: '02' },
+]
+
 // Blog owner's exclusive friend link card information
 export const FRIENDS_CONTACT = {
   sitename: "Silvaire's Blog",

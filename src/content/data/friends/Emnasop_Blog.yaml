@@ -1,5 +1,6 @@
-name: "Emnasop Blog"
-author: "Emnasop"
+name: 'Emnasop Blog'
+author: 'Emnasop'
 url: https://emnasop.cn/
 avatar: https://emnasop.cn/YLYLogo.webp
-description: "一个简易的个人博客"
+description: '一个简易的个人博客'
+directory: Friend

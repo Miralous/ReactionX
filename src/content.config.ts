@@ -11,6 +11,8 @@ const friends = defineCollection({
     author: z.string(),
     description: z.string(),
     avatar: z.string(),
+    directory: z.string().default(''),
+    weight: z.number().default(0),
   }),
 })
 
