@@ -49,7 +49,7 @@ function renderFriendCard(f: (typeof FRIENDS_LIST)[0]) {
   return `<a href="${f.url}" target="_blank" rel="noopener noreferrer" class="friend-card group flex flex-col justify-between rounded-lg border border-border/40 bg-background/50 p-5 hover:bg-muted/20 hover:border-border hover:shadow-xs transition-all duration-300 min-h-[160px] hover:-translate-y-0.5">
     <div class="friend-content flex flex-col h-full w-full">
       <div class="flex items-start justify-between mb-3">
-        <img src="${f.avatar}" alt="${f.name}" class="size-10 rounded-full object-cover ring-1 ring-border/50 bg-muted/30" loading="lazy" />
+        <img src="${f.avatar || defaultImg}" alt="${f.name}" class="size-10 rounded-full object-cover ring-1 ring-border/50 bg-muted/30" loading="lazy" />
         <span class="icon-[ph--arrow-up-right] size-4 text-muted-foreground/30 group-hover:text-foreground transition-colors mt-1"></span>
       </div>
       <div class="flex flex-col flex-1">
@@ -68,6 +68,8 @@ function renderSection(section: (typeof sections)[0]) {
 }
 
 const sectionsHtml = sections.map(renderSection).join('')
+
+const defaultImg = 'https://pic2.zhimg.com/50/v2-cc1a32fcb444fc9d5e23f2ee078dc6e1_720w.jpg?source=1940ef5c'
 ---
 
 <Layout {title} {description}>

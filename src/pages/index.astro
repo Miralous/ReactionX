@@ -14,7 +14,7 @@ const allPosts = await getCollection('posts')
 const posts = postsSort(allPosts).slice(0, size)
 
 const NAV_CARDS = [
-  { id: '01', title: 'Logs', desc: 'Technical archives', href: '/posts', icon: 'icon-[ph--read-cv-logo]', status: 'Active' },
+  { id: '01', title: 'Playlist', desc: 'Personal collection', href: '/playlist', icon: 'icon-[ph--music-note]', status: 'Active' },
   { id: '02', title: 'Links', desc: 'Signal network', href: '/friends', icon: 'icon-[ph--planet]', status: 'Connected' },
   { id: '03', title: 'Projects', desc: 'Deployed modules', href: '/projects', icon: 'icon-[ph--stack]', status: 'Stable' },
   { id: '04', title: 'Tags', desc: 'Core filters', href: '/tags', icon: 'icon-[ph--tag]', status: 'Verified' },

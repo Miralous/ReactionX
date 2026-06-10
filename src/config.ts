@@ -37,7 +37,7 @@ export const SITE: Site = {
 
 // Top navigation menu
 export const HEADER_LINKS: Link[] = [
-  { name: 'Home', url: '/posts' },
+  { name: 'Posts', url: '/posts' },
   { name: 'Dynamic', url: '/dynamic' },
   { name: 'Projects', url: '/projects' },
   { name: 'About', url: '/about' },
@@ -320,4 +320,11 @@ export const FRIENDS_CONTACT = {
 export const WALINE_CONFIG = {
   enableComment: true,
   serverURL: 'https://waline.qwq.blue',
+}
+
+// Netease music playlist configuration
+export const NETEASE_CONFIG = {
+  musicList: '17942010185',
+  metingApi: 'https://api.qijieya.cn/meting',
+  musicSlice: 0, // the number of artists to show, 0 means show all
 }

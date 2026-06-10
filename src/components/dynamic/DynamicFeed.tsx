@@ -52,7 +52,7 @@ function FeedItemCard({ item, animationDelay }: { item: FeedItem; animationDelay
         </span>
       </div>
 
-      <div className="px-5 pt-1 flex-1 flex flex-col">
+      <div className="px-6 pt-1 flex-1 flex flex-col">
         <div
           className={cn(
             'relative transition-[max-height] duration-500 ease-in-out overflow-hidden',
