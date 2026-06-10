@@ -59,10 +59,6 @@ const ThemeToggle = () => {
     var darkVariant = root.getAttribute('data-ctp-dark') || 'macchiato';
     root.dataset.ctp = isDark ? darkVariant : lightVariant
 
-    // Accent color — stays same regardless of light/dark
-    var accent = root.getAttribute('data-accent') || 'lavender';
-    root.dataset.accent = accent
-    
     // 使用 requestAnimationFrame 保证样式应用完毕后再恢复过渡
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {

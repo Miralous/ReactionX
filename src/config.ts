@@ -12,12 +12,14 @@ import type {
 
 // Catppuccin color theme
 export const CATPPUCCIN = {
+  // Catppuccin flavor for light and dark mode. 'latte' is light, 'mocha', 'macchiato' and 'frappe' is dark.
   light: 'latte',
   dark: 'mocha',
+  // Catppuccin hue — controls accent color. 280 matches Catppuccin default (lavender)
+  hue: 300,
+  // Shift ALL UI colors (not just accent) by hue when true
+  isGlobal: false,
 }
-
-// Accent color
-export const ACCENT_COLOR = 'mauve'
 
 // Global site configuration
 export const SITE: Site = {

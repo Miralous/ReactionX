@@ -38,17 +38,23 @@ const { class: className } = Astro.props;
       <style is:global>
         #waline {
           --waline-font-family: inherit !important;
-          --waline-theme-color: hsl(var(--primary)) !important;
-          --waline-active-color: hsl(var(--primary)) !important;
+          --waline-theme-color: oklch(var(--primary)) !important;
+          --waline-active-color: oklch(var(--primary)) !important;
           --waline-color: hsl(var(--foreground)) !important;
-          --waline-bgcolor: hsl(var(--background)) !important;
-          --waline-bgcolor-light: hsl(var(--muted) / 0.1) !important;
-          --waline-bgcolor-hover: hsl(var(--muted) / 0.3) !important;
+          --waline-bg-color: hsl(var(--background)) !important;
+          --waline-bg-color-light: hsl(var(--muted) / 0.1) !important;
+          --waline-bg-color-hover: hsl(var(--muted) / 0.3) !important;
           --waline-border-color: hsl(var(--border) / 0.4) !important;
           --waline-disable-bg-color: hsl(var(--muted) / 0.2) !important;
           --waline-disable-color: hsl(var(--muted-foreground) / 0.5) !important;
+          --waline-info-bg-color: hsl(var(--muted) / 0.4) !important;
           --waline-info-color: hsl(var(--muted-foreground)) !important;
           --waline-code-bg-color: hsl(var(--muted) / 0.4) !important;
+          --waline-badge-color: oklch(var(--ring)) !important;
+          --waline-bq-color: hsl(var(--muted) / 0.2) !important;
+          --waline-white: hsl(var(--background)) !important;
+          --waline-dark-grey: hsl(var(--foreground)) !important;
+          --waline-light-grey: hsl(var(--muted-foreground)) !important;
           --waline-border-radius: 0.5rem !important;
           --waline-avatar-radius: 50% !important;
         }

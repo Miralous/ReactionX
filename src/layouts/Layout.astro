@@ -1,10 +1,12 @@
 ---
 import '~/styles/global.css'
 import '~/styles/pro.css'
-import { SITE, CATPPUCCIN, ACCENT_COLOR } from '~/config'
+import { SITE, CATPPUCCIN } from '~/config'
 import Head from '~/components/base/Head.astro'
 import Header from './Header.astro'
 import Footer from './Footer.astro'
+const HUE = CATPPUCCIN.hue
+const GLOBAL_HUE = CATPPUCCIN.isGlobal
 
 type Props = {
   title: string
@@ -15,32 +17,26 @@ type Props = {
 const { title, description, image }: Props = Astro.props
 const darkVariant = CATPPUCCIN.dark
 const lightVariant = CATPPUCCIN.light
-const accent = ACCENT_COLOR
 ---
 
 <!doctype html>
-<html lang="zh-CN" data-ctp-light={lightVariant} data-ctp-dark={darkVariant} data-accent={accent}>
+<html lang="zh-CN" data-ctp-light={lightVariant} data-ctp-dark={darkVariant} data-hue={HUE} data-global-hue={GLOBAL_HUE}>
   <head>
     <Head title={`${title} | ${SITE.title}`} {description} {image} />
   </head>
   <body>
-
     <div class="select-text selection:bg-foreground/20 selection:text-foreground">
       <div class="relative z-10 bg-background">
         <Header />
       </div>
 
-      <main 
-        class="relative z-0 fullPage flex-auto bg-background"
-        transition:animate="fade"
-      >
+      <main class="relative z-0 fullPage flex-auto bg-background" transition:animate="fade">
         <slot />
       </main>
 
       <div class="relative z-70 bg-background">
         <Footer />
       </div>
-
     </div>
     <div
       class="pointer-events-none fixed bottom-0 left-0 h-28 w-full z-0 bg-background [mask-image:linear-gradient(transparent,hsl(var(--background)))]"
@@ -52,7 +48,7 @@ const accent = ACCENT_COLOR
       document.addEventListener('astro:before-preparation', () => {
         // 页面开始切换时，预加载关键资源
         const prefetchLinks = document.querySelectorAll('link[rel="prefetch"]')
-        prefetchLinks.forEach(link => {
+        prefetchLinks.forEach((link) => {
           // 确保预加载是激活的
           link.setAttribute('rel', 'prefetch')
         })

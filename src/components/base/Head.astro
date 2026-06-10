@@ -31,9 +31,11 @@ const ogImage = new URL(image || SITE.ogImage, Astro.url)
     var ctpMode = isDark ? darkVariant : lightVariant;
     root.dataset.ctp = ctpMode;
 
-    // Accent color
-    var accent = root.getAttribute('data-accent') || 'lavender';
-    root.dataset.accent = accent;
+    // Hue — set CSS custom properties for dynamic color
+    var hue = parseInt(root.getAttribute('data-hue')) || 280;
+    var globalHue = root.getAttribute('data-global-hue') === 'true';
+    root.style.setProperty('--hue', String(hue));
+    root.style.setProperty('--chue', String(globalHue ? hue : 280));
   }
 
   applyTheme();
