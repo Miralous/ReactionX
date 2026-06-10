@@ -44,7 +44,7 @@ const SECTION_NUM_CLASS =
         <div
           class="flex-1 flex flex-col items-start justify-center p-8 lg:p-10 xl:p-14 bg-background border-r border-border/40 hover:bg-muted/30 transition-colors"
         >
-          <span class="text-lg font-semibold text-foreground tracking-tight">Carbon-based / Form</span>
+          <span class="text-lg font-semibold text-foreground tracking-tight">Carbon-based</span>
           <span class="text-xs text-muted-foreground mt-1">Form</span>
         </div>
         <div class="flex-1 flex flex-col items-start justify-center p-8 lg:p-10 xl:p-14 bg-background hover:bg-muted/30 transition-colors">
@@ -78,12 +78,8 @@ const SECTION_NUM_CLASS =
                   >Admin</span
                 >
               </div>
-              <p class="text-sm font-medium text-foreground/60 mb-4">{profile.role}</p>
-              <div
-                class="prose prose-sm dark:prose-invert prose-p:leading-relaxed prose-p:text-muted-foreground max-w-none font-sans whitespace-pre-wrap"
-              >
-                {profile.bio}
-              </div>
+              <p class="text-sm font-medium text-foreground/60 mb-2">{profile.role}</p>
+              <div class="text-sm max-w-none font-sans whitespace-pre-wrap opacity-90">{profile.bio}</div>
 
               <div class="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-3">
                 {

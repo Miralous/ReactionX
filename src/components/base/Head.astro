@@ -25,7 +25,9 @@ const ogImage = new URL(image || SITE.ogImage, Astro.url)
     root.dataset.theme = isDark ? 'dark' : 'light';
     root.classList.toggle('dark', isDark);
 
-    // Catppuccin surface variant
+    // Catppuccin surface variant — read from <html> data attrs set by Layout
+    var lightVariant = root.getAttribute('data-ctp-light') || 'latte';
+    var darkVariant = root.getAttribute('data-ctp-dark') || 'macchiato';
     var ctpMode = isDark ? darkVariant : lightVariant;
     root.dataset.ctp = ctpMode;
 

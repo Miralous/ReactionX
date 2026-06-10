@@ -22,19 +22,6 @@ const accent = ACCENT_COLOR
 <html lang="zh-CN" data-ctp-light={lightVariant} data-ctp-dark={darkVariant} data-accent={accent}>
   <head>
     <Head title={`${title} | ${SITE.title}`} {description} {image} />
-    <script is:inline>
-      // Catppuccin variant + accent classes
-      (function() {
-        var darkVariant = '${darkVariant}'
-        var lightVariant = '${lightVariant}'
-        var accent = '${accent}'
-        var theme = localStorage.getItem('theme') || 'system'
-        var isDark = theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches)
-        var variant = isDark ? darkVariant : lightVariant
-        document.documentElement.dataset.ctp = variant
-        document.documentElement.dataset.accent = accent
-      })()
-    </script>
   </head>
   <body>
 

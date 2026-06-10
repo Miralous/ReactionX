@@ -3,8 +3,8 @@ import { pluginCollapsibleSections } from '@expressive-code/plugin-collapsible-s
 import { pluginLineNumbers } from '@expressive-code/plugin-line-numbers'
 
 export default defineEcConfig({
-  themes: ['github-dark', 'github-light'],
-  themeCssSelector: (theme) => (theme.name === 'github-dark' ? '.dark' : ':root:not(.dark)'),
+  themes: ['catppuccin-mocha', 'catppuccin-latte'],
+  themeCssSelector: (theme) => (theme.name === 'catppuccin-mocha' ? '.dark' : ':root:not(.dark)'),
 
   defaultLocale: 'zh-CN',
   defaultProps: {

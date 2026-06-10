@@ -10,16 +10,16 @@ import type {
   TagsConfig,
 } from '~/types'
 
-// Catppuccin 配色主题
+// Catppuccin color theme
 export const CATPPUCCIN = {
   light: 'latte',
   dark: 'mocha',
 }
 
-// 强调色
+// Accent color
 export const ACCENT_COLOR = 'mauve'
 
-// 站点全局配置
+// Global site configuration
 export const SITE: Site = {
   title: "Silvaire's Blog",
   description: 'Per Aspera Ad Astra',
@@ -33,26 +33,26 @@ export const SITE: Site = {
   footerText2: 'Minimalist layout, maximum focus. Data persistence guaranteed.',
 }
 
-// 顶部导航菜单
+// Top navigation menu
 export const HEADER_LINKS: Link[] = [
-  { name: '主页', url: '/posts' },
-  { name: '动态', url: '/dynamic' },
-  { name: '项目', url: '/projects' },
-  { name: '关于', url: '/about' },
+  { name: 'Home', url: '/posts' },
+  { name: 'Dynamic', url: '/dynamic' },
+  { name: 'Projects', url: '/projects' },
+  { name: 'About', url: '/about' },
 ]
 
-// 底部导航菜单
+// Bottom navigation menu
 export const FOOTER_LINKS: Link[] = [
-  { name: '主页', url: '/' },
-  { name: '文章', url: '/posts' },
-  { name: '动态', url: '/dynamic' },
-  { name: '项目', url: '/projects' },
-  { name: '标签', url: '/tags' },
-  { name: '友链', url: '/friends' },
-  { name: '关于', url: '/about' },
+  { name: 'Home', url: '/' },
+  { name: 'Posts', url: '/posts' },
+  { name: 'Dynamic', url: '/dynamic' },
+  { name: 'Projects', url: '/projects' },
+  { name: 'Tags', url: '/tags' },
+  { name: 'Friends', url: '/friends' },
+  { name: 'About', url: '/about' },
 ]
 
-// 社交链接 (图标参考: https://icon-sets.iconify.design/)
+// Social links (Icon reference: https://icon-sets.iconify.design/)
 export const SOCIAL_LINKS: SocialLink[] = [
   {
     name: 'GitHub',
@@ -66,7 +66,7 @@ export const SOCIAL_LINKS: SocialLink[] = [
   },
 ]
 
-// 技能展示矩阵配置
+// Skills showcase matrix configuration
 export const SKILLSSHOWCASE_CONFIG: SkillsShowcaseConfig = {
   SKILLS_ENABLED: true,
   SKILLS_DATA: [
@@ -104,18 +104,18 @@ export const SKILLSSHOWCASE_CONFIG: SkillsShowcaseConfig = {
   ],
 }
 
-// GitHub 贡献图配置
+// GitHub contribution graph configuration
 export const GITHUB_CONFIG: GithubConfig = {
   ENABLED: true,
   GITHUB_USERNAME: 'silvaire-qwq',
   TOOLTIP_ENABLED: true,
 }
 
-// 文章页面配置
+// Posts page configuration
 export const POSTS_CONFIG: PostConfig = {
   title: 'Posts',
-  description: 'Silvaire 的文章',
-  introduce: '不定时更新维护文章，可订阅 RSS 获取最新更新状态。',
+  description: "Silvaire's articles",
+  introduce: 'Articles are updated irregularly. You can subscribe to the RSS feed for the latest updates.',
   author: 'Silvaire',
   homePageConfig: { size: 3, type: 'compact' },
   postPageConfig: { size: 8, type: 'image' },
@@ -125,43 +125,43 @@ export const POSTS_CONFIG: PostConfig = {
   defaultHeroImageAspectRatio: '16/9',
   postType: 'jap',
   imageDarkenInDark: true,
-  readMoreText: '阅读全文',
-  prevPageText: '上一页',
-  nextPageText: '下一页',
-  tocText: '目录导航',
-  backToPostsText: '返回文章列表',
-  nextPostText: '下一篇',
-  prevPostText: '上一篇',
+  readMoreText: 'Read More',
+  prevPageText: 'Previous Page',
+  nextPageText: 'Next Page',
+  tocText: 'Table of Contents',
+  backToPostsText: 'Back to Posts',
+  nextPostText: 'Next Post',
+  prevPostText: 'Previous Post',
 }
 
-// 标签页面配置
+// Tags page configuration
 export const TAGS_CONFIG: TagsConfig = {
   title: 'Tags',
-  description: '所有文章标签',
-  introduce: '所有文章标签均在此处，点击即可筛选。',
+  description: 'All article tags',
+  introduce: 'All article tags are here. Click to filter.',
 }
 
-// 项目页面配置
+// Projects page configuration
 export const PROJECTS_CONFIG: ProjectConfig = {
   title: 'Projs',
-  description: '我的项目案例',
-  introduce: '以下是我的项目案例展示，不定期维护项目。',
+  description: 'My project showcases',
+  introduce: 'Below are my project showcases, maintained irregularly.',
 }
 
-// 动态页面配置
+// Dynamic page configuration
 export const DYNAMIC_CONFIG: DynamicConfig = {
   title: 'Dynamic',
-  description: '我的动态',
-  introduce: '实时信号、简短想法和开发更新。',
+  description: 'My updates',
+  introduce: 'Live signals, brief thoughts, and development updates.',
 }
 
-// 关于页面配置
+// About page configuration
 export const ABOUT_CONFIG = {
   title: 'About',
   description: 'Who am I?',
   introduce: 'A student who is learning frontend development',
 
-  // 个人档案
+  // Personal profile
   profile: {
     name: 'Silvaire',
     avatar:
@@ -170,7 +170,7 @@ export const ABOUT_CONFIG = {
     bio: 'Per Aspera Ad Astra.',
   },
 
-  // 附加信息
+  // Additional information
   physicalAttributes: [
     { label: 'Height', value: '144 CM', icon: 'icon-[ph--ruler]' },
     { label: 'Weight', value: '43 KG', icon: 'icon-[ph--barbell]' },
@@ -178,22 +178,25 @@ export const ABOUT_CONFIG = {
     { label: 'Location', value: 'Tianjin', icon: 'icon-[ph--map-pin]' },
   ],
 
-  // 技能矩阵
+  // Skill matrix
   skills: [
-    { category: 'Frontend', items: ['JavaScript', 'Vue', 'TypeScript', 'Tailwind CSS', 'HTML', 'CSS'] },
+    {
+      category: 'Frontend',
+      items: ['JavaScript', 'Vue', 'TypeScript', 'Tailwind CSS', 'HTML', 'CSS'],
+    },
     { category: 'Tools', items: ['Vite', 'Node.js', 'Git', 'Docker', 'PNPM', 'Yarn', 'NPM'] },
     { category: 'Editors', items: ['VSCode', 'VSCodium', 'Vim', 'Neovim'] },
     { category: 'OS', items: ['Arch Linux', 'Windows', 'Linux'] },
     { category: 'Learning', items: ['Astro', 'React'] },
   ],
 
-  // 硬件清单
+  // Equipment list
   equipment: [],
 
-  // 游戏日志
+  // Game log
   games: [],
 
-  // 课程表
+  // Course schedule
   courseSchedule: [
     {
       day: 'MON',
@@ -277,7 +280,7 @@ export const ABOUT_CONFIG = {
     },
   ],
 
-  // 待办清单
+  // To-do list
   todos: [
     { task: 'Write more articles', completed: true },
     { task: 'Miracle v2', completed: false },
@@ -285,15 +288,15 @@ export const ABOUT_CONFIG = {
   ],
 }
 
-// 友链页面配置
+// Friends page configuration
 export const FRIENDS_CONFIG = {
   title: 'Friends',
-  description: '我的朋友们都在这里，欢迎互访～',
-  introduce: '已获取星图定位，正在前往友链星系的路上……',
+  description: 'All my friends are here. Feel free to exchange links~',
+  introduce: 'Star map positioning acquired. Heading towards the friends link galaxy...',
   enableAdd: true,
 }
 
-// 博主专属友链卡片信息
+// Blog owner's exclusive friend link card information
 export const FRIENDS_CONTACT = {
   sitename: "Silvaire's Blog",
   email: 'silvaire_qwq@outlook.com',
@@ -304,7 +307,7 @@ export const FRIENDS_CONTACT = {
   description: 'Per Aspera Ad Astra',
 }
 
-// Waline 评论系统配置
+// Waline comment system configuration
 export const WALINE_CONFIG = {
   enableComment: true,
   serverURL: 'https://waline.qwq.blue',

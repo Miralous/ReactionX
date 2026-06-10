@@ -89,7 +89,7 @@ function FeedItemCard({ item, animationDelay }: { item: FeedItem; animationDelay
         )}
       </div>
 
-      <div className="px-5 pb-4 mt-1 flex items-center gap-4">
+      <div className="px-5 pb-4 mt-2 flex items-center gap-4">
         {item.link && (
           <a
             href={item.link}
