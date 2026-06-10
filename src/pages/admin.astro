@@ -1,0 +1,11 @@
+---
+import Layout from '~/layouts/Layout.astro'
+import AdminDashboard from '~/components/admin/AdminDashboard'
+
+const title = "System Controller";
+const description = "Authorized Personnel Only";
+---
+
+<Layout {title} {description} >
+  <AdminDashboard client:only="react" />
+</Layout>

@@ -328,3 +328,11 @@ export const NETEASE_CONFIG = {
   metingApi: 'https://api.qijieya.cn/meting',
   musicSlice: 0, // the number of artists to show, 0 means show all
 }
+
+export const CMS_CONFIG = {
+  enableCMS: true,
+  owner: 'Miralous',
+  repo: 'ReactionX',
+  branch: 'main',
+  pathPrefix: 'src/content/posts/',
+}
