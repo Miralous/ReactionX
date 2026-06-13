@@ -1,6 +1,6 @@
 ---
 import { getCollection } from 'astro:content'
-import { SITE, SKILLSSHOWCASE_CONFIG, SOCIAL_LINKS, GITHUB_CONFIG, POSTS_CONFIG } from '~/config'
+import { SITE, SKILLSSHOWCASE_CONFIG, SOCIAL_LINKS, GITHUB_CONFIG, POSTS_CONFIG } from '~/config.ts'
 import { cn, postsSort } from '~/lib/utils'
 import Layout from '~/layouts/Layout.astro'
 import GithubContributions from '~/components/base/GithubContributions.tsx'
@@ -14,7 +14,7 @@ const allPosts = await getCollection('posts')
 const posts = postsSort(allPosts).slice(0, size)
 
 const NAV_CARDS = [
-  { id: '01', title: 'Playlist', desc: 'Personal collection', href: '/playlist', icon: 'icon-[ph--music-note]', status: 'Active' },
+  { id: '01', title: 'Logs', desc: 'Technical archives', href: '/posts', icon: 'icon-[ph--read-cv-logo]', status: 'Active' },
   { id: '02', title: 'Links', desc: 'Signal network', href: '/friends', icon: 'icon-[ph--planet]', status: 'Connected' },
   { id: '03', title: 'Projects', desc: 'Deployed modules', href: '/projects', icon: 'icon-[ph--stack]', status: 'Stable' },
   { id: '04', title: 'Tags', desc: 'Core filters', href: '/tags', icon: 'icon-[ph--tag]', status: 'Verified' },
@@ -46,7 +46,7 @@ const SECTION_NUM_CLASS =
         </div>
 
         <div class="shrink-0 p-6 lg:p-8 xl:p-12 fade-up animation-delay-150">
-          <p class="text-sm text-muted-foreground leading-relaxed">Welcome to the site, built with Astro v6.</p>
+          <p class="text-sm text-muted-foreground leading-relaxed">欢迎访问此站点，基于Astro v6构建，欢迎提出建议。</p>
         </div>
       </div>
 
