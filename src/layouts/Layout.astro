@@ -1,12 +1,13 @@
 ---
 import '~/styles/global.css'
 import '~/styles/pro.css'
-import { SITE, CATPPUCCIN } from '~/config'
+import { SITE, CATPPUCCIN, DESIGN } from '~/config'
 import Head from '~/components/base/Head.astro'
 import Header from './Header.astro'
 import Footer from './Footer.astro'
 const HUE = CATPPUCCIN.hue
 const GLOBAL_HUE = CATPPUCCIN.isGlobal
+const MONO = CATPPUCCIN.mono
 
 type Props = {
   title: string
@@ -17,10 +18,24 @@ type Props = {
 const { title, description, image }: Props = Astro.props
 const darkVariant = CATPPUCCIN.dark
 const lightVariant = CATPPUCCIN.light
+const designStyle = [
+  `--radius-xs:${DESIGN.radius * 0.25}rem`,
+  `--radius-sm:${DESIGN.radius * 0.5}rem`,
+  `--radius-md:${DESIGN.radius * 0.75}rem`,
+  `--radius-lg:${DESIGN.radius}rem`,
+  `--radius-xl:${DESIGN.radius * 1.5}rem`,
+  `--radius-2xl:${DESIGN.radius * 2}rem`,
+  `--radius-3xl:${DESIGN.radius * 3}rem`,
+  `--radius-4xl:${DESIGN.radius * 4}rem`,
+  `--spacing:${DESIGN.spacing}rem`,
+  `--font-serif:${DESIGN.font.serif}`,
+  `--font-sans:${DESIGN.font.sans}`,
+  `--font-mono:${DESIGN.font.mono}`,
+].join(';')
 ---
 
 <!doctype html>
-<html lang="zh-CN" data-ctp-light={lightVariant} data-ctp-dark={darkVariant} data-hue={HUE} data-global-hue={GLOBAL_HUE}>
+<html lang="zh-CN" data-ctp-light={lightVariant} data-ctp-dark={darkVariant} data-hue={HUE} data-global-hue={GLOBAL_HUE} data-mono={MONO} style={designStyle}>
   <head>
     <Head title={`${title} | ${SITE.title}`} {description} {image} />
   </head>

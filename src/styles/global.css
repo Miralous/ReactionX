@@ -85,24 +85,38 @@
 /* ===== Catppuccin 4 variants ===== */
 @layer base {
   :root {
-    --font-lexend: 'Lexend', 'CJKEmDash', 'Numbers', 'ShangguSansSC-VF', ui-sans-serif, system-ui, sans-serif;
-    --font-sans: 'CJKEmDash', 'Numbers', 'ShangguSansSC-VF', ui-sans-serif, system-ui, sans-serif;
-    --font-geist-mono: 'GeistMono', 'Input Mono', 'Fira Code', 'ShangguSansSC-VF', monospace;
+    --font-lexend: ui-sans-serif, system-ui, sans-serif;
+    --font-sans: ui-sans-serif, system-ui, sans-serif;
+    --font-geist-mono: monospace;
     --hue: 280;
     --chue: 280;
+    --l-chroma: 0.1751;
+    --d-chroma: 0.091;
   }
 
   [data-ctp='latte'] {
-    --background: calc(var(--chue) - 60) 23.077% 94.902%;
-    --foreground: calc(var(--chue) - 46.207) 16.022% 35.49%;
-    --muted: calc(var(--chue) - 57.143) 15.909% 82.745%;
-    --muted-foreground: calc(var(--chue) - 48.571) 10.048% 59.02%;
-    --border: calc(var(--chue) - 55) 13.559% 76.863%;
-    --scrollbar: calc(var(--chue) - 53.333) 12.162% 70.98%;
-    --scrollbar-bg: calc(var(--chue) - 57.143) 15.909% 82.745%;
-    --tag-bg: calc(var(--chue) - 57.143) 15.909% 82.745%;
-    --tag-bg-hover: calc(var(--chue) - 55) 13.559% 76.863%;
-    --tag-border: calc(var(--chue) - 53.333) 12.162% 70.98%;
+    --s-bg: 23.077%;
+    --s-fg: 16.022%;
+    --s-muted: 15.909%;
+    --s-muted-fg: 10.048%;
+    --s-border: 13.559%;
+    --s-scrollbar: 12.162%;
+    --l-bg: 94.902%;
+    --l-fg: 35.49%;
+    --l-muted: 82.745%;
+    --l-muted-fg: 59.02%;
+    --l-border: 76.863%;
+    --l-scrollbar: 70.98%;
+    --background: calc(var(--chue) - 60) var(--s-bg) var(--l-bg);
+    --foreground: calc(var(--chue) - 46.207) var(--s-fg) var(--l-fg);
+    --muted: calc(var(--chue) - 57.143) var(--s-muted) var(--l-muted);
+    --muted-foreground: calc(var(--chue) - 48.571) var(--s-muted-fg) var(--l-muted-fg);
+    --border: calc(var(--chue) - 55) var(--s-border) var(--l-border);
+    --scrollbar: calc(var(--chue) - 53.333) var(--s-scrollbar) var(--l-scrollbar);
+    --scrollbar-bg: calc(var(--chue) - 57.143) var(--s-muted) var(--l-muted);
+    --tag-bg: calc(var(--chue) - 57.143) var(--s-muted) var(--l-muted);
+    --tag-bg-hover: calc(var(--chue) - 55) var(--s-border) var(--l-border);
+    --tag-border: calc(var(--chue) - 53.333) var(--s-scrollbar) var(--l-scrollbar);
     --ctp-rosewater: 10.8 58.824% 66.667%;
     --ctp-flamingo: 0 59.763% 66.863%;
     --ctp-pink: 316.034 73.418% 69.02%;
@@ -115,25 +129,37 @@
     --ctp-teal: 183.231 73.864% 34.51%;
     --ctp-blue: 219.907 91.489% 53.922%;
     --ctp-lavender: 230.935 97.203% 71.961%;
-    --primary: 0.6638 0.1751 calc(var(--hue) - 7);
-    --accent: 0.6638 0.1751 calc(var(--hue) - 7);
-    --ring: 0.6638 0.1751 calc(var(--hue) - 7);
-    --tag-text: 0.6638 0.1751 calc(var(--hue) - 7);
+    --primary: 0.6638 var(--l-chroma) calc(var(--hue) - 7);
+    --accent: 0.6638 var(--l-chroma) calc(var(--hue) - 7);
+    --ring: 0.6638 var(--l-chroma) calc(var(--hue) - 7);
+    --tag-text: 0.6638 var(--l-chroma) calc(var(--hue) - 7);
     --primary-foreground: 0 0% 0%;
     --accent-foreground: 0 0% 0%;
   }
 
   [data-ctp='frappe'] {
-    --background: calc(var(--chue) - 50.909) 18.644% 23.137%;
-    --foreground: calc(var(--chue) - 52.766) 70.149% 86.863%;
-    --muted: calc(var(--chue) - 50) 15.584% 30.196%;
-    --muted-foreground: calc(var(--chue) - 53.333) 16.981% 58.431%;
-    --border: calc(var(--chue) - 52.857) 14.737% 37.255%;
-    --scrollbar: calc(var(--chue) - 52) 13.274% 44.314%;
-    --scrollbar-bg: calc(var(--chue) - 50) 15.584% 30.196%;
-    --tag-bg: calc(var(--chue) - 50) 15.584% 30.196%;
-    --tag-bg-hover: calc(var(--chue) - 52.857) 14.737% 37.255%;
-    --tag-border: calc(var(--chue) - 52) 13.274% 44.314%;
+    --s-bg: 18.644%;
+    --s-fg: 70.149%;
+    --s-muted: 15.584%;
+    --s-muted-fg: 16.981%;
+    --s-border: 14.737%;
+    --s-scrollbar: 13.274%;
+    --l-bg: 23.137%;
+    --l-fg: 86.863%;
+    --l-muted: 30.196%;
+    --l-muted-fg: 58.431%;
+    --l-border: 37.255%;
+    --l-scrollbar: 44.314%;
+    --background: calc(var(--chue) - 50.909) var(--s-bg) var(--l-bg);
+    --foreground: calc(var(--chue) - 52.766) var(--s-fg) var(--l-fg);
+    --muted: calc(var(--chue) - 50) var(--s-muted) var(--l-muted);
+    --muted-foreground: calc(var(--chue) - 53.333) var(--s-muted-fg) var(--l-muted-fg);
+    --border: calc(var(--chue) - 52.857) var(--s-border) var(--l-border);
+    --scrollbar: calc(var(--chue) - 52) var(--s-scrollbar) var(--l-scrollbar);
+    --scrollbar-bg: calc(var(--chue) - 50) var(--s-muted) var(--l-muted);
+    --tag-bg: calc(var(--chue) - 50) var(--s-muted) var(--l-muted);
+    --tag-bg-hover: calc(var(--chue) - 52.857) var(--s-border) var(--l-border);
+    --tag-border: calc(var(--chue) - 52) var(--s-scrollbar) var(--l-scrollbar);
     --ctp-rosewater: 10.286 57.377% 88.039%;
     --ctp-flamingo: 0 58.537% 83.922%;
     --ctp-pink: 316 73.171% 83.922%;
@@ -146,25 +172,37 @@
     --ctp-teal: 171.549 39.227% 64.51%;
     --ctp-blue: 221.633 74.242% 74.118%;
     --ctp-lavender: 238.909 66.265% 83.725%;
-    --primary: 0.6638 0.1751 calc(var(--hue) - 7);
-    --accent: 0.6638 0.1751 calc(var(--hue) - 7);
-    --ring: 0.6638 0.1751 calc(var(--hue) - 7);
-    --tag-text: 0.6638 0.1751 calc(var(--hue) - 7);
+    --primary: 0.6638 var(--l-chroma) calc(var(--hue) - 7);
+    --accent: 0.6638 var(--l-chroma) calc(var(--hue) - 7);
+    --ring: 0.6638 var(--l-chroma) calc(var(--hue) - 7);
+    --tag-text: 0.6638 var(--l-chroma) calc(var(--hue) - 7);
     --primary-foreground: 0 0% 0%;
     --accent-foreground: 0 0% 0%;
   }
 
   [data-ctp='macchiato'] {
-    --background: calc(var(--chue) - 48.182) 23.404% 18.431%;
-    --foreground: calc(var(--chue) - 52.558) 68.254% 87.647%;
-    --muted: calc(var(--chue) - 49.6) 18.797% 26.078%;
-    --muted-foreground: calc(var(--chue) - 52.353) 15.455% 56.863%;
-    --border: calc(var(--chue) - 48.889) 15.607% 33.922%;
-    --scrollbar: calc(var(--chue) - 50.345) 13.744% 41.373%;
-    --scrollbar-bg: calc(var(--chue) - 49.6) 18.797% 26.078%;
-    --tag-bg: calc(var(--chue) - 49.6) 18.797% 26.078%;
-    --tag-bg-hover: calc(var(--chue) - 48.889) 15.607% 33.922%;
-    --tag-border: calc(var(--chue) - 50.345) 13.744% 41.373%;
+    --s-bg: 23.404%;
+    --s-fg: 68.254%;
+    --s-muted: 18.797%;
+    --s-muted-fg: 15.455%;
+    --s-border: 15.607%;
+    --s-scrollbar: 13.744%;
+    --l-bg: 18.431%;
+    --l-fg: 87.647%;
+    --l-muted: 26.078%;
+    --l-muted-fg: 56.863%;
+    --l-border: 33.922%;
+    --l-scrollbar: 41.373%;
+    --background: calc(var(--chue) - 48.182) var(--s-bg) var(--l-bg);
+    --foreground: calc(var(--chue) - 52.558) var(--s-fg) var(--l-fg);
+    --muted: calc(var(--chue) - 49.6) var(--s-muted) var(--l-muted);
+    --muted-foreground: calc(var(--chue) - 52.353) var(--s-muted-fg) var(--l-muted-fg);
+    --border: calc(var(--chue) - 48.889) var(--s-border) var(--l-border);
+    --scrollbar: calc(var(--chue) - 50.345) var(--s-scrollbar) var(--l-scrollbar);
+    --scrollbar-bg: calc(var(--chue) - 49.6) var(--s-muted) var(--l-muted);
+    --tag-bg: calc(var(--chue) - 49.6) var(--s-muted) var(--l-muted);
+    --tag-bg-hover: calc(var(--chue) - 48.889) var(--s-border) var(--l-border);
+    --tag-border: calc(var(--chue) - 50.345) var(--s-scrollbar) var(--l-scrollbar);
     --ctp-rosewater: 10 57.692% 89.804%;
     --ctp-flamingo: 0 58.333% 85.882%;
     --ctp-pink: 316.071 73.684% 85.098%;
@@ -177,25 +215,37 @@
     --ctp-teal: 171.081 46.835% 69.02%;
     --ctp-blue: 220.189 82.813% 74.902%;
     --ctp-lavender: 234.462 82.278% 84.51%;
-    --primary: 0.8166 0.091 calc(var(--hue) - 3);
-    --accent: 0.8166 0.091 calc(var(--hue) - 3);
-    --ring: 0.8166 0.091 calc(var(--hue) - 3);
-    --tag-text: 0.8166 0.091 calc(var(--hue) - 3);
+    --primary: 0.8166 var(--d-chroma) calc(var(--hue) - 3);
+    --accent: 0.8166 var(--d-chroma) calc(var(--hue) - 3);
+    --ring: 0.8166 var(--d-chroma) calc(var(--hue) - 3);
+    --tag-text: 0.8166 var(--d-chroma) calc(var(--hue) - 3);
     --primary-foreground: 0 0% 0%;
     --accent-foreground: 0 0% 0%;
   }
 
   [data-ctp='mocha'] {
-    --background: calc(var(--chue) - 40) 21.053% 14.902%;
-    --foreground: calc(var(--chue) - 53.846) 63.934% 88.039%;
-    --muted: calc(var(--chue) - 43.158) 16.239% 22.941%;
-    --muted-foreground: calc(var(--chue) - 50.345) 12.775% 55.49%;
-    --border: calc(var(--chue) - 45.714) 13.208% 31.176%;
-    --scrollbar: calc(var(--chue) - 47.5) 12% 39.216%;
-    --scrollbar-bg: calc(var(--chue) - 43.158) 16.239% 22.941%;
-    --tag-bg: calc(var(--chue) - 43.158) 16.239% 22.941%;
-    --tag-bg-hover: calc(var(--chue) - 45.714) 13.208% 31.176%;
-    --tag-border: calc(var(--chue) - 47.5) 12% 39.216%;
+    --s-bg: 21.053%;
+    --s-fg: 63.934%;
+    --s-muted: 16.239%;
+    --s-muted-fg: 12.775%;
+    --s-border: 13.208%;
+    --s-scrollbar: 12%;
+    --l-bg: 14.902%;
+    --l-fg: 88.039%;
+    --l-muted: 22.941%;
+    --l-muted-fg: 55.49%;
+    --l-border: 31.176%;
+    --l-scrollbar: 39.216%;
+    --background: calc(var(--chue) - 40) var(--s-bg) var(--l-bg);
+    --foreground: calc(var(--chue) - 53.846) var(--s-fg) var(--l-fg);
+    --muted: calc(var(--chue) - 43.158) var(--s-muted) var(--l-muted);
+    --muted-foreground: calc(var(--chue) - 50.345) var(--s-muted-fg) var(--l-muted-fg);
+    --border: calc(var(--chue) - 45.714) var(--s-border) var(--l-border);
+    --scrollbar: calc(var(--chue) - 47.5) var(--s-scrollbar) var(--l-scrollbar);
+    --scrollbar-bg: calc(var(--chue) - 43.158) var(--s-muted) var(--l-muted);
+    --tag-bg: calc(var(--chue) - 43.158) var(--s-muted) var(--l-muted);
+    --tag-bg-hover: calc(var(--chue) - 45.714) var(--s-border) var(--l-border);
+    --tag-border: calc(var(--chue) - 47.5) var(--s-scrollbar) var(--l-scrollbar);
     --ctp-rosewater: 9.6 55.556% 91.176%;
     --ctp-flamingo: 0 58.73% 87.647%;
     --ctp-pink: 316.471 71.831% 86.078%;
@@ -208,12 +258,26 @@
     --ctp-teal: 170 57.353% 73.333%;
     --ctp-blue: 217.168 91.87% 75.882%;
     --ctp-lavender: 231.892 97.368% 85.098%;
-    --primary: 0.8166 0.091 calc(var(--hue) - 3);
-    --accent: 0.8166 0.091 calc(var(--hue) - 3);
-    --ring: 0.8166 0.091 calc(var(--hue) - 3);
-    --tag-text: 0.8166 0.091 calc(var(--hue) - 3);
+    --primary: 0.8166 var(--d-chroma) calc(var(--hue) - 3);
+    --accent: 0.8166 var(--d-chroma) calc(var(--hue) - 3);
+    --ring: 0.8166 var(--d-chroma) calc(var(--hue) - 3);
+    --tag-text: 0.8166 var(--d-chroma) calc(var(--hue) - 3);
     --primary-foreground: 0 0% 0%;
     --accent-foreground: 0 0% 0%;
+  }
+
+  /* mono: zero saturation/chroma and push lightness extremes */
+  [data-mono='true'][data-ctp='latte'] {
+    --s-bg: 0%; --s-fg: 0%; --s-muted: 0%; --s-muted-fg: 0%; --s-border: 0%; --s-scrollbar: 0%;
+    --l-bg: 100%; --l-fg: 0%; --l-muted: 95%; --l-muted-fg: 30%; --l-border: 88%; --l-scrollbar: 85%;
+    --primary: 0 0 0; --accent: 0 0 0; --ring: 0 0 0; --tag-text: 0 0 0;
+  }
+  [data-mono='true'][data-ctp='frappe'],
+  [data-mono='true'][data-ctp='macchiato'],
+  [data-mono='true'][data-ctp='mocha'] {
+    --s-bg: 0%; --s-fg: 0%; --s-muted: 0%; --s-muted-fg: 0%; --s-border: 0%; --s-scrollbar: 0%;
+    --l-bg: 0%; --l-fg: 100%; --l-muted: 10%; --l-muted-fg: 55%; --l-border: 18%; --l-scrollbar: 22%;
+    --primary: 1 0 0; --accent: 1 0 0; --ring: 1 0 0; --tag-text: 1 0 0;
   }
 }
 

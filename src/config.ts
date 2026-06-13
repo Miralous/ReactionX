@@ -16,9 +16,11 @@ export const CATPPUCCIN = {
   light: 'latte',
   dark: 'mocha',
   // Catppuccin hue — controls accent color. 280 matches Catppuccin default (lavender)
-  hue: 300,
+  hue: 280,
   // Shift ALL UI colors (not just accent) by hue when true
   isGlobal: false,
+  // Zero saturation on all colors for a monochrome look
+  mono: false,
 }
 
 // Global site configuration
@@ -316,17 +318,29 @@ export const FRIENDS_CONTACT = {
   description: 'Per Aspera Ad Astra',
 }
 
+// Global design tokens — overrides Tailwind's default scale
+export const DESIGN = {
+  // Base radius in rem. Controls all rounded-* utilities:
+  // xs=0.25x, sm=0.5x, md=0.75x, lg=1x, xl=1.5x, 2xl=2x, 3xl=3x, 4xl=4x
+  // Default: 0.5 (8px at 16px base → rounded-lg)
+  radius: 0.65,
+
+  // Base spacing unit in rem. Affects all p-*, m-*, gap-*, space-*, etc.
+  // Default: 0.25 (4px at 16px base). e.g. p-4 = 4 × 0.25rem = 1rem
+  spacing: 0.25,
+
+  // Font families
+  font: {
+    serif: "'Lexend', 'CJKEmDash', 'Numbers', 'ShangguSansSC-VF', ui-sans-serif, system-ui, sans-serif",
+    sans: "'CJKEmDash', 'Numbers', 'ShangguSansSC-VF', ui-sans-serif, system-ui, sans-serif",
+    mono: "'GeistMono', 'Input Mono', 'Fira Code', 'ShangguSansSC-VF', monospace",
+  },
+}
+
 // Waline comment system configuration
 export const WALINE_CONFIG = {
   enableComment: true,
   serverURL: 'https://waline.qwq.blue',
-}
-
-// Netease music playlist configuration
-export const NETEASE_CONFIG = {
-  musicList: '17942010185',
-  metingApi: 'https://api.qijieya.cn/meting',
-  musicSlice: 0, // the number of artists to show, 0 means show all
 }
 
 export const CMS_CONFIG = {
