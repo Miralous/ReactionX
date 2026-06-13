@@ -63,7 +63,7 @@ export const SOCIAL_LINKS: SocialLink[] = [
   },
   {
     name: 'BiliBili',
-    url: 'https://space.bilibili.com/441325177',
+    url: 'https://bilibili.com',
     icon: 'icon-[ri--arrow-left-up-line]',
   },
 ]
@@ -176,7 +176,7 @@ export const ABOUT_CONFIG = {
   physicalAttributes: [
     { label: 'Height', value: '144 CM', icon: 'icon-[ph--ruler]' },
     { label: 'Weight', value: '43 KG', icon: 'icon-[ph--barbell]' },
-    { label: 'Birthday', value: 'May 30, 2013', icon: 'icon-[ph--cake]' },
+    { label: 'Birthday', value: 'March 30, 2013', icon: 'icon-[ph--cake]' },
     { label: 'Location', value: 'Tianjin', icon: 'icon-[ph--map-pin]' },
   ],
 
