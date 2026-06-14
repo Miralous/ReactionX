@@ -26,7 +26,7 @@ export default function QueuePanel() {
               </div>
             ) : (
               queue.map(item => (
-                <div key={item.id} className="relative bg-background border border-border/40 rounded-xs p-3 flex flex-col gap-2 group hover:border-border hover:shadow-xs transition-all">
+                <div key={item.id} className="relative bg-background border border-border/40 rounded-xs p-3 flex flex-col gap-2 group hover:border-border hoverStyle transition-all">
                     <div className="flex justify-between items-start">
                       <span className={cn(
                         "text-[10px] font-semibold uppercase px-2 py-0.5 rounded-xs",

@@ -116,7 +116,7 @@ const SECTION_NUM_CLASS =
     grid.innerHTML = repos
       .map(
         (repo, i) => `
-      <div class="group relative flex flex-col bg-background/50 border border-border/40 rounded-lg hover:bg-muted/20 hover:shadow-xs transition-all duration-300 fade-up hover:-translate-y-0.5" style="animation-delay: ${i * 100}ms">
+      <div class="group relative flex flex-col bg-background/50 border border-border/40 rounded-lg hover:bg-muted/20 hoverStyle transition-all duration-300 fade-up hoverStyle" style="animation-delay: ${i * 100}ms">
         <div class="p-6 pb-2 relative z-10 flex justify-between items-start">
           <div class="size-12 flex items-center justify-center rounded-md bg-muted/30 border border-border/40">
             <span class="icon-[mdi--github] size-6 text-foreground/80"></span>
@@ -132,15 +132,14 @@ const SECTION_NUM_CLASS =
           </a>
           <p class="text-xs text-muted-foreground leading-relaxed line-clamp-3">${repo.description || 'No description'}</p>
         </div>
-        <div class="mt-auto border-t border-border/40 px-6 py-2 bg-muted/10 rounded-b-xl flex items-center justify-between">
+        <div class="mt-auto border-t border-border/40 px-6 py-2 bg-muted/10 rounded-b-lg flex items-center justify-between">
           <span class="inline-flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
             <span class="size-1.5 rounded-full ${repo.archived ? 'bg-ctp-yellow' : 'bg-ctp-green'}"></span>
             ${repo.archived ? 'Archived' : 'Active'}
           </span>
-          <div class="flex items-center gap-3 text-xs text-muted-foreground">
-            ${repo.language ? `<span>${repo.language}</span>` : ''}
-            <span class="flex items-center gap-1"><span class="icon-[ph--star] size-3"></span>${repo.stargazers_count}</span>
-            <span class="flex items-center gap-1"><span class="icon-[ph--git-fork] size-3"></span>${repo.forks_count}</span>
+          <div class="flex gap-4 transition-all duration-500 opacity-100 font-mono">
+            <span class="flex items-center gap-1"><span class="icon-[ph--star-fill] size-3 bg-ctp-yellow"></span>${repo.stargazers_count}</span>
+            <span class="flex items-center gap-1"><span class="icon-[ph--git-fork-fill] size-3"></span>${repo.forks_count}</span>
           </div>
         </div>
       </div>

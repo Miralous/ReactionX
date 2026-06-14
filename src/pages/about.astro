@@ -105,7 +105,7 @@ const SECTION_NUM_CLASS =
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
             {
               skills.map((skillGroup) => (
-                <div class="p-6 rounded-lg border border-border/40 bg-background/50 hover:bg-muted/20 hover:shadow-xs transition-all group hover:-translate-y-0.5">
+                <div class="p-6 rounded-lg border border-border/40 bg-background/50 hover:bg-muted/20 hoverStyle transition-all group hoverStyle">
                   <h4 class="text-sm font-semibold text-foreground tracking-tight mb-4 flex items-center gap-2">{skillGroup.category}</h4>
                   <div class="flex flex-wrap gap-2">
                     {skillGroup.items.map((item) => (
@@ -161,7 +161,7 @@ const SECTION_NUM_CLASS =
             games.length > 0 ? (
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {games.map((game: any) => (
-                  <div class="p-5 rounded-lg border border-border/40 bg-background/50 hover:bg-muted/20 hover:shadow-xs transition-all flex flex-col justify-between min-h-[120px] hover:-translate-y-0.5">
+                  <div class="p-5 rounded-lg border border-border/40 bg-background/50 hover:bg-muted/20 hoverStyle transition-all flex flex-col justify-between min-h-[120px] hoverStyle">
                     <div class="flex justify-between items-start mb-4">
                       <span class="text-base font-semibold text-foreground tracking-tight">{game.title}</span>
                       <span class="text-xs font-medium text-muted-foreground bg-muted/60 px-2 py-0.5 rounded-full">{game.hours}</span>
@@ -192,7 +192,7 @@ const SECTION_NUM_CLASS =
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5 gap-4">
             {
               courseSchedule.map((dayData) => (
-                <div class="flex flex-col rounded-lg border border-border/40 bg-background/50 hover:shadow-xs transition-all overflow-hidden hover:-translate-y-0.5">
+                <div class="flex flex-col rounded-lg border border-border/40 bg-background/50 hoverStyle transition-all overflow-hidden hoverStyle">
                   <div class="flex justify-between items-center px-4 py-3 bg-muted/30 border-b border-border/40">
                     <span class="text-sm font-semibold text-foreground">{dayData.day}</span>
                     <span class="text-xs font-medium text-muted-foreground">{dayData.label}</span>

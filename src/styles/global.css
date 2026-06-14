@@ -367,3 +367,8 @@
   padding: 0;
   border-radius: 0;
 }
+
+.hoverStyle:hover {
+  transition: all 0.3;
+  transform: translateY(-1.5px);
+}

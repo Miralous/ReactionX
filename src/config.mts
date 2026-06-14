@@ -18,7 +18,7 @@ export const CATPPUCCIN = {
   // Catppuccin hue — controls accent color. 280 matches Catppuccin default (lavender)
   hue: 280,
   // Shift ALL UI colors (not just accent) by hue when true
-  isGlobal: false,
+  isGlobal: true,
   // Zero saturation on all colors for a monochrome look
   mono: false,
 }
@@ -121,9 +121,9 @@ export const POSTS_CONFIG: PostConfig = {
   description: "Silvaire's articles",
   introduce: 'Articles are updated irregularly. You can subscribe to the RSS feed for the latest updates.',
   author: 'Silvaire',
-  homePageConfig: { size: 3, type: 'image' },
+  homePageConfig: { size: 3, type: 'compact' },
   postPageConfig: { size: 8, type: 'image' },
-  tagsPageConfig: { size: 5, type: 'image' },
+  tagsPageConfig: { size: 5, type: 'compact' },
   defaultHeroImage:
     'https://wsrv.nl/?url=avatars.githubusercontent.com/u/184231508?s=400&u=0a370792ba6bbb95a04d309171b562bcd7283a0f&v=4&mask=circle',
   defaultHeroImageAspectRatio: '16/9',
