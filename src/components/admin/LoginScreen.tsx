@@ -50,7 +50,7 @@ export default function LoginScreen() {
                 placeholder="••••••••"
                 autoFocus
                 className={cn(
-                  'w-full px-4 py-2.5 rounded-lg border bg-background text-sm transition-all focus:outline-none focus:ring-2 focus:ring-offset-0',
+                  'w-full px-4 py-2.5 rounded-md border bg-background text-sm transition-all focus:outline-none focus:ring-2 focus:ring-offset-0',
                   loginError
                     ? 'border-red-500/50 focus:ring-red-500/20 text-red-500'
                     : 'border-border/60 focus:border-primary/50 focus:ring-primary/20'
@@ -62,7 +62,7 @@ export default function LoginScreen() {
               onClick={() => performLogin(password)}
               disabled={isValidating}
               className={cn(
-                'w-full py-2.5 rounded-lg text-sm font-semibold transition-all flex items-center justify-center gap-2',
+                'w-full py-2.5 rounded-md text-sm font-semibold transition-all flex items-center justify-center gap-2',
                 loginError
                   ? 'bg-muted text-muted-foreground border border-border/50 cursor-not-allowed'
                   : 'bg-foreground text-background hover:bg-foreground/90 shadow-sm'

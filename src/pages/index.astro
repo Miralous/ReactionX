@@ -1,6 +1,6 @@
 ---
 import { getCollection } from 'astro:content'
-import { SITE, SKILLSSHOWCASE_CONFIG, SOCIAL_LINKS, GITHUB_CONFIG, POSTS_CONFIG } from '~/config.ts'
+import { SITE, SKILLSSHOWCASE_CONFIG, SOCIAL_LINKS, GITHUB_CONFIG, POSTS_CONFIG } from '~/config.mjs'
 import { cn, postsSort } from '~/lib/utils'
 import Layout from '~/layouts/Layout.astro'
 import GithubContributions from '~/components/base/GithubContributions.tsx'
@@ -82,7 +82,7 @@ const SECTION_NUM_CLASS =
                 >
                   <div class="relative z-10 flex flex-col h-full">
                     <div class="flex justify-between items-start mb-auto">
-                      <div class="size-10 flex items-center justify-center rounded-md bg-muted/30 border border-border/40 group-hover:border-border/60 transition-colors">
+                      <div class="size-10 flex items-center justify-center rounded-sm bg-muted/30 border border-border/40 group-hover:border-border/60 transition-colors">
                         <span class={cn('size-5 text-foreground/70 group-hover:text-foreground transition-colors', card.icon)} />
                       </div>
                       <span class="icon-[ph--arrow-up-right] size-4 text-muted-foreground/30 group-hover:text-foreground transition-colors mt-1" />

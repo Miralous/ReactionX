@@ -1,4 +1,4 @@
-import { CMS_CONFIG } from '~/config'
+import { CMS_CONFIG } from '~/config.mjs'
 import { cn } from '~/lib/utils'
 import AdminProvider, { useAdmin } from './AdminContext'
 import { REPO_CONFIG } from './types'

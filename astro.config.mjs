@@ -8,14 +8,14 @@ import robotsTxt from 'astro-robots-txt'
 import expressiveCode from 'astro-expressive-code'
 import vercel from '@astrojs/vercel'
 import { remarkPlugins, rehypePlugins } from './plugins'
-import { SITE } from './src/config'
+import { SITE } from './src/config.mts'
 
 export default defineConfig({
   site: SITE.website,
   base: SITE.base,
-  
-  output: 'static', 
-  
+
+  output: 'static',
+
   adapter: vercel({
     webAnalytics: { enabled: false },
   }),
@@ -48,24 +48,25 @@ export default defineConfig({
             if (id.includes('node_modules/clsx') || id.includes('node_modules/tailwind-merge')) {
               return 'utils'
             }
-          }
-        }
+          },
+        },
       },
     },
   },
-  image: process.env.NODE_ENV === 'development'
-    ? {} 
-    : {
-        service: {
-          entrypoint: 'astro/assets/services/sharp',
-        },
-        remotePatterns: [
-          {
-            hostname: '/',
-            protocol: 'https',
+  image:
+    process.env.NODE_ENV === 'development'
+      ? {}
+      : {
+          service: {
+            entrypoint: 'astro/assets/services/sharp',
           },
-        ],
-      },
+          remotePatterns: [
+            {
+              hostname: '/',
+              protocol: 'https',
+            },
+          ],
+        },
   markdown: {
     syntaxHighlight: false,
     remarkPlugins,

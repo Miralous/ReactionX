@@ -8,9 +8,9 @@
 
 /* ===== 主题变量 ===== */
 @theme {
-  --font-serif: var(--font-lexend);
+  --font-serif: var(--font-serif);
   --font-sans: var(--font-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-mono: var(--font-mono);
 
   --color-border: hsl(var(--border));
   --color-border-primary: hsl(var(--border));
@@ -57,37 +57,12 @@
   --color-zinc-900: hsl(var(--ctp-mauve));
 }
 
-/* ===== 字体配置 ===== */
-@layer base {
-  @font-face {
-    font-family: 'Numbers';
-    src: url('/fonts/GeistVF.woff2') format('woff2');
-    font-display: swap;
-  }
-  @font-face {
-    font-family: 'CJKEmDash';
-    unicode-range: U+2014, U+2E3A-2E3B;
-    src: url('/fonts/ZhudouSansVF-subset.woff2') format('woff2');
-    font-display: swap;
-  }
-  @font-face {
-    font-family: 'Lexend';
-    src: url('/fonts/Lexend-VariableFont_wght.woff2') format('woff2');
-    font-display: swap;
-  }
-  @font-face {
-    font-family: 'GeistMono';
-    src: url('/fonts/GeistMono.woff2') format('woff2');
-    font-display: swap;
-  }
-}
-
 /* ===== Catppuccin 4 variants ===== */
 @layer base {
   :root {
-    --font-lexend: ui-sans-serif, system-ui, sans-serif;
+    --font-serif: ui-serif, Georgia, serif;
     --font-sans: ui-sans-serif, system-ui, sans-serif;
-    --font-geist-mono: monospace;
+    --font-mono: ui-monospace, monospace;
     --hue: 280;
     --chue: 280;
     --l-chroma: 0.1751;
@@ -268,16 +243,42 @@
 
   /* mono: zero saturation/chroma and push lightness extremes */
   [data-mono='true'][data-ctp='latte'] {
-    --s-bg: 0%; --s-fg: 0%; --s-muted: 0%; --s-muted-fg: 0%; --s-border: 0%; --s-scrollbar: 0%;
-    --l-bg: 100%; --l-fg: 0%; --l-muted: 95%; --l-muted-fg: 30%; --l-border: 88%; --l-scrollbar: 85%;
-    --primary: 0 0 0; --accent: 0 0 0; --ring: 0 0 0; --tag-text: 0 0 0;
+    --s-bg: 0%;
+    --s-fg: 0%;
+    --s-muted: 0%;
+    --s-muted-fg: 0%;
+    --s-border: 0%;
+    --s-scrollbar: 0%;
+    --l-bg: 100%;
+    --l-fg: 0%;
+    --l-muted: 95%;
+    --l-muted-fg: 30%;
+    --l-border: 88%;
+    --l-scrollbar: 85%;
+    --primary: 0 0 0;
+    --accent: 0 0 0;
+    --ring: 0 0 0;
+    --tag-text: 0 0 0;
   }
   [data-mono='true'][data-ctp='frappe'],
   [data-mono='true'][data-ctp='macchiato'],
   [data-mono='true'][data-ctp='mocha'] {
-    --s-bg: 0%; --s-fg: 0%; --s-muted: 0%; --s-muted-fg: 0%; --s-border: 0%; --s-scrollbar: 0%;
-    --l-bg: 0%; --l-fg: 100%; --l-muted: 10%; --l-muted-fg: 55%; --l-border: 18%; --l-scrollbar: 22%;
-    --primary: 1 0 0; --accent: 1 0 0; --ring: 1 0 0; --tag-text: 1 0 0;
+    --s-bg: 0%;
+    --s-fg: 0%;
+    --s-muted: 0%;
+    --s-muted-fg: 0%;
+    --s-border: 0%;
+    --s-scrollbar: 0%;
+    --l-bg: 0%;
+    --l-fg: 100%;
+    --l-muted: 10%;
+    --l-muted-fg: 55%;
+    --l-border: 18%;
+    --l-scrollbar: 22%;
+    --primary: 1 0 0;
+    --accent: 1 0 0;
+    --ring: 1 0 0;
+    --tag-text: 1 0 0;
   }
 }
 
@@ -347,4 +348,22 @@
     view-transition-name: none !important;
     --astro-view-transition: none !important;
   }
+}
+
+/* Code blocks in ReactMarkdown */
+.prose pre {
+  background-color: hsl(var(--muted)) !important;
+  border: 1px solid hsl(var(--border));
+  border-radius: 0.5rem;
+}
+.prose code {
+  background-color: hsl(var(--muted));
+  padding: 0.125rem 0.25rem;
+  border-radius: 0.25rem;
+  font-size: 0.8125rem;
+}
+.prose pre code {
+  background: none;
+  padding: 0;
+  border-radius: 0;
 }

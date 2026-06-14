@@ -1,7 +1,7 @@
 ---
 import '~/styles/global.css'
 import '~/styles/pro.css'
-import { SITE, CATPPUCCIN, DESIGN } from '~/config'
+import { SITE, CATPPUCCIN, DESIGN } from '~/config.mjs'
 import Head from '~/components/base/Head.astro'
 import Header from './Header.astro'
 import Footer from './Footer.astro'
@@ -32,12 +32,26 @@ const designStyle = [
   `--font-sans:${DESIGN.font.sans}`,
   `--font-mono:${DESIGN.font.mono}`,
 ].join(';')
+const fontCSS = [
+  `@font-face{font-family:'Serif';src:url('/fonts/${DESIGN.font.family}/Serif.woff2') format('woff2');font-display:swap}`,
+  `@font-face{font-family:'Sans';src:url('/fonts/${DESIGN.font.family}/Sans.woff2') format('woff2');font-display:swap}`,
+  `@font-face{font-family:'Mono';src:url('/fonts/${DESIGN.font.family}/Mono.woff2') format('woff2');font-display:swap}`,
+].join('')
 ---
 
 <!doctype html>
-<html lang="zh-CN" data-ctp-light={lightVariant} data-ctp-dark={darkVariant} data-hue={HUE} data-global-hue={GLOBAL_HUE} data-mono={MONO} style={designStyle}>
+<html
+  lang="zh-CN"
+  data-ctp-light={lightVariant}
+  data-ctp-dark={darkVariant}
+  data-hue={HUE}
+  data-global-hue={GLOBAL_HUE}
+  data-mono={MONO}
+  style={designStyle}
+>
   <head>
     <Head title={`${title} | ${SITE.title}`} {description} {image} />
+    <style is:global set:html={fontCSS} />
   </head>
   <body>
     <div class="select-text selection:bg-foreground/20 selection:text-foreground">

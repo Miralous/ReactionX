@@ -1,6 +1,7 @@
 import { defineEcConfig } from 'astro-expressive-code'
 import { pluginCollapsibleSections } from '@expressive-code/plugin-collapsible-sections'
 import { pluginLineNumbers } from '@expressive-code/plugin-line-numbers'
+import { DESIGN } from './src/config.mts'
 
 export default defineEcConfig({
   themes: ['catppuccin-mocha', 'catppuccin-latte'],
@@ -20,9 +21,9 @@ export default defineEcConfig({
   useStyleReset: true,
 
   styleOverrides: {
-    uiFontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+    uiFontFamily: DESIGN.font.sans,
     uiFontSize: '0.875rem',
-    codeFontFamily: "'Geist Mono', ui-monospace, SFMono-Regular, Consolas, monospace",
+    codeFontFamily: DESIGN.font.mono,
     codeFontSize: '0.875rem',
     codeLineHeight: '1.7',
 

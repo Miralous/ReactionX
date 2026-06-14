@@ -1,7 +1,7 @@
 import { defineCollection } from 'astro:content'
 import { glob } from 'astro/loaders'
 import { z } from 'astro/zod'
-import { POSTS_CONFIG } from './config'
+import { POSTS_CONFIG } from './config.mts'
 
 const friends = defineCollection({
   loader: glob({ pattern: '**/*.yaml', base: './src/content/data/friends' }),
@@ -36,14 +36,20 @@ const posts = defineCollection({
     updatedDate: z.coerce.date().optional(),
     recommend: z.boolean().default(false),
     author: z.string().default(POSTS_CONFIG.author),
-    heroImage: z.string().optional().transform(val => {
-      if (!val) return undefined;
-      return val.startsWith('http') || val === 'none' ? val : `/hero-images/${val}`;
-    }),
-    ogImage: z.string().optional().transform(val => {
-      if (!val) return undefined;
-      return val.startsWith('http') || val === 'none' ? val : `/og-images/${val}`;
-    }),
+    heroImage: z
+      .string()
+      .optional()
+      .transform((val) => {
+        if (!val) return undefined
+        return val.startsWith('http') || val === 'none' ? val : `/hero-images/${val}`
+      }),
+    ogImage: z
+      .string()
+      .optional()
+      .transform((val) => {
+        if (!val) return undefined
+        return val.startsWith('http') || val === 'none' ? val : `/og-images/${val}`
+      }),
     heroImageLayout: z.string().optional(),
     heroImageAspectRatio: z.string().default(POSTS_CONFIG.defaultHeroImageAspectRatio),
     tags: z.array(z.string()),

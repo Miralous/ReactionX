@@ -61,7 +61,7 @@ function FeedItemCard({ item, animationDelay }: { item: FeedItem; animationDelay
         >
           <div
             ref={contentRef}
-            className="prose prose-sm dark:prose-invert max-w-none prose-img:rounded-lg prose-img:border prose-img:border-border/40 prose-a:text-primary prose-p:leading-relaxed"
+            className="*:!text-foreground prose prose-sm dark:prose-invert max-w-none prose-img:rounded-lg prose-img:border prose-img:border-border/40 prose-a:text-primary prose-p:leading-relaxed"
           >
             <ReactMarkdown remarkPlugins={[remarkGfm]}>{item.content}</ReactMarkdown>
           </div>

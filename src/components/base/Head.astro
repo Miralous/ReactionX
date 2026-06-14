@@ -1,6 +1,6 @@
 ---
 import { ClientRouter } from 'astro:transitions'
-import { SITE } from '~/config'
+import { SITE } from '~/config.mjs'
 
 type Props = {
   title: string
@@ -15,43 +15,44 @@ const ogImage = new URL(image || SITE.ogImage, Astro.url)
 ---
 
 <script is:inline>
-(function() {
-  var STORAGE_KEY = 'theme';
-  var root = document.documentElement;
-  var saved = localStorage.getItem(STORAGE_KEY) || 'system';
+  ;(function () {
+    var STORAGE_KEY = 'theme'
+    var root = document.documentElement
+    var saved = localStorage.getItem(STORAGE_KEY) || 'system'
 
-  function applyTheme() {
-    var isDark = saved === 'dark' || (saved === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
-    root.dataset.theme = isDark ? 'dark' : 'light';
-    root.classList.toggle('dark', isDark);
+    function applyTheme() {
+      var isDark = saved === 'dark' || (saved === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches)
+      root.dataset.theme = isDark ? 'dark' : 'light'
+      root.classList.toggle('dark', isDark)
 
-    // Catppuccin surface variant — read from <html> data attrs set by Layout
-    var lightVariant = root.getAttribute('data-ctp-light') || 'latte';
-    var darkVariant = root.getAttribute('data-ctp-dark') || 'macchiato';
-    var ctpMode = isDark ? darkVariant : lightVariant;
-    root.dataset.ctp = ctpMode;
+      // Catppuccin surface variant — read from <html> data attrs set by Layout
+      var lightVariant = root.getAttribute('data-ctp-light') || 'latte'
+      var darkVariant = root.getAttribute('data-ctp-dark') || 'macchiato'
+      var ctpMode = isDark ? darkVariant : lightVariant
+      root.dataset.ctp = ctpMode
 
-    // Hue — set CSS custom properties for dynamic color
-    var hue = parseInt(root.getAttribute('data-hue')) || 280;
-    var globalHue = root.getAttribute('data-global-hue') === 'true';
-    root.style.setProperty('--hue', String(hue));
-    root.style.setProperty('--chue', String(globalHue ? hue : 280));
-  }
+      // Hue — set CSS custom properties for dynamic color
+      var hue = parseInt(root.getAttribute('data-hue')) || 280
+      var globalHue = root.getAttribute('data-global-hue') === 'true'
+      root.style.setProperty('--hue', String(hue))
+      root.style.setProperty('--chue', String(globalHue ? hue : 280))
+    }
 
-  applyTheme();
+    applyTheme()
 
-  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function() {
-    if (localStorage.getItem(STORAGE_KEY) === 'system') { applyTheme(); }
-  });
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function () {
+      if (localStorage.getItem(STORAGE_KEY) === 'system') {
+        applyTheme()
+      }
+    })
 
-  document.addEventListener('astro:after-swap', function() {
-    var theme = localStorage.getItem(STORAGE_KEY) || 'system';
-    saved = theme;
-    applyTheme();
-  });
-})();
+    document.addEventListener('astro:after-swap', function () {
+      var theme = localStorage.getItem(STORAGE_KEY) || 'system'
+      saved = theme
+      applyTheme()
+    })
+  })()
 </script>
-
 
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -63,10 +64,8 @@ const ogImage = new URL(image || SITE.ogImage, Astro.url)
 <meta name="description" content={description} />
 <meta name="author" content={SITE.author} />
 
-
 <meta name="theme-color" content="" />
 <meta name="color-scheme" content="light dark" />
-
 
 <link rel="icon" type="image/x-icon" sizes="16x16 32x32 48x48" href="/favicon.ico" />
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
@@ -78,16 +77,9 @@ const ogImage = new URL(image || SITE.ogImage, Astro.url)
 
 <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
 
-
-
-
-
-
 <link rel="canonical" href={canonicalURL} />
 
-
 <link rel="sitemap" href="/sitemap-index.xml" />
-
 
 <meta property="og:type" content="website" />
 <meta property="og:url" content={Astro.url} />
@@ -95,7 +87,6 @@ const ogImage = new URL(image || SITE.ogImage, Astro.url)
 <meta property="og:site_name" content={SITE.title} />
 <meta property="og:description" content={description} />
 <meta property="og:image" content={ogImage} />
-
 
 <meta property="twitter:card" content="summary_large_image" />
 <meta property="twitter:url" content={Astro.url} />
