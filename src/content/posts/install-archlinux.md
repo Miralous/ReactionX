@@ -1,9 +1,9 @@
 ---
-title: 使用命令行安装单系统 Arch Linux
-description: 论加入 Arch 教的第一步——安装
-author: Silvaire
+title: '使用命令行安装单系统 Arch Linux'
+description: '论加入 Arch 教的第一步——安装。'
 pubDate: 2024-02-25
-tags: [Arch, Linux, Terminal]
+author: 'Silvaire'
+tags: ['Arch', 'Linux', 'Terminal']
 recommend: true
 heroImage: none
 ogImage: none
