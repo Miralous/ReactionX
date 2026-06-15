@@ -1,12 +1,12 @@
 ---
 // src/components/Header.astro
-import { HEADER_LINKS } from '~/config'
+import { HEADER_LINKS } from '~/config.mjs'
 import ThemeToggle from '~/components/theme/ThemeToggle'
 import HeaderLink from '~/components/base/HeaderLink.astro'
 import SearchSwitch from '~/components/base/SearchSwitch.astro'
 import { Image } from 'astro:assets'
 import favicon from '../../public/favicon.webp'
-import { CMS_CONFIG } from '~/config'
+import { CMS_CONFIG } from '~/config.mjs'
 ---
 
 <header>
