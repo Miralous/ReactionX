@@ -54,9 +54,8 @@ const ThemeToggle = () => {
     root.classList.toggle('dark', isDark)
 
     // Catppuccin surface variant
-    var ctpVariants = ['latte', 'frappe', 'macchiato', 'mocha'];
-    var lightVariant = root.getAttribute('data-ctp-light') || 'latte';
-    var darkVariant = root.getAttribute('data-ctp-dark') || 'macchiato';
+    const lightVariant = root.getAttribute('data-ctp-light') || 'latte';
+    const darkVariant = root.getAttribute('data-ctp-dark') || 'macchiato';
     root.dataset.ctp = isDark ? darkVariant : lightVariant
 
     // 使用 requestAnimationFrame 保证样式应用完毕后再恢复过渡

@@ -10,7 +10,7 @@ interface PostEditorProps {
 }
 
 export default function PostEditor({ showPreview, showMetaConfig }: PostEditorProps) {
-  const { body, setBody, meta, setMeta, triggerUpload, stageForWrite } = useAdmin();
+  const { body, setBody, meta, setMeta, stageForWrite } = useAdmin();
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const insertText = (before: string, after: string = '') => {
