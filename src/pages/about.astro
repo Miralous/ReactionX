@@ -105,11 +105,11 @@ const SECTION_NUM_CLASS =
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
             {
               skills.map((skillGroup) => (
-                <div class="p-6 rounded-lg border border-border/40 bg-background/50 hover:bg-muted/20 hoverStyle transition-all group hoverStyle">
+                <div class="p-6 rounded-lg border border-border/40 bg-background/50 hover:bg-muted/10 hoverStyle transition-all group hoverStyle">
                   <h4 class="text-sm font-semibold text-foreground tracking-tight mb-4 flex items-center gap-2">{skillGroup.category}</h4>
                   <div class="flex flex-wrap gap-2">
                     {skillGroup.items.map((item) => (
-                      <span class="inline-flex items-center rounded-lg bg-muted/50 px-2.5 py-1 text-xs font-medium text-muted-foreground border border-border/40 group-hover:bg-background group-hover:text-foreground transition-colors cursor-default">
+                      <span class="inline-flex items-center rounded-md bg-muted/50 px-2.5 py-1 text-xs font-medium text-muted-foreground transition-colors cursor-default">
                         {item}
                       </span>
                     ))}
@@ -234,7 +234,7 @@ const SECTION_NUM_CLASS =
             <div class="space-y-1">
               {
                 todos.map((todo) => (
-                  <div class="flex items-center justify-between group/todo hover:bg-muted/30 p-2 rounded-xs transition-colors">
+                  <div class="flex items-center justify-between group/todo hover:bg-muted/30 p-2 px-2.5 rounded-md transition-colors">
                     <div class="flex items-center gap-3">
                       <div class="flex items-center justify-center w-5 shrink-0 text-muted-foreground group-hover/todo:text-foreground transition-colors">
                         {todo.completed ? (

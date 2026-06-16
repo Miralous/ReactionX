@@ -25,7 +25,7 @@ const variantClasses = {
 
 <span
   class={cn(
-    'inline-flex items-center rounded-sm font-medium transition-colors duration-200',
+    'inline-flex items-center rounded-sm font-medium transition-colors duration-200 cursor-pointer',
     sizeClasses[size],
     variantClasses[variant],
     className
@@ -33,4 +33,5 @@ const variantClasses = {
   title="Recommended post"
 >
   {showIcon && <span class="icon-[ph--sparkle-fill] opacity-70" />}
+  <span class="font-mono">REC</span>
 </span>
