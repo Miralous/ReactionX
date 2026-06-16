@@ -1,6 +1,6 @@
 ---
-import { cn } from '~/lib/utils'
 import { PROJECTS_CONFIG, GITHUB_CONFIG } from '~/config.mjs'
+import GithubProjectGrid, { RepoCount } from '~/components/projects/GithubProjectList'
 import Layout from '~/layouts/Layout.astro'
 
 const { title, description, introduce } = PROJECTS_CONFIG
@@ -42,7 +42,7 @@ const SECTION_NUM_CLASS =
         <div
           class="flex-1 flex flex-col items-start justify-center p-8 lg:p-10 xl:p-14 bg-background border-r border-border/40 hover:bg-muted/30 transition-colors"
         >
-          <span class="text-2xl font-semibold text-foreground tracking-tight" id="repo-count">--</span>
+          <RepoCount username={username} />
           <span class="text-xs text-muted-foreground mt-1">Total Modules</span>
         </div>
         <div class="flex-1 flex flex-col items-start justify-center p-8 lg:p-10 xl:p-14 bg-background hover:bg-muted/30 transition-colors">
@@ -62,121 +62,11 @@ const SECTION_NUM_CLASS =
           </div>
         </div>
 
-        <div id="repo-grid" class="grid grid-cols-1 gap-6 mt-8"></div>
+        <GithubProjectGrid client:load username={username} />
       </div>
     </main>
   </div>
 </Layout>
-
-<script>
-  import { PROJECTS_CONFIG, GITHUB_CONFIG } from '~/config.mjs'
-  const username = GITHUB_CONFIG.GITHUB_USERNAME
-  const CACHE_KEY = 'gh_projects_data'
-  const CACHE_DURATION = 60 * 60 * 1000
-
-  // 1. Define an interface for the GitHub API response
-  interface Repository {
-    name: string
-    description: string | null
-    html_url: string
-    homepage: string | null
-    archived: boolean
-    language: string | null
-    stargazers_count: number
-    forks_count: number
-  }
-
-  // Type the return value of the cache fetcher
-  function getCached(): Repository[] | null {
-    try {
-      const raw = localStorage.getItem(CACHE_KEY)
-      if (!raw) return null
-      const { data, timestamp } = JSON.parse(raw)
-      if (Date.now() - timestamp < CACHE_DURATION) return data as Repository[]
-    } catch {}
-    return null
-  }
-
-  // 2. Add the Repository[] type to the parameter
-  function renderRepos(repos: Repository[]) {
-    const grid = document.getElementById('repo-grid')
-    const countEl = document.getElementById('repo-count')
-
-    // 3. Add a null check for countEl
-    if (!grid || !countEl) return
-
-    countEl.textContent = repos.length.toString().padStart(2, '0')
-
-    if (repos.length === 0) {
-      grid.innerHTML =
-        '<div class="flex flex-col items-center justify-center py-20 text-muted-foreground"><span class="icon-[ph--warning-circle] size-10 text-ctp-yellow/80 mb-3"></span><p class="text-sm">No repositories found</p></div>'
-      return
-    }
-
-    grid.innerHTML = repos
-      .map(
-        (repo, i) => `
-      <div class="group relative flex flex-col bg-background/50 border border-border/40 rounded-lg hover:bg-muted/20 hoverStyle transition-all duration-300 fade-up hoverStyle" style="animation-delay: ${i * 100}ms">
-        <div class="p-6 pb-2 relative z-10 flex justify-between items-start">
-          <div class="size-12 flex items-center justify-center rounded-md bg-muted/30 border border-border/40">
-            <span class="icon-[mdi--github] size-6 text-foreground/80"></span>
-          </div>
-          <div class="flex gap-2">
-            ${repo.html_url ? `<a href="${repo.html_url}" target="_blank" class="flex items-center justify-center size-8 rounded-full bg-muted/50 hover:bg-muted text-muted-foreground hover:text-foreground transition-all"><span class="icon-[mdi--github] size-4"></span></a>` : ''}
-            ${repo.homepage ? `<a href="${repo.homepage}" target="_blank" class="flex items-center justify-center size-8 rounded-full bg-muted/50 hover:bg-muted text-muted-foreground hover:text-foreground transition-all"><span class="icon-[ph--arrow-up-right] size-4"></span></a>` : ''}
-          </div>
-        </div>
-        <div class="p-6 pt-2 flex-1 relative z-10">
-          <a href="${repo.html_url}" target="_blank" class="block">
-            <h3 class="text-base font-semibold text-foreground tracking-tight">${repo.name}</h3>
-          </a>
-          <p class="text-xs text-muted-foreground leading-relaxed line-clamp-3">${repo.description || 'No description'}</p>
-        </div>
-        <div class="mt-auto border-t border-border/40 px-6 py-2 bg-muted/10 rounded-b-lg flex items-center justify-between">
-          <span class="inline-flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
-            <span class="size-1.5 rounded-full ${repo.archived ? 'bg-ctp-yellow' : 'bg-ctp-green'}"></span>
-            ${repo.archived ? 'Archived' : 'Active'}
-          </span>
-          <div class="flex gap-4 transition-all duration-500 opacity-100 font-mono">
-            <span class="flex items-center gap-1"><span class="icon-[ph--star-fill] size-3 bg-ctp-yellow"></span>${repo.stargazers_count}</span>
-            <span class="flex items-center gap-1"><span class="icon-[ph--git-fork-fill] size-3"></span>${repo.forks_count}</span>
-          </div>
-        </div>
-      </div>
-    `
-      )
-      .join('')
-
-    const sb = document.querySelector('.scrollbar-hide')
-    if (sb) sb.scrollTop = 0
-  }
-
-  async function fetchRepos() {
-    try {
-      // 4. Type the headers object so TS allows dynamic key assignment
-      const headers: Record<string, string> = {}
-      const token = import.meta.env.PUBLIC_GITHUB_TOKEN
-      if (token) headers['Authorization'] = `Bearer ${token}`
-
-      const res = await fetch(`https://api.github.com/users/${username}/repos?per_page=100&sort=pushed&type=owner`, { headers })
-
-      if (!res.ok) throw new Error(`GitHub API ${res.status}`)
-
-      // 5. Explicitly type the JSON payload from GitHub
-      const all: Repository[] = await res.json()
-      const repos = all.filter((r) => r.name !== '.github' && r.name.toLowerCase() !== username.toLowerCase())
-
-      localStorage.setItem(CACHE_KEY, JSON.stringify({ data: repos, timestamp: Date.now() }))
-      renderRepos(repos)
-    } catch {}
-  }
-
-  const cached = getCached()
-  if (cached) {
-    renderRepos(cached)
-  }
-  fetchRepos()
-</script>
 
 <style>
   .scrollbar-hide::-webkit-scrollbar {
