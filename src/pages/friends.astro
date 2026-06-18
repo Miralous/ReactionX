@@ -1,7 +1,8 @@
----
+﻿---
 import { getCollection } from 'astro:content'
 import { FRIENDS_CONFIG, FRIENDS_CONTACT, FRIENDS_DIRECTORIES } from '~/config.mjs'
 import Layout from '~/layouts/Layout.astro'
+import Aside from '~/components/base/Aside.astro'
 import Comments from '~/components/posts/base/Comments.astro'
 
 const friendsEntries = await getCollection('friends')
@@ -74,105 +75,37 @@ const defaultImg = 'https://pic2.zhimg.com/50/v2-cc1a32fcb444fc9d5e23f2ee078dc6e
 
 <Layout {title} {description}>
   <div class="relative font-sans flex flex-col lg:flex-row min-h-screen max-w-[1920px] mx-auto">
-    <aside class="w-full lg:w-1/3 lg:sticky lg:top-0 lg:h-screen flex flex-col xl:border-r border-border/40 z-20 bg-background">
-      <div class="flex flex-1 lg:overflow-y-auto scrollbar-hide flex-col">
-        <div class="p-6 lg:p-8 xl:p-12 pb-0 shrink-0 fade-up">
-          <span
-            class="inline-flex items-center gap-1.5 rounded-full bg-ctp-green/10 px-3 py-1 text-xs font-medium text-ctp-green select-none"
-          >
-            <span class="relative flex h-1.5 w-1.5">
-              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-ctp-green opacity-75"></span>
-              <span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-ctp-green"></span>
-            </span>
-            Connected
-          </span>
-        </div>
+        <Aside
+      badge="Connected"
+      badgeGreenDot={true}
+      title={title}
+      subtitleIcon="icon-[ph--planet] size-4"
+      subtitleText="Network & Signals"
+      description={introduce}
+      footerLeftValue={totalLinks}
+      footerLeftLabel="Active Nodes"
+      footerRightValue="HTTPS"
+      footerRightLabel="Protocol"
+    />
 
-        <div
-          class="flex-1 flex flex-col justify-end lg:justify-center p-6 lg:p-8 xl:p-12 min-h-[300px] lg:min-h-[250px] fade-up animation-delay-100"
-        >
-          <h1 class="text-5xl sm:text-6xl xl:text-7xl font-bold tracking-tight text-foreground leading-[1.1] mb-4 select-none">{title}</h1>
-          <div class="flex items-center gap-2 text-sm text-muted-foreground">
-            <span class="icon-[ph--planet] size-4"></span>
-            <span>Network & Signals</span>
-          </div>
-        </div>
-
-        <div class="shrink-0 p-6 lg:p-8 xl:p-12 fade-up animation-delay-150">
-          <p class="text-sm text-muted-foreground leading-relaxed max-w-sm">{introduce}</p>
-        </div>
-      </div>
-
-      <div class="flex border-t border-border/40 shrink-0 fade-up animation-delay-200">
-        <div
-          class="flex-1 flex flex-col items-start justify-center p-8 lg:p-10 xl:p-14 bg-background border-r border-border/40 hover:bg-muted/30 transition-colors"
-        >
-          <span class="text-2xl font-semibold text-foreground tracking-tight">{totalLinks}</span>
-          <span class="text-xs text-muted-foreground mt-1">Active Nodes</span>
-        </div>
-        <div class="flex-1 flex flex-col items-start justify-center p-8 lg:p-10 xl:p-14 bg-background hover:bg-muted/30 transition-colors">
-          <span class="text-xl font-semibold text-foreground tracking-tight">HTTPS</span>
-          <span class="text-xs text-muted-foreground mt-1">Protocol</span>
-        </div>
-      </div>
-    </aside>
-
-    <main class="w-full lg:w-2/3 z-10 flex flex-col fade-up animation-delay-150">
-      <div class="p-6 lg:p-10 xl:p-16 2xl:p-20 flex-1 flex flex-col">
+    <main class="w-full lg:w-2/3 z-10 flex flex-col fade-up animation-delay-100">
+      <div class="p-6 lg:p-10 xl:p-16 2xl:p-20 flex-1">
+        <!-- Server-rendered friend cards -->
         <div set:html={sectionsHtml} />
 
         {
           enableAdd ? (
             <>
-              <div id="exchange-section" class="fade-up animation-delay-200">
+              <div class="mb-24 fade-up">
                 <div class={SECTION_HEADER_CLASS}>
                   <div class="flex items-center">
-                    <>
-                      <span class={SECTION_NUM_CLASS}>{String(exchangeSectionNum).padStart(2, '0')}</span>{' '}
-                      <h2 class={SECTION_TITLE_CLASS}>Exchange Protocol</h2>
-                    </>
+                    <span class={SECTION_NUM_CLASS}>{String(exchangeSectionNum).padStart(2, '0')}</span>
+                    <h2 class={SECTION_TITLE_CLASS}>Exchange</h2>
                   </div>
                 </div>
-                <div class="grid xl:grid-cols-2 gap-10 mt-6">
-                  {/* 规则与联系方式 */}
-                  <div class="flex flex-col">
-                    <div>
-                      <h3 class="text-lg font-semibold tracking-tight mb-4 text-foreground">Requirements</h3>
-                      <ul class="space-y-3 text-sm text-muted-foreground">
-                        <li class="flex items-start gap-2.5">
-                          <span class="icon-[ph--check-circle-fill] size-4 text-primary shrink-0 mt-0.5" />
-                          <span>Content must comply with industry standards and contain no NSFW material.</span>
-                        </li>
-                        <li class="flex items-start gap-2.5">
-                          <span class="icon-[ph--check-circle-fill] size-4 text-primary shrink-0 mt-0.5" />
-                          <span>Before applying, please add this site to your link list.</span>
-                        </li>
-                        <li class="flex items-start gap-2.5">
-                          <span class="icon-[ph--check-circle-fill] size-4 text-primary shrink-0 mt-0.5" />
-                          <span>Priority given to tech, design, and indie blogs.</span>
-                        </li>
-                        <li class="flex items-start gap-2.5">
-                          <span class="icon-[ph--warning-circle-fill] size-4 text-ctp-yellow shrink-0 mt-0.5" />
-                          <span>Inactive nodes will be periodically cleaned.</span>
-                        </li>
-                      </ul>
-                    </div>
-
-                    <div class="mt-8 p-5 rounded-lg border border-border/40 bg-muted/10">
-                      <span class="text-xs font-semibold text-foreground block mb-2">Direct Contact</span>
-                      <a
-                        href={`mailto:${email}`}
-                        class="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors group"
-                      >
-                        <span class="icon-[ph--envelope-simple] size-4 group-hover:text-primary transition-colors" />
-                        <span class="font-medium">{email}</span>
-                      </a>
-                    </div>
-                  </div>
-
-                  {/* 右侧：站点配置信息 */}
-                  <div class="relative">
-                    <div class="rounded-lg border border-border/40 bg-background overflow-hidden flex flex-col h-full">
+                <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6 mt-4 fade-up animation-delay-200">
+                  <div class="col-span-full">
+                    <div class="flex flex-col h-full rounded-lg border border-border/40 bg-background/50 overflow-hidden hoverStyle">
                       <div class="px-5 py-4 border-b border-border/40 bg-muted/20 flex justify-between items-center">
                         <span class="font-semibold text-sm tracking-tight">Site Configuration</span>
                         <span class="text-xs font-medium text-muted-foreground bg-background border border-border/40 px-2 py-0.5 rounded-md">
@@ -233,16 +166,6 @@ const defaultImg = 'https://pic2.zhimg.com/50/v2-cc1a32fcb444fc9d5e23f2ee078dc6e
   </div>
 </Layout>
 
-<style>
-  .scrollbar-hide::-webkit-scrollbar {
-    display: none;
-  }
-  .scrollbar-hide {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-</style>
-
 <script is:inline>
   function initCopy() {
     const btns = document.querySelectorAll('.copy-trigger')
@@ -294,3 +217,5 @@ const defaultImg = 'https://pic2.zhimg.com/50/v2-cc1a32fcb444fc9d5e23f2ee078dc6e
     initAll()
   }
 </script>
+
+

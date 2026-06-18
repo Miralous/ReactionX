@@ -1,7 +1,8 @@
----
+﻿---
 import { PROJECTS_CONFIG, GITHUB_CONFIG } from '~/config.mjs'
-import GithubProjectGrid, { RepoCount } from '~/components/projects/GithubProjectList'
+import GithubProjectGrid from '~/components/projects/GithubProjectList'
 import Layout from '~/layouts/Layout.astro'
+import Aside from '~/components/base/Aside.astro'
 
 const { title, description, introduce } = PROJECTS_CONFIG
 const username = GITHUB_CONFIG.GITHUB_USERNAME
@@ -13,46 +14,18 @@ const SECTION_NUM_CLASS =
 
 <Layout {title} {description}>
   <div class="relative font-sans flex flex-col lg:flex-row min-h-screen max-w-[1920px] mx-auto">
-    <aside class="w-full lg:w-1/3 lg:sticky lg:top-0 lg:h-screen flex flex-col xl:border-r border-border/40 z-20 bg-background">
-      <div class="flex flex-1 lg:overflow-y-auto scrollbar-hide flex-col">
-        <div class="p-6 lg:p-8 xl:p-12 pb-0 shrink-0 fade-up">
-          <span
-            class="inline-flex items-center gap-1.5 rounded-full bg-ctp-green/10 px-3 py-1 text-xs font-medium text-ctp-green select-none"
-          >
-            <span class="relative flex h-1.5 w-1.5">
-              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-ctp-green opacity-75"></span>
-              <span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-ctp-green"></span>
-            </span>
-            Online
-          </span>
-        </div>
-        <div
-          class="flex-1 flex flex-col justify-end lg:justify-center p-6 lg:p-8 xl:p-12 min-h-[300px] lg:min-h-[250px] fade-up animation-delay-100"
-        >
-          <h1 class="text-5xl sm:text-6xl xl:text-7xl font-bold tracking-tight text-foreground leading-[1.1] mb-6 select-none">{title}</h1>
-          <div class="flex items-center gap-2 text-sm text-muted-foreground">
-            <span class="icon-[ph--stack] size-4"></span><span>Module Registry</span>
-          </div>
-        </div>
-        <div class="shrink-0 p-6 lg:p-8 xl:p-12 fade-up animation-delay-150">
-          <p class="text-sm text-muted-foreground leading-relaxed">{introduce}</p>
-        </div>
-      </div>
-      <div class="flex border-t border-border/40 shrink-0 fade-up animation-delay-200">
-        <div
-          class="flex-1 flex flex-col items-start justify-center p-8 lg:p-10 xl:p-14 bg-background border-r border-border/40 hover:bg-muted/30 transition-colors"
-        >
-          <RepoCount {username} />
-          <span class="text-xs text-muted-foreground mt-1">Total Modules</span>
-        </div>
-        <div class="flex-1 flex flex-col items-start justify-center p-8 lg:p-10 xl:p-14 bg-background hover:bg-muted/30 transition-colors">
-          <span class="text-xl font-semibold text-foreground tracking-tight"
-            >{new Date().toLocaleDateString('en-US', { month: 'short', day: '2-digit' })}</span
-          >
-          <span class="text-xs text-muted-foreground mt-1">Last Update</span>
-        </div>
-      </div>
-    </aside>
+            <Aside
+      badge="Online"
+      badgeGreenDot={true}
+      title={title}
+      subtitleIcon="icon-[ph--stack] size-4"
+      subtitleText="Module Registry"
+      description={introduce}
+      footerLeftValue="Github"
+      footerLeftLabel="Host"
+      footerRightValue={new Date().toLocaleDateString('en-US', { month: 'short', day: '2-digit' })}
+      footerRightLabel="Last Update"
+    />
 
     <main class="w-full lg:w-2/3 z-10 flex flex-col fade-up animation-delay-100">
       <div class="p-6 lg:p-10 xl:p-16 2xl:p-20 flex-1">
@@ -68,12 +41,8 @@ const SECTION_NUM_CLASS =
   </div>
 </Layout>
 
-<style>
-  .scrollbar-hide::-webkit-scrollbar {
-    display: none;
-  }
-  .scrollbar-hide {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-</style>
+
+
+
+
+

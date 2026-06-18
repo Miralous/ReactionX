@@ -1,0 +1,128 @@
+﻿---
+import { cn } from '~/lib/utils'
+
+interface Props {
+  title: string
+  subtitleIcon?: string
+  subtitleText?: string
+  badge?: string
+  badgeGreenDot?: boolean
+  description?: string
+  footerLeftValue: string
+  footerLeftLabel: string
+  footerRightValue: string
+  footerRightLabel: string
+  footerLeftHref?: string
+  footerLeftIcon?: string
+  footerRightHref?: string
+  footerRightIcon?: string
+}
+const {
+  title,
+  subtitleIcon,
+  subtitleText,
+  badge,
+  badgeGreenDot,
+  description,
+  footerLeftValue,
+  footerLeftLabel,
+  footerRightValue,
+  footerRightLabel,
+  footerLeftHref,
+  footerLeftIcon,
+  footerRightHref,
+  footerRightIcon,
+}: Props = Astro.props
+---
+
+<aside class="w-full lg:w-1/3 lg:sticky lg:top-0 lg:h-screen flex flex-col xl:border-r border-border/40 z-20 bg-background">
+  <div class="flex flex-1 lg:overflow-y-auto scrollbar-hide flex-col">
+    <div class="p-6 lg:p-8 xl:p-12 pb-0 shrink-0 fade-up">
+      {
+        badge && (
+          <span
+            class={cn(
+              'inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium select-none',
+              badgeGreenDot ? 'bg-ctp-green/10 text-ctp-green' : 'bg-primary/10 text-primary'
+            )}
+          >
+            {badgeGreenDot && (
+              <span class="relative flex h-1.5 w-1.5">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-ctp-green opacity-75" />
+                <span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-ctp-green" />
+              </span>
+            )}
+            {badge}
+          </span>
+        )
+      }
+    </div>
+
+    <div
+      class="flex-1 flex flex-col justify-end lg:justify-center p-6 lg:p-8 xl:p-12 min-h-[300px] lg:min-h-[250px] fade-up animation-delay-100"
+    >
+      <h1 class="text-5xl sm:text-6xl xl:text-7xl font-bold tracking-tight text-foreground leading-[1.1] mb-6 select-none">
+        {title}
+      </h1>
+      {
+        subtitleIcon && subtitleText && (
+          <div class="flex items-center gap-2 text-sm text-muted-foreground">
+            <span class={subtitleIcon} />
+            <span>{subtitleText}</span>
+          </div>
+        )
+      }
+    </div>
+
+    <div class="shrink-0 p-6 lg:p-8 xl:p-12 fade-up animation-delay-150">
+      {description && <p class="text-sm text-muted-foreground leading-relaxed">{description}</p>}
+    </div>
+  </div>
+
+  <div class="flex border-t border-border/40 shrink-0 fade-up animation-delay-200">
+    {
+      footerLeftHref ? (
+        <a
+          href={footerLeftHref}
+          target="_blank"
+          class="flex-1 flex flex-col items-start justify-center p-8 lg:p-10 xl:p-14 bg-background hover:bg-muted/30 border-r border-border/40 last:border-r-0 transition-colors"
+        >
+          <span class={cn(footerLeftIcon, 'size-6 text-foreground transition-colors mb-2')} />
+          <span class="text-xs font-medium text-muted-foreground">{footerLeftValue}</span>
+        </a>
+      ) : (
+        <div class="flex-1 flex flex-col items-start justify-center p-8 lg:p-10 xl:p-14 bg-background border-r border-border/40 hover:bg-muted/30 transition-colors">
+          <span class="text-2xl font-semibold text-foreground tracking-tight">{footerLeftValue}</span>
+          <span class="text-xs text-muted-foreground mt-1">{footerLeftLabel}</span>
+        </div>
+      )
+    }
+    {
+      footerRightHref ? (
+        <a
+          href={footerRightHref}
+          target="_blank"
+          class="flex-1 flex flex-col items-start justify-center p-8 lg:p-10 xl:p-14 bg-background hover:bg-muted/30 last:border-r-0 transition-colors"
+        >
+          <span class={cn(footerRightIcon, 'size-6 text-foreground transition-colors mb-2')} />
+          <span class="text-xs font-medium text-muted-foreground">{footerRightValue}</span>
+        </a>
+      ) : (
+        <div class="flex-1 flex flex-col items-start justify-center p-8 lg:p-10 bg-background hover:bg-muted/30 transition-colors">
+          <span class="text-2xl font-semibold text-foreground tracking-tight">{footerRightValue}</span>
+          <span class="text-xs text-muted-foreground mt-1">{footerRightLabel}</span>
+        </div>
+      )
+    }
+  </div>
+</aside>
+
+<style>
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+</style>
