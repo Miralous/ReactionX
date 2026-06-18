@@ -13,7 +13,6 @@ const { title, description, introduce } = TAGS_CONFIG
 const maxCount = Math.max(...(sortedTags.map((t) => t.count).length > 0 ? sortedTags.map((t) => t.count) : [0]))
 const totalTags = tags.length.toString().padStart(2, '0')
 const totalPosts = allPosts.length.toString().padStart(2, '0')
-const lastUpdate = new Date().toLocaleDateString('en-US', { month: 'short', day: '2-digit' })
 
 const SECTION_HEADER_CLASS = 'flex items-center justify-between border-b border-border/40 pb-4 mb-8 select-none'
 const SECTION_TITLE_CLASS = 'text-lg font-semibold tracking-tight text-foreground'
