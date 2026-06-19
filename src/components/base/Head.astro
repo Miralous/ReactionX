@@ -32,10 +32,14 @@ const ogImage = new URL(image || SITE.ogImage, Astro.url)
       root.dataset.ctp = ctpMode
 
       // Hue — set CSS custom properties for dynamic color
-      var hue = parseInt(root.getAttribute('data-hue')) || 280
-      var globalHue = root.getAttribute('data-global-hue') === 'true'
+      var hue = parseInt(localStorage.getItem('appearance-hue')) || parseInt(root.getAttribute('data-hue')) || 280
+      var globalHue = localStorage.getItem('appearance-chue') !== null ? localStorage.getItem('appearance-chue') === 'true' : root.getAttribute('data-global-hue') === 'true'
       root.style.setProperty('--hue', String(hue))
       root.style.setProperty('--chue', String(globalHue ? hue : 280))
+
+      // Mono
+      var mono = localStorage.getItem('appearance-mono') !== null ? localStorage.getItem('appearance-mono') === 'true' : root.getAttribute('data-mono') === 'true'
+      root.setAttribute('data-mono', String(mono))
     }
 
     applyTheme()

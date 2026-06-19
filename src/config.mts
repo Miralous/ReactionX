@@ -10,17 +10,51 @@ import type {
   TagsConfig,
 } from '~/types'
 
-// Catppuccin color theme
-export const CATPPUCCIN = {
-  // Catppuccin flavor for light and dark mode. 'latte' is light, 'mocha', 'macchiato' and 'frappe' is dark.
-  light: 'latte',
-  dark: 'mocha',
-  // Catppuccin hue — controls accent color. 280 matches Catppuccin default (lavender)
-  hue: 280,
-  // Shift ALL UI colors (not just accent) by hue when true
-  isGlobal: true,
-  // Zero saturation on all colors for a monochrome look
-  mono: false,
+// Catppuccin color theme + design tokens + UI effects
+export const UI_CONFIG = {
+  theme: {
+    // Catppuccin flavor for light and dark mode. 'latte' is light, 'mocha', 'macchiato' and 'frappe' is dark.
+    light: 'latte',
+    dark: 'mocha',
+    // Catppuccin hue — controls accent color. 280 matches Catppuccin default (lavender)
+    hue: 280,
+    // Shift ALL UI colors (not just accent) by hue when true
+    isGlobal: true,
+    // Zero saturation on all colors for a monochrome look
+    mono: false,
+  },
+
+  // Global design tokens — overrides Tailwind's default scale
+  design: {
+    // Base radius in rem. Controls all rounded-* utilities:
+    // xs=0.25x, sm=0.5x, md=0.75x, lg=1x, xl=1.5x, 2xl=2x, 3xl=3x, 4xl=4x
+    // Default: 0.5 (8px at 16px base → rounded-lg)
+    radius: 1.2,
+
+    // Base spacing unit in rem. Affects all p-*, m-*, gap-*, space-*, etc.
+    // Default: 0.25 (4px at 16px base). e.g. p-4 = 4 × 0.25rem = 1rem
+    spacing: 0.25,
+
+    // Font families — family picks the directory under /public/fonts/
+    font: {
+      family: 'Inter', // import /fonts/$/{Serif,Sans,Mono}.woff2 (as Serif, Sans, Mono)
+      serif: "'Sans', system-ui, sans-serif",
+      // serif-fallback-to-serif: "'Serif', ui-serif, serif",
+      // serif-fallback-to-sans-serif: "'Serif', system-ui, sans-serif",
+      sans: "'Sans', system-ui, sans-serif",
+      mono: "'Mono', ui-monospace, monospace",
+    },
+  },
+
+  // Card hover 3D tilt effect
+  cardHover: {
+    enabled: true,
+    maxMove: 8,
+    maxRotate: 3,
+    easing: 0.1,
+    scale: 1.02,
+    duration: 0.2,
+  },
 }
 
 // Global site configuration
@@ -33,16 +67,17 @@ export const SITE: Site = {
   ogImage:
     'https://wsrv.nl/?url=avatars.githubusercontent.com/u/184231508?s=400&u=0a370792ba6bbb95a04d309171b562bcd7283a0f&v=4&mask=circle',
   version: '1.8',
+  favicon: '/favicon.webp',
   footerText: 'Designed and engineered for the digital void.',
   footerText2: 'Minimalist layout, maximum focus. Data persistence guaranteed.',
 }
 
 // Top navigation menu
 export const HEADER_LINKS: Link[] = [
-  { name: 'Posts', url: '/posts' },
-  { name: 'Dynamic', url: '/dynamic' },
-  { name: 'Projects', url: '/projects' },
-  { name: 'About', url: '/about' },
+  { name: 'Posts', url: '/posts', icon: 'icon-[ph--book-open-text]' },
+  { name: 'Dynamic', url: '/dynamic', icon: 'icon-[ph--waveform]' },
+  { name: 'Projects', url: '/projects', icon: 'icon-[ph--code-block]' },
+  { name: 'About', url: '/about', icon: 'icon-[ph--user]' },
 ]
 
 // Bottom navigation menu
@@ -318,27 +353,16 @@ export const FRIENDS_CONTACT = {
   description: 'Per Aspera Ad Astra',
 }
 
+// Deprecated: use UI_CONFIG.theme
+export const CATPPUCCIN = UI_CONFIG.theme
+
 // Global design tokens — overrides Tailwind's default scale
-export const DESIGN = {
-  // Base radius in rem. Controls all rounded-* utilities:
-  // xs=0.25x, sm=0.5x, md=0.75x, lg=1x, xl=1.5x, 2xl=2x, 3xl=3x, 4xl=4x
-  // Default: 0.5 (8px at 16px base → rounded-lg)
-  radius: 1.2,
+// Deprecated: use UI_CONFIG.design
+export const DESIGN = UI_CONFIG.design
 
-  // Base spacing unit in rem. Affects all p-*, m-*, gap-*, space-*, etc.
-  // Default: 0.25 (4px at 16px base). e.g. p-4 = 4 × 0.25rem = 1rem
-  spacing: 0.25,
-
-  // Font families — family picks the directory under /public/fonts/
-  font: {
-    family: 'Inter', // import /fonts/$/{Serif,Sans,Mono}.woff2 (as Serif, Sans, Mono)
-    serif: "'Sans', system-ui, sans-serif",
-    // serif-fallback-to-serif: "'Serif', ui-serif, serif",
-    // serif-fallback-to-sans-serif: "'Serif', system-ui, sans-serif",
-    sans: "'Sans', system-ui, sans-serif",
-    mono: "'Mono', ui-monospace, monospace",
-  },
-}
+// Visual appearance — card hover 3D tilt effect
+// Deprecated: use UI_CONFIG.cardHover
+export const GLOBAL_CONFIG = { styles: { visual: { cardHover: UI_CONFIG.cardHover } } }
 
 // Waline comment system configuration
 export const WALINE_CONFIG = {

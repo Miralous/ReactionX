@@ -4,6 +4,7 @@ import '~/styles/pro.css'
 import { SITE, CATPPUCCIN, DESIGN } from '~/config.mjs'
 import Head from '~/components/base/Head.astro'
 import Header from './Header.astro'
+import NavSidebar from '~/components/base/NavSidebar.astro'
 import Footer from './Footer.astro'
 const HUE = CATPPUCCIN.hue
 const GLOBAL_HUE = CATPPUCCIN.isGlobal
@@ -51,20 +52,24 @@ const fontCSS = [
 >
   <head>
     <Head title={`${title} | ${SITE.title}`} {description} {image} />
-    <style is:global set:html={fontCSS} />
+    <style is:global set:html={fontCSS}></style>
   </head>
   <body>
     <div class="select-text selection:bg-foreground/20 selection:text-foreground">
-      <div class="relative z-10 bg-background">
-        <Header />
-      </div>
+      <NavSidebar />
 
-      <main class="relative z-0 fullPage flex-auto bg-background" transition:animate="fade">
-        <slot />
-      </main>
+      <div class="sidebar-offset">
+        <div class="relative z-10 bg-background">
+          <Header />
+        </div>
 
-      <div class="relative z-70 bg-background">
-        <Footer />
+        <main class="relative z-0 fullPage flex-auto bg-background" transition:animate="fade">
+          <slot />
+        </main>
+
+        <div class="relative z-70 bg-background">
+          <Footer />
+        </div>
       </div>
     </div>
     <div
@@ -73,20 +78,466 @@ const fontCSS = [
     </div>
 
     <script is:inline>
-      // 性能监测和优化
       document.addEventListener('astro:before-preparation', () => {
-        // 页面开始切换时，预加载关键资源
-        const prefetchLinks = document.querySelectorAll('link[rel="prefetch"]')
-        prefetchLinks.forEach((link) => {
-          // 确保预加载是激活的
-          link.setAttribute('rel', 'prefetch')
-        })
+        document.querySelectorAll('link[rel="prefetch"]').forEach((link) => link.setAttribute('rel', 'prefetch'))
+      })
+      document.addEventListener('astro:after-swap', () => window.scrollTo(0, 0))
+    </script>
+
+    <!-- Search overlay (shared, single instance) -->
+    <div id="search-mask" class="fixed z-[200] hidden inset-0 bg-background/80 backdrop-blur-sm transition-opacity duration-300 opacity-0">
+      <div
+        class="absolute left-1/2 top-[12%] -translate-x-1/2 transition-all duration-300 -translate-y-4 search-panel-show w-[92%] max-w-[640px]"
+      >
+        <div
+          id="search-panel"
+          class="flex flex-col max-h-[75vh] w-full bg-background/95 backdrop-blur-xl border border-border/40 rounded-md shadow-2xl overflow-hidden"
+        >
+          <div id="search-bar" class="flex items-center gap-3 px-5 py-4 border-b border-border/40 bg-muted/10 shrink-0">
+            <span class="icon-[material-symbols--manage-search] size-6 text-muted-foreground/60"></span>
+            <label class="sr-only" for="search-input">Search</label>
+            <input
+              type="search"
+              id="search-input"
+              class="w-full bg-transparent outline-none text-foreground placeholder:text-muted-foreground/50 font-medium text-base"
+              placeholder="Search documentation..."
+              autocomplete="off"
+            />
+            <button
+              id="search-exact"
+              class="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-md border border-border/40 transition-colors select-none shrink-0"
+              aria-pressed="false"
+              title="Exact Match"
+            >
+              <span class="icon-[material-symbols--format-quote] size-3.5"></span>
+              Exact
+            </button>
+            <kbd
+              class="hidden sm:inline-flex items-center justify-center h-6 px-2 text-[10px] font-mono font-semibold text-muted-foreground bg-muted/50 border border-border/40 rounded shrink-0"
+              >ESC</kbd
+            >
+          </div>
+
+          <div id="search-results" class="flex-1 overflow-y-auto custom-scrollbar p-2 sm:p-3 overscroll-contain" data-base="/"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Appearance popup (shared, single instance) -->
+    <div
+      id="appearance-popup"
+      class="fixed z-[100] hidden flex-col gap-5 p-5 rounded-xl border border-border/40 bg-background shadow-2xl min-w-[240px]"
+    >
+      <div class="text-xs font-semibold text-muted-foreground uppercase tracking-wider select-none">Appearance</div>
+      <div class="flex flex-col gap-2">
+        <div class="flex items-center justify-between text-xs">
+          <span class="text-muted-foreground">Hue</span>
+          <span class="text-muted-foreground font-mono" id="appearance-hue-value">280°</span>
+        </div>
+        <div
+          class="relative w-full h-5 rounded-sm overflow-hidden cursor-pointer"
+          id="appearance-hue-track"
+          style="background: linear-gradient(to right, hsl(0 80% 50%), hsl(60 80% 50%), hsl(120 80% 50%), hsl(180 80% 50%), hsl(240 80% 50%), hsl(300 80% 50%), hsl(360 80% 50%));"
+        >
+          <div
+            id="appearance-hue-thumb"
+            class="absolute top-0.5 size-4 border-2 border-white rounded-sm shadow-md pointer-events-none"
+            style="background:hsl(280 80% 50%); left:calc(280/360*100% - 0.5rem);"
+          >
+          </div>
+        </div>
+      </div>
+      <div class="flex flex-col gap-4">
+        <div class="flex items-center justify-between">
+          <span class="text-xs text-muted-foreground">Monochrome</span>
+          <button
+            id="appearance-mono-btn"
+            class="relative inline-flex h-5 w-9 shrink-0 rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none"
+            role="switch"
+            aria-checked="false"
+            style="background:hsl(var(--muted))"
+          >
+            <span
+              class="pointer-events-none inline-block h-4 w-4 rounded-full bg-white shadow-sm ring-0 transition duration-200 ease-in-out translate-x-0"
+            ></span>
+          </button>
+        </div>
+        <div class="flex items-center justify-between">
+          <span class="text-xs text-muted-foreground">Global hue</span>
+          <button
+            id="appearance-chue-btn"
+            class="relative inline-flex h-5 w-9 shrink-0 rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none"
+            role="switch"
+            aria-checked="false"
+            style="background:hsl(var(--muted))"
+          >
+            <span
+              class="pointer-events-none inline-block h-4 w-4 rounded-full bg-white shadow-sm ring-0 transition duration-200 ease-in-out translate-x-0"
+            ></span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      import { initCardHover } from '~/lib/cardHover'
+
+      document.addEventListener('astro:page-load', () => {
+        initCardHover()
+      })
+    </script>
+
+    <script>
+      const searchInput = document.getElementById('search-input') as HTMLInputElement
+      const searchMask = document.getElementById('search-mask')
+      const searchResults = document.getElementById('search-results')
+      const exactToggle = document.getElementById('search-exact') as HTMLButtonElement | null
+      const searchPanelShow = document.querySelector('.search-panel-show') as HTMLElement
+
+      let searchReqId = 0
+      let isPagefindLoaded = false
+      let isPagefindLoading = false
+
+      let exactMode = false
+      try {
+        exactMode = localStorage.getItem('search-exact') === '1'
+      } catch {}
+
+      const updateExactUI = () => {
+        if (!exactToggle) return
+        exactToggle.setAttribute('aria-pressed', exactMode ? 'true' : 'false')
+        if (exactMode) {
+          exactToggle.classList.add('bg-foreground', 'text-background', 'border-foreground')
+          exactToggle.classList.remove('text-muted-foreground', 'bg-transparent')
+        } else {
+          exactToggle.classList.remove('bg-foreground', 'text-background', 'border-foreground')
+          exactToggle.classList.add('text-muted-foreground', 'bg-transparent')
+        }
+      }
+      updateExactUI()
+
+      exactToggle?.addEventListener('click', () => {
+        exactMode = !exactMode
+        try {
+          localStorage.setItem('search-exact', exactMode ? '1' : '0')
+        } catch {}
+        updateExactUI()
+        searchInput?.dispatchEvent(new Event('input'))
       })
 
-      // 使用 astro:after-swap 替代 astro:page-load 获得更快的转换反应
+      const initPagefind = async () => {
+        if (isPagefindLoaded || isPagefindLoading || !import.meta.env.PROD) return
+
+        isPagefindLoading = true
+        if (searchInput) searchInput.placeholder = 'Initializing search engine...'
+
+        try {
+          const path = '/pagefind/' + 'pagefind.js'
+          const pagefind = await import(/* @vite-ignore */ path)
+
+          await pagefind.options({
+            excerptLength: 25,
+            showSubResults: true,
+          })
+          await pagefind.init()
+          ;(window as any).pagefind = pagefind
+          isPagefindLoaded = true
+
+          if (searchInput) {
+            searchInput.placeholder = 'Search documentation...'
+            if (searchInput.value.trim() !== '') {
+              searchInput.dispatchEvent(new Event('input'))
+            }
+          }
+        } catch (e) {
+          console.error('Failed to load pagefind:', e)
+          if (searchInput) searchInput.placeholder = 'Engine failed to load'
+        } finally {
+          isPagefindLoading = false
+        }
+      }
+
+      function openSearch() {
+        searchMask?.classList.remove('hidden')
+        requestAnimationFrame(() => {
+          searchMask?.classList.remove('opacity-0')
+          searchPanelShow?.classList.remove('-translate-y-4')
+          searchPanelShow?.classList.add('translate-y-0')
+        })
+        searchInput?.focus()
+        initPagefind()
+      }
+
+      function closeSearch() {
+        searchMask?.classList.add('opacity-0')
+        searchPanelShow?.classList.remove('translate-y-0')
+        searchPanelShow?.classList.add('-translate-y-4')
+        setTimeout(() => {
+          searchMask?.classList.add('hidden')
+          if (searchInput) searchInput.value = ''
+          if (searchResults) searchResults.innerHTML = ''
+        }, 300)
+      }
+
+      function bindSearchTriggers() {
+        document.querySelectorAll('[data-search-trigger]').forEach((el) => {
+          el.onclick = openSearch
+        })
+      }
+
+      searchMask?.addEventListener('click', (e) => {
+        if (e.target === searchMask) closeSearch()
+      })
+
+      const handleKeydown = (e: KeyboardEvent) => {
+        if (e.key === 'Escape' && !searchMask?.classList.contains('hidden')) {
+          closeSearch()
+        }
+        if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+          e.preventDefault()
+          if (searchMask?.classList.contains('hidden')) {
+            openSearch()
+          } else {
+            closeSearch()
+          }
+        }
+      }
+      document.addEventListener('keydown', handleKeydown)
       document.addEventListener('astro:after-swap', () => {
-        // 重置滚动位置（使用更快的同步操作）
-        window.scrollTo(0, 0)
+        bindSearchTriggers()
+      })
+      bindSearchTriggers()
+
+      searchInput?.addEventListener('input', async (e) => {
+        if (searchResults) searchResults.innerHTML = ''
+        const target = e.target as HTMLInputElement
+        const q = target.value.trim()
+        const reqId = ++searchReqId
+
+        if (q === '') {
+          searchResults?.insertAdjacentHTML(
+            'beforeend',
+            `<div class="py-16 flex flex-col items-center justify-center gap-3 select-none opacity-50">
+              <span class="icon-[ph--keyboard] size-10 text-muted-foreground"></span>
+              <span class="text-sm font-medium text-muted-foreground">Type to start searching</span>
+            </div>`
+          )
+          return
+        }
+
+        if (import.meta.env.PROD) {
+          if (!isPagefindLoaded) return
+
+          const pagefindQuery = exactMode ? `"${q}"` : q
+          const search = await (window as any).pagefind.debouncedSearch(pagefindQuery)
+
+          if (reqId !== searchReqId || searchInput?.value.trim() !== q) return
+
+          if (!search?.results || search.results.length === 0) {
+            searchResults?.insertAdjacentHTML(
+              'beforeend',
+              `<div class="py-16 flex flex-col items-center justify-center gap-3 select-none opacity-60">
+                <span class="icon-[ph--magnifying-glass-minus] size-10 text-muted-foreground"></span>
+                <span class="text-sm font-medium text-muted-foreground">No results found for "${q}"</span>
+              </div>`
+            )
+            return
+          }
+
+          for (const result of search.results) {
+            const data = await result.data()
+
+            const resultItem = document.createElement('a')
+            resultItem.href = data.url
+            resultItem.className =
+              'block p-4 mb-2 bg-background hover:bg-muted/40 border border-transparent hover:border-border/60 rounded-md transition-all group'
+            resultItem.innerHTML = `
+              <h3 class="text-base font-semibold text-foreground group-hover:text-primary transition-colors tracking-tight mb-2">${data.meta.title}</h3>
+              <p class="text-sm text-muted-foreground leading-relaxed line-clamp-2">${data.excerpt}</p>
+            `
+            resultItem.addEventListener('click', closeSearch)
+            searchResults?.appendChild(resultItem)
+
+            if (data.sub_results) {
+              for (const subResult of data.sub_results) {
+                if (subResult.excerpt === data.excerpt) continue
+                const cleanTitle = subResult.title.replace(/\s*[Hh][1-6]$/g, '')
+                if (!cleanTitle) continue
+
+                const subItem = document.createElement('a')
+                subItem.href = subResult.url
+                subItem.className =
+                  'block p-3 ml-6 mb-2 bg-muted/20 hover:bg-muted/50 border-l-[3px] border-border/60 hover:border-primary rounded-r-md transition-all group'
+                subItem.innerHTML = `
+                  <h4 class="text-sm font-medium text-foreground opacity-90 group-hover:text-primary transition-colors mb-1 tracking-tight">${cleanTitle}</h4>
+                  <p class="text-xs text-muted-foreground/80 line-clamp-1">${subResult.excerpt}</p>
+                `
+                subItem.addEventListener('click', closeSearch)
+                searchResults?.appendChild(subItem)
+              }
+            }
+          }
+        } else {
+          searchResults?.insertAdjacentHTML(
+            'beforeend',
+            `<div class="py-16 flex flex-col items-center justify-center gap-3 select-none opacity-60">
+              <span class="icon-[ph--warning-circle] size-10 text-ctp-yellow/80"></span>
+              <span class="text-sm font-medium text-muted-foreground text-center">Search requires Pagefind.<br/>Not available in dev mode.</span>
+            </div>`
+          )
+        }
+      })
+    </script>
+
+    <script>
+      function initAppearance() {
+        const root = document.documentElement
+        const hue = parseInt(localStorage.getItem('appearance-hue')) || parseInt(root.getAttribute('data-hue')) || 280
+        const clamped = Math.max(0, Math.min(360, hue))
+        root.style.setProperty('--hue', String(clamped))
+        root.setAttribute('data-hue', String(clamped))
+        localStorage.setItem('appearance-hue', String(clamped))
+
+        const monoActive = (localStorage.getItem('appearance-mono') ?? root.getAttribute('data-mono')) === 'true'
+        root.setAttribute('data-mono', String(monoActive))
+        localStorage.setItem('appearance-mono', String(monoActive))
+
+        const chueActive = (localStorage.getItem('appearance-chue') ?? root.getAttribute('data-global-hue')) === 'true'
+        root.setAttribute('data-global-hue', String(chueActive))
+        localStorage.setItem('appearance-chue', String(chueActive))
+        root.style.setProperty('--chue', String(chueActive ? clamped : 280))
+
+        document.getElementById('appearance-hue-value').textContent = clamped + '°'
+        updateHueThumb(clamped)
+        setToggle('appearance-mono-btn', monoActive)
+        setToggle('appearance-chue-btn', chueActive)
+      }
+
+      function updateHueThumb(h) {
+        const thumb = document.getElementById('appearance-hue-thumb')
+        if (thumb) {
+          thumb.style.left = `calc(${h} / 360 * 100% - 0.5rem)`
+          thumb.style.background = `hsl(${h} 80% 50%)`
+        }
+      }
+
+      function setHue(h) {
+        const clamped = Math.max(0, Math.min(360, h))
+        const root = document.documentElement
+        root.style.setProperty('--hue', String(clamped))
+        root.setAttribute('data-hue', String(clamped))
+        localStorage.setItem('appearance-hue', String(clamped))
+        document.getElementById('appearance-hue-value').textContent = clamped + '°'
+        updateHueThumb(clamped)
+        const chueActive = document.getElementById('appearance-chue-btn').getAttribute('aria-checked') === 'true'
+        root.style.setProperty('--chue', String(chueActive ? clamped : 280))
+      }
+
+      function setToggle(id, active) {
+        const btn = document.getElementById(id)
+        if (!btn) return
+        btn.setAttribute('aria-checked', String(active))
+        const dot = btn.querySelector('span')
+        if (dot) dot.style.transform = active ? 'translateX(16px)' : 'translateX(0)'
+        btn.style.background = active ? 'hsl(var(--foreground))' : 'hsl(var(--muted))'
+      }
+
+      function attachAppearanceEvents() {
+        const popup = document.getElementById('appearance-popup')
+        let activeBtn = null
+        function togglePopup(btn) {
+          activeBtn = activeBtn === btn && !popup.classList.contains('hidden') ? null : btn
+          if (activeBtn) {
+            const rect = activeBtn.getBoundingClientRect()
+            if (window.innerWidth < 768) {
+              popup.style.setProperty('top', rect.bottom + 8 + 'px')
+              popup.style.setProperty('right', window.innerWidth - rect.right + 'px')
+              popup.style.removeProperty('bottom')
+              popup.style.removeProperty('left')
+            } else {
+              popup.style.setProperty('bottom', '1rem')
+              popup.style.setProperty('left', rect.left + 'px')
+              popup.style.removeProperty('top')
+              popup.style.removeProperty('right')
+            }
+          } else {
+            popup.style.removeProperty('top')
+            popup.style.removeProperty('right')
+            popup.style.removeProperty('bottom')
+            popup.style.removeProperty('left')
+          }
+          popup.classList.toggle('hidden')
+          popup.classList.toggle('flex')
+        }
+        document.querySelectorAll('#sidebar-appearance-btn, #header-appearance-btn').forEach((el) => {
+          el.onclick = function (e) {
+            e.stopPropagation()
+            togglePopup(this)
+          }
+        })
+        document.addEventListener('click', function (e) {
+          if (
+            popup &&
+            !popup.classList.contains('hidden') &&
+            !popup.contains(e.target) &&
+            !e.target.closest('#sidebar-appearance-btn') &&
+            !e.target.closest('#header-appearance-btn')
+          ) {
+            popup.classList.add('hidden')
+            popup.classList.remove('flex')
+          }
+        })
+
+        // Hue track — click or drag
+        const track = document.getElementById('appearance-hue-track')
+        if (track) {
+          function hueFromEvent(e) {
+            const rect = track.getBoundingClientRect()
+            const x = Math.max(0, Math.min(e.clientX - rect.left, rect.width))
+            return Math.round((x / rect.width) * 360)
+          }
+          track.onclick = function (e) {
+            setHue(hueFromEvent(e))
+          }
+          track.onmousedown = function (e) {
+            setHue(hueFromEvent(e))
+            function onMove(ev) {
+              setHue(hueFromEvent(ev))
+            }
+            function onUp() {
+              document.removeEventListener('mousemove', onMove)
+              document.removeEventListener('mouseup', onUp)
+            }
+            document.addEventListener('mousemove', onMove)
+            document.addEventListener('mouseup', onUp)
+          }
+        }
+
+        document.getElementById('appearance-mono-btn')?.addEventListener('click', function () {
+          const active = this.getAttribute('aria-checked') !== 'true'
+          setToggle('appearance-mono-btn', active)
+          document.documentElement.setAttribute('data-mono', String(active))
+          localStorage.setItem('appearance-mono', String(active))
+        })
+
+        document.getElementById('appearance-chue-btn')?.addEventListener('click', function () {
+          const active = this.getAttribute('aria-checked') !== 'true'
+          setToggle('appearance-chue-btn', active)
+          document.documentElement.setAttribute('data-global-hue', String(active))
+          localStorage.setItem('appearance-chue', String(active))
+          const hue =
+            parseInt(document.documentElement.style.getPropertyValue('--hue')) ||
+            parseInt(document.documentElement.getAttribute('data-hue')) ||
+            280
+          document.documentElement.style.setProperty('--chue', String(active ? hue : 280))
+        })
+      }
+
+      initAppearance()
+      attachAppearanceEvents()
+      document.addEventListener('astro:after-swap', () => {
+        initAppearance()
+        attachAppearanceEvents()
       })
     </script>
   </body>

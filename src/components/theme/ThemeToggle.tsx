@@ -44,7 +44,9 @@ const ThemeToggle = () => {
       controlsSystem.start('hidden')
     }
 
-    try { localStorage.setItem('theme', theme) } catch (e) {}
+    try {
+      localStorage.setItem('theme', theme)
+    } catch (e) {}
 
     // 执行变色，并短暂禁用原生过渡以防全局闪烁
     const root = document.documentElement
@@ -54,8 +56,8 @@ const ThemeToggle = () => {
     root.classList.toggle('dark', isDark)
 
     // Catppuccin surface variant
-    const lightVariant = root.getAttribute('data-ctp-light') || 'latte';
-    const darkVariant = root.getAttribute('data-ctp-dark') || 'macchiato';
+    const lightVariant = root.getAttribute('data-ctp-light') || 'latte'
+    const darkVariant = root.getAttribute('data-ctp-dark') || 'macchiato'
     root.dataset.ctp = isDark ? darkVariant : lightVariant
 
     // 使用 requestAnimationFrame 保证样式应用完毕后再恢复过渡
@@ -64,7 +66,6 @@ const ThemeToggle = () => {
         root.classList.remove('disable-transition')
       })
     })
-
   }, [theme, mounted, controlsSun, controlsMoon, controlsSystem])
 
   const handleClick = () => {
@@ -85,15 +86,33 @@ const ThemeToggle = () => {
 
   return (
     <button onClick={handleClick} className="relative size-5 flex items-center justify-center cursor-pointer" aria-label="Toggle Theme">
-      <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.9 }} className="relative size-5 flex items-center justify-center">
-        <motion.div className="absolute inset-0" variants={iconVariants} initial="hidden" animate={controlsSun} transition={{ duration: 0.2, ease: 'easeOut' }}>
-          <span className="icon-[tabler--sun-filled] size-5 text-foreground hover:text-foreground transition-colors"></span>
+      <motion.div whileTap={{ scale: 0.9 }} className="relative size-5 flex items-center justify-center">
+        <motion.div
+          className="absolute inset-0"
+          variants={iconVariants}
+          initial="hidden"
+          animate={controlsSun}
+          transition={{ duration: 0.2, ease: 'easeOut' }}
+        >
+          <span className="icon-[tabler--sun-filled] size-5"></span>
         </motion.div>
-        <motion.div className="absolute inset-0" variants={iconVariants} initial="hidden" animate={controlsSystem} transition={{ duration: 0.2, ease: 'easeOut' }}>
-          <span className="icon-[tabler--device-desktop-question] size-5 text-foreground hover:text-foreground transition-colors"></span>
+        <motion.div
+          className="absolute inset-0"
+          variants={iconVariants}
+          initial="hidden"
+          animate={controlsSystem}
+          transition={{ duration: 0.2, ease: 'easeOut' }}
+        >
+          <span className="icon-[tabler--device-desktop-question] size-5"></span>
         </motion.div>
-        <motion.div className="absolute inset-0" variants={iconVariants} initial="hidden" animate={controlsMoon} transition={{ duration: 0.2, ease: 'easeOut' }}>
-          <span className="icon-[tabler--moon-filled] size-5 text-foreground hover:text-foreground transition-colors"></span>
+        <motion.div
+          className="absolute inset-0"
+          variants={iconVariants}
+          initial="hidden"
+          animate={controlsMoon}
+          transition={{ duration: 0.2, ease: 'easeOut' }}
+        >
+          <span className="icon-[tabler--moon-filled] size-5"></span>
         </motion.div>
       </motion.div>
     </button>

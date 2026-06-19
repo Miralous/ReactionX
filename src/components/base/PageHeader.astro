@@ -1,0 +1,116 @@
+---
+import { cn } from '~/lib/utils'
+
+interface Props {
+  title: string
+  subtitleIcon?: string
+  subtitleText?: string
+  badge?: string
+  badgeGreenDot?: boolean
+  description?: string
+  footerLeftValue: string
+  footerLeftLabel?: string
+  footerRightValue: string
+  footerRightLabel?: string
+  footerLeftHref?: string
+  footerLeftIcon?: string
+  footerRightHref?: string
+  footerRightIcon?: string
+}
+
+const {
+  title,
+  subtitleIcon,
+  subtitleText,
+  badge,
+  badgeGreenDot,
+  description,
+  footerLeftValue,
+  footerLeftLabel,
+  footerRightValue,
+  footerRightLabel,
+  footerLeftHref,
+  footerLeftIcon,
+  footerRightHref,
+  footerRightIcon,
+}: Props = Astro.props
+---
+
+<div class="border-b border-border/40 fade-up">
+  <div class="max-w-[1250px] mx-auto px-6 lg:px-10 xl:px-16 2xl:px-20">
+    <div class="py-8 lg:py-12 xl:py-16">
+      {
+        badge && (
+          <span
+            class={cn(
+              'inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium select-none mb-4',
+              badgeGreenDot ? 'bg-ctp-green/10 text-ctp-green' : 'bg-primary/10 text-primary'
+            )}
+          >
+            {badgeGreenDot && (
+              <span class="relative flex h-1.5 w-1.5">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-ctp-green opacity-75" />
+                <span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-ctp-green" />
+              </span>
+            )}
+            {badge}
+          </span>
+        )
+      }
+
+      <h1 class="text-4xl sm:text-5xl xl:text-6xl font-bold tracking-tight text-foreground leading-[1.1] mb-4 select-none">
+        {title}
+      </h1>
+
+      {
+        subtitleIcon && subtitleText && (
+          <div class="flex items-center gap-2 text-sm text-muted-foreground">
+            <span class={subtitleIcon} />
+            <span>{subtitleText}</span>
+          </div>
+        )
+      }
+
+      {description && <p class="text-sm text-muted-foreground leading-relaxed mt-4 max-w-prose">{description}</p>}
+    </div>
+  </div>
+
+  <div class="max-w-[1250px] mx-auto px-6 lg:px-10 xl:px-16 2xl:px-20">
+    <div class="flex border-t border-border/40">
+      {
+        footerLeftHref ? (
+          <a
+            href={footerLeftHref}
+            target="_blank"
+            class="flex-1 flex items-center gap-3 py-4 px-6 bg-background hover:bg-muted/30 border-r border-border/40 last:border-r-0 transition-colors"
+          >
+            <span class={cn(footerLeftIcon, 'size-5 text-foreground')} />
+            <span class="text-sm font-medium text-muted-foreground">{footerLeftValue}</span>
+          </a>
+        ) : (
+          <div class="flex-1 flex items-center gap-3 py-4 px-6 bg-background border-r border-border/40">
+            <span class="text-xl font-semibold text-foreground tracking-tight">{footerLeftValue}</span>
+            {footerLeftLabel && <span class="text-xs text-muted-foreground">{footerLeftLabel}</span>}
+          </div>
+        )
+      }
+      {
+        footerRightHref ? (
+          <a
+            href={footerRightHref}
+            target="_blank"
+            class="flex-1 flex items-center gap-3 py-4 px-6 bg-background hover:bg-muted/30 last:border-r-0 transition-colors"
+          >
+            <span class={cn(footerRightIcon, 'size-5 text-foreground')} />
+            <span class="text-sm font-medium text-muted-foreground">{footerRightValue}</span>
+          </a>
+        ) : (
+          <div class="flex-1 flex items-center gap-3 py-4 px-6 bg-background">
+            <span class="text-xl font-semibold text-foreground tracking-tight">{footerRightValue}</span>
+            {footerRightLabel && <span class="text-xs text-muted-foreground">{footerRightLabel}</span>}
+          </div>
+        )
+      }
+    </div>
+  </div>
+</div>

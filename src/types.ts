@@ -18,6 +18,7 @@ export type Site = {
   version: string
   footerText: string
   footerText2?: string
+  favicon: string
 }
 
 /**
@@ -157,6 +158,7 @@ export type GithubConfig = {
 export type Link = {
   name: string
   url: string
+  icon?: string
 }
 
 /**

@@ -1,0 +1,192 @@
+---
+import { HEADER_LINKS, CMS_CONFIG, SITE } from '~/config.mjs'
+import { cn } from '~/lib/utils'
+---
+
+<nav
+  id="sidebar-nav"
+  class="fixed left-0 top-0 bottom-0 flex-col items-center py-3 gap-1 border-r border-border/40 bg-background z-50 hidden md:flex sidebar-nav"
+>
+  <!-- Logo + site title -->
+  <a href="/" class="sidebar-item sidebar-logo-item" aria-label="Home" title="Home">
+    <img src={SITE.favicon} width={20} height={20} alt="Logo" class="size-5 shrink-0" loading="eager" />
+    <span class="sidebar-label text-sm font-semibold whitespace-nowrap">{SITE.title}</span>
+  </a>
+
+  <div class="w-6 border-t border-border/40 sidebar-divider"></div>
+
+  <!-- Nav links -->
+  {
+    HEADER_LINKS.map((link) => (
+      <a
+        href={link.url}
+        class={cn('sidebar-item', (Astro.url.pathname === link.url || Astro.url.pathname.startsWith(link.url)) && 'sidebar-item-active')}
+        aria-label={link.name}
+        title={link.name}
+      >
+        {link.icon && <span class={cn(link.icon, 'size-5 shrink-0')} />}
+        <span class="sidebar-label text-sm font-medium whitespace-nowrap">{link.name}</span>
+      </a>
+    ))
+  }
+
+  <div class="flex-1 min-h-2"></div>
+
+  <!-- Search — direct icon, no wrapping div -->
+  <div class="sidebar-item" data-search-trigger>
+    <span class="icon-[material-symbols--manage-search] size-5 shrink-0"></span>
+    <span class="sidebar-label text-sm font-medium whitespace-nowrap">Search</span>
+  </div>
+
+  <!-- RSS -->
+  <a href="/rss.xml" target="_blank" class="sidebar-item" aria-label="RSS Feed" title="RSS Feed">
+    <span class="icon-[material-symbols--rss-feed] size-5 shrink-0"></span>
+    <span class="sidebar-label text-sm font-medium whitespace-nowrap">RSS</span>
+  </a>
+
+  {
+    CMS_CONFIG.enableCMS && (
+      <a href="/admin" class="sidebar-item" aria-label="Admin Dashboard" title="Admin Panel">
+        <span class="icon-[material-symbols--admin-panel-settings-outline] size-5 shrink-0" />
+        <span class="sidebar-label text-sm font-medium whitespace-nowrap">Admin</span>
+      </a>
+    )
+  }
+
+  <!-- Theme -->
+  <div class="sidebar-item" id="sidebar-theme-btn">
+    <span id="sidebar-theme-icon" class="icon-[tabler--sun-filled] size-5 shrink-0"></span>
+    <span class="sidebar-label text-sm font-medium whitespace-nowrap">Theme</span>
+  </div>
+
+  <!-- Appearance -->
+  <div class="sidebar-item" id="sidebar-appearance-btn" title="Appearance settings">
+    <span class="icon-[ph--palette] size-5 shrink-0"></span>
+    <span class="sidebar-label text-sm font-medium whitespace-nowrap">Appearance</span>
+  </div>
+
+  <div class="w-6 border-t border-border/40 sidebar-divider"></div>
+
+  <button id="sidebar-mode-btn" class="sidebar-item" aria-label="Toggle sidebar mode" title="Icons only">
+    <span id="sidebar-mode-icon" class="icon-[ph--sidebar-simple] size-5 shrink-0"></span>
+  </button>
+  <!-- Tailwind scan hint for dynamic icons -->
+  <span class="hidden icon-[ph--align-left-simple] icon-[ph--align-left]"></span>
+</nav>
+
+<script>
+  const STORAGE_KEY = 'sidebar-mode'
+  const MODE_LIST = ['compact', 'label', 'aside']
+  const MODE_ICONS = {
+    compact: 'ph--sidebar-simple',
+    label: 'ph--align-left-simple',
+    aside: 'ph--align-left',
+  }
+  const MODE_TITLES = {
+    compact: 'Icons only',
+    label: 'Show labels',
+    aside: 'Show aside panel',
+  }
+
+  function hasAside() {
+    return !!document.querySelector('.aside-panel')
+  }
+
+  function wideEnoughForAside() {
+    return window.innerWidth >= 1280
+  }
+
+  function getNextMode(current) {
+    let idx = MODE_LIST.indexOf(current)
+    for (let i = 0; i < MODE_LIST.length; i++) {
+      idx = (idx + 1) % MODE_LIST.length
+      const next = MODE_LIST[idx]
+      if (next === 'aside' && (!hasAside() || !wideEnoughForAside())) continue
+      return next
+    }
+    return 'compact'
+  }
+
+  function setMode(mode) {
+    document.body.dataset.sidebarMode = mode
+    try {
+      localStorage.setItem(STORAGE_KEY, mode)
+    } catch {}
+
+    const btn = document.getElementById('sidebar-mode-btn')
+    const icon = document.getElementById('sidebar-mode-icon')
+    if (btn) {
+      btn.title = MODE_TITLES[mode] || 'Icons only'
+      btn.classList.toggle('sidebar-item-active', mode !== 'compact')
+    }
+    if (icon) icon.className = `icon-[${MODE_ICONS[mode]}] size-5 shrink-0`
+  }
+
+  const THEME_ICON_MAP = { light: 'tabler--sun-filled', dark: 'tabler--moon-filled', system: 'tabler--device-desktop-question' }
+
+  function setThemeIcon(theme) {
+    const icon = document.getElementById('sidebar-theme-icon')
+    if (icon) icon.className = `icon-[${THEME_ICON_MAP[theme] || 'tabler--sun-filled'}] size-5 shrink-0`
+  }
+
+  function applyTheme(theme) {
+    const root = document.documentElement
+    root.classList.add('disable-transition')
+    const isDark = theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches)
+    root.classList.toggle('dark', isDark)
+
+    const lightVariant = root.getAttribute('data-ctp-light') || 'latte'
+    const darkVariant = root.getAttribute('data-ctp-dark') || 'macchiato'
+    root.dataset.ctp = isDark ? darkVariant : lightVariant
+
+    requestAnimationFrame(() => requestAnimationFrame(() => root.classList.remove('disable-transition')))
+  }
+
+  function cycleTheme() {
+    const current = localStorage.getItem('theme') || 'system'
+    const next = current === 'light' ? 'dark' : current === 'dark' ? 'system' : 'light'
+    try {
+      localStorage.setItem('theme', next)
+    } catch {}
+    setThemeIcon(next)
+    applyTheme(next)
+  }
+
+  function initSidebar() {
+    const saved =
+      (() => {
+        try {
+          return localStorage.getItem(STORAGE_KEY)
+        } catch {
+          return null
+        }
+      })() || 'compact'
+    const valid = MODE_LIST.includes(saved) ? saved : 'compact'
+    setMode(valid === 'aside' && (!hasAside() || !wideEnoughForAside()) ? 'compact' : valid)
+
+    const theme = localStorage.getItem('theme') || 'system'
+    setThemeIcon(theme)
+  }
+
+  function attachEvents() {
+    const modeBtn = document.getElementById('sidebar-mode-btn')
+    if (modeBtn) {
+      modeBtn.onclick = function () {
+        setMode(getNextMode(document.body.dataset.sidebarMode || 'compact'))
+      }
+    }
+
+    const themeBtn = document.getElementById('sidebar-theme-btn')
+    if (themeBtn) {
+      themeBtn.onclick = cycleTheme
+    }
+  }
+
+  initSidebar()
+  attachEvents()
+
+  document.addEventListener('astro:after-swap', () => {
+    initSidebar()
+    attachEvents()
+  })
+</script>

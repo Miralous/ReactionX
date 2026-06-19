@@ -368,7 +368,98 @@
   border-radius: 0;
 }
 
-.hoverStyle:hover {
-  transition: all 0.3;
-  transform: translateY(-1.5px);
+.hoverStyle {
+  cursor: pointer;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hoverStyle:hover {
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+/* ===== Sidebar Mode System ===== */
+/* CSS variables for sidebar width (set by data-sidebar-mode) */
+@media (min-width: 768px) {
+  body[data-sidebar-mode="compact"],
+  body[data-sidebar-mode="aside"] { --sidebar-w: 4rem; }
+  body[data-sidebar-mode="label"] { --sidebar-w: 12rem; }
+}
+
+.sidebar-nav {
+  width: var(--sidebar-w, 0px);
+  overflow: hidden auto;
+  transition: width 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.sidebar-offset {
+  padding-left: var(--sidebar-w, 0px);
+  transition: padding-left 0.3s ease;
+}
+
+/* Sidebar item base style */
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 0.5rem;
+  color: var(--color-muted-foreground);
+  transition: all 0.2s;
+  flex-shrink: 0;
+  cursor: pointer;
+  text-decoration: none;
+}
+.sidebar-item:hover {
+  color: var(--color-foreground);
+  background: hsl(var(--muted) / 0.2);
+}
+.sidebar-item-active {
+  color: var(--color-foreground);
+  background: hsl(var(--muted) / 0.3);
+}
+
+.sidebar-label { display: none; }
+
+/* Label mode */
+@media (min-width: 768px) {
+  body[data-sidebar-mode="label"] .sidebar-nav {
+    align-items: stretch;
+    padding: 0.75rem 0.5rem;
+  }
+  body[data-sidebar-mode="label"] .sidebar-item {
+    justify-content: flex-start;
+    gap: 0.75rem;
+    width: 100%;
+    height: 2.5rem;
+    padding: 0 0.75rem;
+  }
+  body[data-sidebar-mode="label"] .sidebar-label { display: block; }
+  body[data-sidebar-mode="label"] .sidebar-logo-item { align-self: center; }
+  body[data-sidebar-mode="label"] .sidebar-divider { width: auto; margin: 0.25rem 0.75rem; }
+}
+
+/* Aside collapse by sidebar mode */
+@media (min-width: 1280px) {
+  .aside-panel {
+    flex: 0 0 33.333%;
+    transition: flex-basis 0.3s ease;
+  }
+  body[data-sidebar-mode="compact"] .aside-panel,
+  body[data-sidebar-mode="label"] .aside-panel {
+    flex: 0 0 0%;
+    padding: 0 !important;
+    overflow: hidden !important;
+    min-width: 0 !important;
+    width: 0 !important;
+    border: 0 !important;
+    opacity: 0;
+    pointer-events: none;
+  }
 }
