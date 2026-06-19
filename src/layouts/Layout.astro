@@ -281,7 +281,7 @@ const fontCSS = [
 
       function bindSearchTriggers() {
         document.querySelectorAll('[data-search-trigger]').forEach((el) => {
-          el.onclick = openSearch
+          ;(el as HTMLElement).onclick = openSearch
         })
       }
 
@@ -392,7 +392,7 @@ const fontCSS = [
     <script>
       function initAppearance() {
         const root = document.documentElement
-        const hue = parseInt(localStorage.getItem('appearance-hue')) || parseInt(root.getAttribute('data-hue')) || 280
+        const hue = parseInt(localStorage.getItem('appearance-hue') ?? '') || parseInt(root.getAttribute('data-hue') ?? '') || 280
         const clamped = Math.max(0, Math.min(360, hue))
         root.style.setProperty('--hue', String(clamped))
         root.setAttribute('data-hue', String(clamped))
@@ -407,13 +407,14 @@ const fontCSS = [
         localStorage.setItem('appearance-chue', String(chueActive))
         root.style.setProperty('--chue', String(chueActive ? clamped : 280))
 
-        document.getElementById('appearance-hue-value').textContent = clamped + '°'
+        const hueValue = document.getElementById('appearance-hue-value')
+        if (hueValue) hueValue.textContent = clamped + '°'
         updateHueThumb(clamped)
         setToggle('appearance-mono-btn', monoActive)
         setToggle('appearance-chue-btn', chueActive)
       }
 
-      function updateHueThumb(h) {
+      function updateHueThumb(h: number) {
         const thumb = document.getElementById('appearance-hue-thumb')
         if (thumb) {
           thumb.style.left = `calc(${h} / 360 * 100% - 0.5rem)`
@@ -421,19 +422,21 @@ const fontCSS = [
         }
       }
 
-      function setHue(h) {
+      function setHue(h: number) {
         const clamped = Math.max(0, Math.min(360, h))
         const root = document.documentElement
         root.style.setProperty('--hue', String(clamped))
         root.setAttribute('data-hue', String(clamped))
         localStorage.setItem('appearance-hue', String(clamped))
-        document.getElementById('appearance-hue-value').textContent = clamped + '°'
+        const hueValue = document.getElementById('appearance-hue-value')
+        if (hueValue) hueValue.textContent = clamped + '°'
         updateHueThumb(clamped)
-        const chueActive = document.getElementById('appearance-chue-btn').getAttribute('aria-checked') === 'true'
+        const chueBtn = document.getElementById('appearance-chue-btn')
+        const chueActive = chueBtn?.getAttribute('aria-checked') === 'true'
         root.style.setProperty('--chue', String(chueActive ? clamped : 280))
       }
 
-      function setToggle(id, active) {
+      function setToggle(id: string, active: boolean) {
         const btn = document.getElementById(id)
         if (!btn) return
         btn.setAttribute('aria-checked', String(active))
@@ -443,9 +446,9 @@ const fontCSS = [
       }
 
       function attachAppearanceEvents() {
-        const popup = document.getElementById('appearance-popup')
-        let activeBtn = null
-        function togglePopup(btn) {
+        const popup = document.getElementById('appearance-popup')!
+        let activeBtn: HTMLElement | null = null
+        function togglePopup(btn: HTMLElement) {
           activeBtn = activeBtn === btn && !popup.classList.contains('hidden') ? null : btn
           if (activeBtn) {
             const rect = activeBtn.getBoundingClientRect()
@@ -470,18 +473,19 @@ const fontCSS = [
           popup.classList.toggle('flex')
         }
         document.querySelectorAll('#sidebar-appearance-btn, #header-appearance-btn').forEach((el) => {
-          el.onclick = function (e) {
+          ;(el as HTMLElement).onclick = function (e: MouseEvent) {
             e.stopPropagation()
-            togglePopup(this)
+            togglePopup(e.currentTarget as HTMLElement)
           }
         })
-        document.addEventListener('click', function (e) {
+        document.addEventListener('click', function (e: MouseEvent) {
+          const target = e.target as Node | null
           if (
-            popup &&
+            target &&
             !popup.classList.contains('hidden') &&
-            !popup.contains(e.target) &&
-            !e.target.closest('#sidebar-appearance-btn') &&
-            !e.target.closest('#header-appearance-btn')
+            !popup.contains(target) &&
+            !(target as HTMLElement).closest('#sidebar-appearance-btn') &&
+            !(target as HTMLElement).closest('#header-appearance-btn')
           ) {
             popup.classList.add('hidden')
             popup.classList.remove('flex')
@@ -490,27 +494,26 @@ const fontCSS = [
 
         // Hue track — click or drag
         const track = document.getElementById('appearance-hue-track')
-        if (track) {
-          function hueFromEvent(e) {
-            const rect = track.getBoundingClientRect()
-            const x = Math.max(0, Math.min(e.clientX - rect.left, rect.width))
-            return Math.round((x / rect.width) * 360)
+        if (!track) return
+        function hueFromEvent(e: MouseEvent) {
+          const rect = track!.getBoundingClientRect()
+          const x = Math.max(0, Math.min(e.clientX - rect.left, rect.width))
+          return Math.round((x / rect.width) * 360)
+        }
+        track.onclick = function (e: MouseEvent) {
+          setHue(hueFromEvent(e))
+        }
+        track.onmousedown = function (e: MouseEvent) {
+          setHue(hueFromEvent(e))
+          function onMove(ev: MouseEvent) {
+            setHue(hueFromEvent(ev))
           }
-          track.onclick = function (e) {
-            setHue(hueFromEvent(e))
+          function onUp() {
+            document.removeEventListener('mousemove', onMove)
+            document.removeEventListener('mouseup', onUp)
           }
-          track.onmousedown = function (e) {
-            setHue(hueFromEvent(e))
-            function onMove(ev) {
-              setHue(hueFromEvent(ev))
-            }
-            function onUp() {
-              document.removeEventListener('mousemove', onMove)
-              document.removeEventListener('mouseup', onUp)
-            }
-            document.addEventListener('mousemove', onMove)
-            document.addEventListener('mouseup', onUp)
-          }
+          document.addEventListener('mousemove', onMove)
+          document.addEventListener('mouseup', onUp)
         }
 
         document.getElementById('appearance-mono-btn')?.addEventListener('click', function () {
@@ -520,14 +523,14 @@ const fontCSS = [
           localStorage.setItem('appearance-mono', String(active))
         })
 
-        document.getElementById('appearance-chue-btn')?.addEventListener('click', function () {
+        document.getElementById('appearance-chue-btn')?.addEventListener('click', function (this: HTMLElement) {
           const active = this.getAttribute('aria-checked') !== 'true'
           setToggle('appearance-chue-btn', active)
           document.documentElement.setAttribute('data-global-hue', String(active))
           localStorage.setItem('appearance-chue', String(active))
           const hue =
             parseInt(document.documentElement.style.getPropertyValue('--hue')) ||
-            parseInt(document.documentElement.getAttribute('data-hue')) ||
+            parseInt(document.documentElement.getAttribute('data-hue') ?? '') ||
             280
           document.documentElement.style.setProperty('--chue', String(active ? hue : 280))
         })

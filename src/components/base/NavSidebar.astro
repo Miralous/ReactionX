@@ -96,7 +96,7 @@ import { cn } from '~/lib/utils'
     return window.innerWidth >= 1280
   }
 
-  function getNextMode(current) {
+  function getNextMode(current: string) {
     let idx = MODE_LIST.indexOf(current)
     for (let i = 0; i < MODE_LIST.length; i++) {
       idx = (idx + 1) % MODE_LIST.length
@@ -107,7 +107,7 @@ import { cn } from '~/lib/utils'
     return 'compact'
   }
 
-  function setMode(mode) {
+  function setMode(mode: string) {
     document.body.dataset.sidebarMode = mode
     try {
       localStorage.setItem(STORAGE_KEY, mode)
@@ -116,20 +116,20 @@ import { cn } from '~/lib/utils'
     const btn = document.getElementById('sidebar-mode-btn')
     const icon = document.getElementById('sidebar-mode-icon')
     if (btn) {
-      btn.title = MODE_TITLES[mode] || 'Icons only'
+      btn.title = MODE_TITLES[mode as keyof typeof MODE_TITLES] || 'Icons only'
       btn.classList.toggle('sidebar-item-active', mode !== 'compact')
     }
-    if (icon) icon.className = `icon-[${MODE_ICONS[mode]}] size-5 shrink-0`
+    if (icon) icon.className = `icon-[${MODE_ICONS[mode as keyof typeof MODE_ICONS]}] size-5 shrink-0`
   }
 
   const THEME_ICON_MAP = { light: 'tabler--sun-filled', dark: 'tabler--moon-filled', system: 'tabler--device-desktop-question' }
 
-  function setThemeIcon(theme) {
+  function setThemeIcon(theme: string) {
     const icon = document.getElementById('sidebar-theme-icon')
-    if (icon) icon.className = `icon-[${THEME_ICON_MAP[theme] || 'tabler--sun-filled'}] size-5 shrink-0`
+    if (icon) icon.className = `icon-[${THEME_ICON_MAP[theme as keyof typeof THEME_ICON_MAP] || 'tabler--sun-filled'}] size-5 shrink-0`
   }
 
-  function applyTheme(theme) {
+  function applyTheme(theme: string) {
     const root = document.documentElement
     root.classList.add('disable-transition')
     const isDark = theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches)

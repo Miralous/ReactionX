@@ -8,7 +8,7 @@ import Comments from '~/components/posts/base/Comments.astro'
 const friendsEntries = await getCollection('friends')
 const FRIENDS_LIST = friendsEntries.map((e) => ({ id: e.id, ...e.data }))
 const { title, description, introduce, enableAdd } = FRIENDS_CONFIG
-const { sitename, email, author, sitelink, siteavatar, description: myDescription } = FRIENDS_CONTACT
+const { sitename, author, sitelink, siteavatar, description: myDescription } = FRIENDS_CONTACT
 const totalLinks = FRIENDS_LIST.length.toString().padStart(2, '0')
 
 // Group friends by directory
