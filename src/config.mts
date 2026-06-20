@@ -35,6 +35,10 @@ export const UI_CONFIG = {
     // Default: 0.25 (4px at 16px base). e.g. p-4 = 4 × 0.25rem = 1rem
     spacing: 0.25,
 
+    // Sidebar icon size in Tailwind scale (4 = 1rem, 5 = 1.25rem, 6 = 1.5rem, etc.)
+    // Default: 5 (1.25rem / 20px)
+    sidebarIconSize: 6,
+
     // Font families — family picks the directory under /public/fonts/
     font: {
       family: 'Inter', // import /fonts/$/{Serif,Sans,Mono}.woff2 (as Serif, Sans, Mono)

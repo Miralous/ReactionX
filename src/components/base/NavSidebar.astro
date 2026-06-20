@@ -1,15 +1,20 @@
 ---
-import { HEADER_LINKS, CMS_CONFIG, SITE } from '~/config.mjs'
+import { HEADER_LINKS, CMS_CONFIG, SITE, UI_CONFIG } from '~/config.mjs'
 import { cn } from '~/lib/utils'
+const ICON_SIZE = UI_CONFIG.design.sidebarIconSize
+const sidebarIconSize = `${ICON_SIZE * 0.25}rem`
+const sidebarPadX = `${ICON_SIZE * 0.25 * 0.6}rem`
+const sidebarGap = `${ICON_SIZE * 0.25 * 0.2}rem`
 ---
 
 <nav
   id="sidebar-nav"
-  class="fixed left-0 top-0 bottom-0 flex-col items-center py-3 gap-1 border-r border-border/40 bg-background z-50 hidden md:flex sidebar-nav"
+  class="fixed left-0 top-0 bottom-0 flex-col items-center py-3 border-r border-border/40 bg-background z-50 hidden md:flex sidebar-nav"
+  style={`--sidebar-icon-size: ${sidebarIconSize}; --sidebar-pad-x: ${sidebarPadX}; --sidebar-gap: ${sidebarGap}`}
 >
   <!-- Logo + site title -->
   <a href="/" class="sidebar-item sidebar-logo-item" aria-label="Home" title="Home">
-    <img src={SITE.favicon} width={20} height={20} alt="Logo" class="size-5 shrink-0" loading="eager" />
+    <img src={SITE.favicon} width={20} height={20} alt="Logo" class="sidebar-logo-img shrink-0" loading="eager" />
     <span class="sidebar-label text-sm font-semibold whitespace-nowrap">{SITE.title}</span>
   </a>
 
@@ -24,7 +29,7 @@ import { cn } from '~/lib/utils'
         aria-label={link.name}
         title={link.name}
       >
-        {link.icon && <span class={cn(link.icon, 'size-5 shrink-0')} />}
+        {link.icon && <span class={cn(link.icon, 'sidebar-icon shrink-0')} />}
         <span class="sidebar-label text-sm font-medium whitespace-nowrap">{link.name}</span>
       </a>
     ))
@@ -34,20 +39,20 @@ import { cn } from '~/lib/utils'
 
   <!-- Search — direct icon, no wrapping div -->
   <div class="sidebar-item" data-search-trigger>
-    <span class="icon-[material-symbols--manage-search] size-5 shrink-0"></span>
+    <span class="icon-[material-symbols--manage-search] sidebar-icon shrink-0"></span>
     <span class="sidebar-label text-sm font-medium whitespace-nowrap">Search</span>
   </div>
 
   <!-- RSS -->
   <a href="/rss.xml" target="_blank" class="sidebar-item" aria-label="RSS Feed" title="RSS Feed">
-    <span class="icon-[material-symbols--rss-feed] size-5 shrink-0"></span>
+    <span class="icon-[material-symbols--rss-feed] sidebar-icon shrink-0"></span>
     <span class="sidebar-label text-sm font-medium whitespace-nowrap">RSS</span>
   </a>
 
   {
     CMS_CONFIG.enableCMS && (
       <a href="/admin" class="sidebar-item" aria-label="Admin Dashboard" title="Admin Panel">
-        <span class="icon-[material-symbols--admin-panel-settings-outline] size-5 shrink-0" />
+        <span class="icon-[material-symbols--admin-panel-settings-outline] sidebar-icon shrink-0" />
         <span class="sidebar-label text-sm font-medium whitespace-nowrap">Admin</span>
       </a>
     )
@@ -55,20 +60,21 @@ import { cn } from '~/lib/utils'
 
   <!-- Theme -->
   <div class="sidebar-item" id="sidebar-theme-btn">
-    <span id="sidebar-theme-icon" class="icon-[tabler--sun-filled] size-5 shrink-0"></span>
+    <span id="sidebar-theme-icon" class="icon-[tabler--sun-filled] sidebar-icon shrink-0"></span>
     <span class="sidebar-label text-sm font-medium whitespace-nowrap">Theme</span>
   </div>
 
   <!-- Appearance -->
   <div class="sidebar-item" id="sidebar-appearance-btn" title="Appearance settings">
-    <span class="icon-[ph--palette] size-5 shrink-0"></span>
+    <span class="icon-[ph--palette-bold] sidebar-icon shrink-0"></span>
     <span class="sidebar-label text-sm font-medium whitespace-nowrap">Appearance</span>
   </div>
 
   <div class="w-6 border-t border-border/40 sidebar-divider"></div>
 
   <button id="sidebar-mode-btn" class="sidebar-item" aria-label="Toggle sidebar mode" title="Icons only">
-    <span id="sidebar-mode-icon" class="icon-[ph--sidebar-simple] size-5 shrink-0"></span>
+    <span id="sidebar-mode-icon" class="icon-[ph--sidebar-simple] sidebar-icon shrink-0"></span>
+    <span id="sidebar-mode-label" class="sidebar-label text-sm font-medium whitespace-nowrap">Compact</span>
   </button>
   <!-- Tailwind scan hint for dynamic icons -->
   <span class="hidden icon-[ph--align-left-simple] icon-[ph--align-left]"></span>
@@ -115,18 +121,22 @@ import { cn } from '~/lib/utils'
 
     const btn = document.getElementById('sidebar-mode-btn')
     const icon = document.getElementById('sidebar-mode-icon')
+    const label = document.getElementById('sidebar-mode-label')
+    const title = MODE_TITLES[mode as keyof typeof MODE_TITLES] || 'Icons only'
     if (btn) {
-      btn.title = MODE_TITLES[mode as keyof typeof MODE_TITLES] || 'Icons only'
+      btn.title = title
       btn.classList.toggle('sidebar-item-active', mode !== 'compact')
     }
-    if (icon) icon.className = `icon-[${MODE_ICONS[mode as keyof typeof MODE_ICONS]}] size-5 shrink-0`
+    if (icon) icon.className = `icon-[${MODE_ICONS[mode as keyof typeof MODE_ICONS]}] sidebar-icon shrink-0`
+    if (label) label.textContent = title
   }
 
   const THEME_ICON_MAP = { light: 'tabler--sun-filled', dark: 'tabler--moon-filled', system: 'tabler--device-desktop-question' }
 
   function setThemeIcon(theme: string) {
     const icon = document.getElementById('sidebar-theme-icon')
-    if (icon) icon.className = `icon-[${THEME_ICON_MAP[theme as keyof typeof THEME_ICON_MAP] || 'tabler--sun-filled'}] size-5 shrink-0`
+    if (icon)
+      icon.className = `icon-[${THEME_ICON_MAP[theme as keyof typeof THEME_ICON_MAP] || 'tabler--sun-filled'}] sidebar-icon shrink-0`
   }
 
   function applyTheme(theme: string) {

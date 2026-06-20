@@ -6,7 +6,9 @@ import { DYNAMIC_CONFIG } from '~/config.mjs'
 import { getCollection } from 'astro:content'
 
 const dynamicEntries = await getCollection('dynamic')
-const dynamicData = dynamicEntries.map((e) => e.data).sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+const dynamicData = dynamicEntries
+  .map((e) => ({ id: e.data.id, content: e.body ?? '', date: e.data.date, mood: e.data.mood, link: e.data.link }))
+  .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
 const feed = dynamicData as Array<{ id: string; content: string; date: string; mood: string; link: string | null }>
 
 const SECTION_HEADER_CLASS = 'flex items-center justify-between border-b border-border/40 pb-4 mb-8 select-none'

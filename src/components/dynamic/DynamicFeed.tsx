@@ -41,7 +41,7 @@ function FeedItemCard({ item, animationDelay }: { item: FeedItem; animationDelay
           {item.mood}
         </span>
         <span className="text-xs text-muted-foreground whitespace-nowrap flex items-center gap-1">
-          {new Date(item.date).toLocaleString('zh-CN', {
+          {new Date(item.date).toLocaleString('en-US', {
             month: 'short',
             day: 'numeric',
             year: 'numeric',
@@ -95,7 +95,7 @@ function FeedItemCard({ item, animationDelay }: { item: FeedItem; animationDelay
             href={item.link}
             target="_blank"
             rel="noreferrer"
-            className="inline-flex items-center gap-1.5 text-xs font-medium text-primary hover:text-primary/80 transition-colors"
+            className="inline-flex items-center pt-1 gap-1.5 text-xs font-medium text-primary hover:text-primary/80 transition-colors"
           >
             <span className="icon-[ph--link-bold] size-3.5"></span> Attachment Link
           </a>

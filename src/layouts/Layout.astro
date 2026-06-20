@@ -177,23 +177,18 @@ const fontCSS = [
           </button>
         </div>
       </div>
+      <div class="">
+        <button
+          id="appearance-reset-btn"
+          class="w-full inline-flex items-center justify-center gap-1.5 px-3 py-1.5 text-xs font-medium text-muted-foreground hover:text-foreground border border-border/40 hover:border-border/60 rounded-md transition-all"
+        >
+          <span class="icon-[ph--arrow-counter-clockwise] size-3.5"></span>
+          Reset defaults
+        </button>
+      </div>
     </div>
 
     <script>
-      import { initCardHover } from '~/lib/cardHover'
-
-      document.addEventListener('astro:page-load', () => {
-        initCardHover()
-      })
-    </script>
-
-    <script>
-      const searchInput = document.getElementById('search-input') as HTMLInputElement
-      const searchMask = document.getElementById('search-mask')
-      const searchResults = document.getElementById('search-results')
-      const exactToggle = document.getElementById('search-exact') as HTMLButtonElement | null
-      const searchPanelShow = document.querySelector('.search-panel-show') as HTMLElement
-
       let searchReqId = 0
       let isPagefindLoaded = false
       let isPagefindLoading = false
@@ -202,6 +197,21 @@ const fontCSS = [
       try {
         exactMode = localStorage.getItem('search-exact') === '1'
       } catch {}
+
+      // DOM references — re-queried on each navigation
+      let searchInput: HTMLInputElement | null = null
+      let searchMask: HTMLElement | null = null
+      let searchResults: HTMLElement | null = null
+      let exactToggle: HTMLElement | null = null
+      let searchPanelShow: HTMLElement | null = null
+
+      function queryDomRefs() {
+        searchInput = document.getElementById('search-input') as HTMLInputElement
+        searchMask = document.getElementById('search-mask')
+        searchResults = document.getElementById('search-results')
+        exactToggle = document.getElementById('search-exact') as HTMLButtonElement | null
+        searchPanelShow = document.querySelector('.search-panel-show') as HTMLElement
+      }
 
       const updateExactUI = () => {
         if (!exactToggle) return
@@ -214,16 +224,6 @@ const fontCSS = [
           exactToggle.classList.add('text-muted-foreground', 'bg-transparent')
         }
       }
-      updateExactUI()
-
-      exactToggle?.addEventListener('click', () => {
-        exactMode = !exactMode
-        try {
-          localStorage.setItem('search-exact', exactMode ? '1' : '0')
-        } catch {}
-        updateExactUI()
-        searchInput?.dispatchEvent(new Event('input'))
-      })
 
       const initPagefind = async () => {
         if (isPagefindLoaded || isPagefindLoading || !import.meta.env.PROD) return
@@ -285,10 +285,6 @@ const fontCSS = [
         })
       }
 
-      searchMask?.addEventListener('click', (e) => {
-        if (e.target === searchMask) closeSearch()
-      })
-
       const handleKeydown = (e: KeyboardEvent) => {
         if (e.key === 'Escape' && !searchMask?.classList.contains('hidden')) {
           closeSearch()
@@ -302,94 +298,140 @@ const fontCSS = [
           }
         }
       }
-      document.addEventListener('keydown', handleKeydown)
-      document.addEventListener('astro:after-swap', () => {
-        bindSearchTriggers()
-      })
-      bindSearchTriggers()
 
-      searchInput?.addEventListener('input', async (e) => {
-        if (searchResults) searchResults.innerHTML = ''
-        const target = e.target as HTMLInputElement
-        const q = target.value.trim()
-        const reqId = ++searchReqId
+      function bindSearchUI() {
+        queryDomRefs()
+        updateExactUI()
 
-        if (q === '') {
-          searchResults?.insertAdjacentHTML(
-            'beforeend',
-            `<div class="py-16 flex flex-col items-center justify-center gap-3 select-none opacity-50">
-              <span class="icon-[ph--keyboard] size-10 text-muted-foreground"></span>
-              <span class="text-sm font-medium text-muted-foreground">Type to start searching</span>
-            </div>`
-          )
-          return
-        }
+        exactToggle?.addEventListener('click', () => {
+          exactMode = !exactMode
+          try {
+            localStorage.setItem('search-exact', exactMode ? '1' : '0')
+          } catch {}
+          updateExactUI()
+          searchInput?.dispatchEvent(new Event('input'))
+        })
 
-        if (import.meta.env.PROD) {
-          if (!isPagefindLoaded) return
+        searchMask?.addEventListener('click', (e) => {
+          if (e.target === searchMask) closeSearch()
+        })
 
-          const pagefindQuery = exactMode ? `"${q}"` : q
-          const search = await (window as any).pagefind.debouncedSearch(pagefindQuery)
+        searchInput?.addEventListener('input', async (e) => {
+          if (searchResults) searchResults.innerHTML = ''
+          const target = e.target as HTMLInputElement
+          const q = target.value.trim()
+          const reqId = ++searchReqId
 
-          if (reqId !== searchReqId || searchInput?.value.trim() !== q) return
-
-          if (!search?.results || search.results.length === 0) {
+          if (q === '') {
             searchResults?.insertAdjacentHTML(
               'beforeend',
-              `<div class="py-16 flex flex-col items-center justify-center gap-3 select-none opacity-60">
-                <span class="icon-[ph--magnifying-glass-minus] size-10 text-muted-foreground"></span>
-                <span class="text-sm font-medium text-muted-foreground">No results found for "${q}"</span>
+              `<div class="py-16 flex flex-col items-center justify-center gap-3 select-none opacity-50">
+                <span class="icon-[ph--keyboard] size-10 text-muted-foreground"></span>
+                <span class="text-sm font-medium text-muted-foreground">Type to start searching</span>
               </div>`
             )
             return
           }
 
-          for (const result of search.results) {
-            const data = await result.data()
+          if (import.meta.env.PROD) {
+            if (!isPagefindLoaded) return
 
-            const resultItem = document.createElement('a')
-            resultItem.href = data.url
-            resultItem.className =
-              'block p-4 mb-2 bg-background hover:bg-muted/40 border border-transparent hover:border-border/60 rounded-md transition-all group'
-            resultItem.innerHTML = `
-              <h3 class="text-base font-semibold text-foreground group-hover:text-primary transition-colors tracking-tight mb-2">${data.meta.title}</h3>
-              <p class="text-sm text-muted-foreground leading-relaxed line-clamp-2">${data.excerpt}</p>
-            `
-            resultItem.addEventListener('click', closeSearch)
-            searchResults?.appendChild(resultItem)
+            const pagefindQuery = exactMode ? `"${q}"` : q
+            const search = await (window as any).pagefind.debouncedSearch(pagefindQuery)
 
-            if (data.sub_results) {
-              for (const subResult of data.sub_results) {
-                if (subResult.excerpt === data.excerpt) continue
-                const cleanTitle = subResult.title.replace(/\s*[Hh][1-6]$/g, '')
-                if (!cleanTitle) continue
+            if (reqId !== searchReqId || searchInput?.value.trim() !== q) return
 
-                const subItem = document.createElement('a')
-                subItem.href = subResult.url
-                subItem.className =
-                  'block p-3 ml-6 mb-2 bg-muted/20 hover:bg-muted/50 border-l-[3px] border-border/60 hover:border-primary rounded-r-md transition-all group'
-                subItem.innerHTML = `
-                  <h4 class="text-sm font-medium text-foreground opacity-90 group-hover:text-primary transition-colors mb-1 tracking-tight">${cleanTitle}</h4>
-                  <p class="text-xs text-muted-foreground/80 line-clamp-1">${subResult.excerpt}</p>
-                `
-                subItem.addEventListener('click', closeSearch)
-                searchResults?.appendChild(subItem)
+            if (!search?.results || search.results.length === 0) {
+              searchResults?.insertAdjacentHTML(
+                'beforeend',
+                `<div class="py-16 flex flex-col items-center justify-center gap-3 select-none opacity-60">
+                  <span class="icon-[ph--magnifying-glass-minus] size-10 text-muted-foreground"></span>
+                  <span class="text-sm font-medium text-muted-foreground">No results found for "${q}"</span>
+                </div>`
+              )
+              return
+            }
+
+            for (const result of search.results) {
+              const data = await result.data()
+
+              const resultItem = document.createElement('a')
+              resultItem.href = data.url
+              resultItem.className =
+                'block p-4 mb-2 bg-background hover:bg-muted/40 border border-transparent hover:border-border/60 rounded-md transition-all group'
+              resultItem.innerHTML = `
+                <h3 class="text-base font-semibold text-foreground group-hover:text-primary transition-colors tracking-tight mb-2">${data.meta.title}</h3>
+                <p class="text-sm text-muted-foreground leading-relaxed line-clamp-2">${data.excerpt}</p>
+              `
+              resultItem.addEventListener('click', closeSearch)
+              searchResults?.appendChild(resultItem)
+
+              if (data.sub_results) {
+                for (const subResult of data.sub_results) {
+                  if (subResult.excerpt === data.excerpt) continue
+                  const cleanTitle = subResult.title.replace(/\s*[Hh][1-6]$/g, '')
+                  if (!cleanTitle) continue
+
+                  const subItem = document.createElement('a')
+                  subItem.href = subResult.url
+                  subItem.className =
+                    'block p-3 ml-6 mb-2 bg-muted/20 hover:bg-muted/50 border-l-[3px] border-border/60 hover:border-primary rounded-r-md transition-all group'
+                  subItem.innerHTML = `
+                    <h4 class="text-sm font-medium text-foreground opacity-90 group-hover:text-primary transition-colors mb-1 tracking-tight">${cleanTitle}</h4>
+                    <p class="text-xs text-muted-foreground/80 line-clamp-1">${subResult.excerpt}</p>
+                  `
+                  subItem.addEventListener('click', closeSearch)
+                  searchResults?.appendChild(subItem)
+                }
               }
             }
+          } else {
+            searchResults?.insertAdjacentHTML(
+              'beforeend',
+              `<div class="py-16 flex flex-col items-center justify-center gap-3 select-none opacity-60">
+                <span class="icon-[ph--warning-circle] size-10 text-ctp-yellow/80"></span>
+                <span class="text-sm font-medium text-muted-foreground text-center">Search requires Pagefind.<br/>Not available in dev mode.</span>
+              </div>`
+            )
           }
-        } else {
-          searchResults?.insertAdjacentHTML(
-            'beforeend',
-            `<div class="py-16 flex flex-col items-center justify-center gap-3 select-none opacity-60">
-              <span class="icon-[ph--warning-circle] size-10 text-ctp-yellow/80"></span>
-              <span class="text-sm font-medium text-muted-foreground text-center">Search requires Pagefind.<br/>Not available in dev mode.</span>
-            </div>`
-          )
-        }
-      })
+        })
+
+        bindSearchTriggers()
+      }
+
+      // One-time document-level listeners
+      document.addEventListener('keydown', handleKeydown)
+      document.addEventListener('astro:after-swap', bindSearchUI)
+
+      // Initial setup
+      bindSearchUI()
     </script>
 
     <script>
+      const DEFAULT_HUE = 280
+      const DEFAULT_MONO = false
+      const DEFAULT_CHUE = true
+
+      function resetAppearance() {
+        localStorage.removeItem('appearance-hue')
+        localStorage.removeItem('appearance-mono')
+        localStorage.removeItem('appearance-chue')
+
+        const root = document.documentElement
+        const hue = DEFAULT_HUE
+        root.style.setProperty('--hue', String(hue))
+        root.setAttribute('data-hue', String(hue))
+        root.setAttribute('data-mono', String(DEFAULT_MONO))
+        root.setAttribute('data-global-hue', String(DEFAULT_CHUE))
+        root.style.setProperty('--chue', String(DEFAULT_CHUE ? hue : 280))
+
+        const hueValue = document.getElementById('appearance-hue-value')
+        if (hueValue) hueValue.textContent = hue + '°'
+        updateHueThumb(hue)
+        setToggle('appearance-mono-btn', DEFAULT_MONO)
+        setToggle('appearance-chue-btn', DEFAULT_CHUE)
+      }
+
       function initAppearance() {
         const root = document.documentElement
         const hue = parseInt(localStorage.getItem('appearance-hue') ?? '') || parseInt(root.getAttribute('data-hue') ?? '') || 280
@@ -534,6 +576,8 @@ const fontCSS = [
             280
           document.documentElement.style.setProperty('--chue', String(active ? hue : 280))
         })
+
+        document.getElementById('appearance-reset-btn')?.addEventListener('click', resetAppearance)
       }
 
       initAppearance()

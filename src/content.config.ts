@@ -17,13 +17,12 @@ const friends = defineCollection({
 })
 
 const dynamic = defineCollection({
-  loader: glob({ pattern: '**/*.yaml', base: './src/content/data/dynamic' }),
+  loader: glob({ pattern: '**/*.md', base: './src/content/data/dynamic' }),
   schema: z.object({
     id: z.string(),
-    content: z.string(),
     date: z.string(),
     mood: z.string(),
-    link: z.string().nullable(),
+    link: z.string().nullable().default(null),
   }),
 })
 

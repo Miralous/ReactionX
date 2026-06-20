@@ -1,5 +1,0 @@
-id: dyn-04
-content: "已完成 Waline 评论系统的集成，支持图片上传至自建图床。\n\n可在 config.ts 中配置 serverURL 和 uploadToken。"
-date: "2026-06-03T11:00:00+08:00"
-mood: Update
-link: null
