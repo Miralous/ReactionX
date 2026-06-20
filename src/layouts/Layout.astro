@@ -408,6 +408,12 @@ const fontCSS = [
     </script>
 
     <script>
+      import { initCardHover } from '~/lib/cardHover'
+      initCardHover()
+      document.addEventListener('astro:after-swap', initCardHover)
+    </script>
+
+    <script>
       const DEFAULT_HUE = 280
       const DEFAULT_MONO = false
       const DEFAULT_CHUE = true
