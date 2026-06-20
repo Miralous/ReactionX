@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react';
-import { DEFAULT_META, type FileType, type EditorMode, type MetaType } from '../types';
+import { DEFAULT_META, DEFAULT_DYNAMIC_META, DEFAULT_FRIEND_META, type FileType, type EditorMode, type MetaType, type DynamicMeta, type FriendMeta } from '../types';
 import type { ToastType } from './useAdminToast';
 
 export function useAdminEditor(showToast: (msg: string, type?: ToastType) => void) {
@@ -8,6 +8,8 @@ export function useAdminEditor(showToast: (msg: string, type?: ToastType) => voi
   const [filename, setFilename] = useState('');
   const [body, setBody] = useState('');
   const [meta, setMeta] = useState<MetaType>(DEFAULT_META);
+  const [dynamicMeta, setDynamicMeta] = useState<DynamicMeta>(DEFAULT_DYNAMIC_META);
+  const [friendMeta, setFriendMeta] = useState<FriendMeta>(DEFAULT_FRIEND_META);
   const [jsonContent, setJsonContent] = useState('');
   const [parsedJson, setParsedJson] = useState<any[]>([]);
   const [editingItemIndex, setEditingItemIndex] = useState<number | null>(null);
@@ -77,6 +79,7 @@ export function useAdminEditor(showToast: (msg: string, type?: ToastType) => voi
   return {
     currentMode, setCurrentMode, editorMode, setEditorMode,
     filename, setFilename, body, setBody, meta, setMeta,
+    dynamicMeta, setDynamicMeta, friendMeta, setFriendMeta,
     jsonContent, setJsonContent, parsedJson, setParsedJson,
     editingItemIndex, setEditingItemIndex,
     fileInputRef, uploadTargetRef, triggerUpload, handleFileChange

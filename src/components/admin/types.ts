@@ -7,6 +7,12 @@ export const REPO_CONFIG = {
   pathPrefix: CMS_CONFIG.pathPrefix,
 }
 
+export const CONTENT_COLLECTIONS: Record<string, { path: string; ext: string }> = {
+  post: { path: CMS_CONFIG.pathPrefix, ext: '.md,.mdx' },
+  dynamic: { path: 'src/content/data/dynamic/', ext: '.md' },
+  friend: { path: 'src/content/data/friends/', ext: '.yaml' },
+}
+
 export const DEFAULT_META = {
   title: '',
   description: '',
@@ -19,9 +25,26 @@ export const DEFAULT_META = {
   heroImageAspectRatio: '16/9',
 }
 
-export type FileType = 'post' | 'data'
+export const DEFAULT_DYNAMIC_META = {
+  id: '',
+  date: new Date().toISOString(),
+  mood: '',
+  link: '',
+}
+
+export const DEFAULT_FRIEND_META = {
+  name: '',
+  author: '',
+  url: '',
+  avatar: '',
+  description: '',
+  directory: '',
+}
+
+export type FileType = 'post' | 'dynamic' | 'friend' | 'data'
 export type MobileView = 'files' | 'editor' | 'queue'
 export type EditorMode = 'visual' | 'raw'
+export type CollectionTab = 'post' | 'dynamic' | 'friend'
 
 export type QueueItem = {
   id: string
@@ -45,4 +68,20 @@ export interface MetaType {
   heroImage: string
   ogImage: string
   heroImageAspectRatio: string
+}
+
+export interface DynamicMeta {
+  id: string
+  date: string
+  mood: string
+  link: string
+}
+
+export interface FriendMeta {
+  name: string
+  author: string
+  url: string
+  avatar: string
+  description: string
+  directory: string
 }

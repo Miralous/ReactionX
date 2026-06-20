@@ -23,7 +23,7 @@ export const POST: APIRoute = async ({ request }) => {
     }
 
     const body = await request.json();
-    const { config, filename, absolutePath } = body;
+    const { config, filename, absolutePath, path: customPath } = body;
 
     const authHeader = request.headers.get('authorization');
     if (!authHeader || !authHeader.startsWith('Bearer ')) {

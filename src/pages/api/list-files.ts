@@ -18,7 +18,7 @@ export const POST: APIRoute = async ({ request }) => {
     }
 
     const body = await request.json();
-    const { config } = body;
+    const { config, path: customPath } = body;
 
     const authHeader = request.headers.get('authorization');
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
@@ -42,19 +42,22 @@ export const POST: APIRoute = async ({ request }) => {
     }
 
     const octokit = new Octokit({ auth: GITHUB_TOKEN });
+    const listPath = customPath || config.pathPrefix;
 
     const { data } = await octokit.repos.getContent({
       owner: config.owner,
       repo: config.repo,
-      path: config.pathPrefix,
+      path: listPath,
     });
 
     if (!Array.isArray(data)) {
       return new Response(JSON.stringify({ files: [] }), { status: 200 });
     }
 
+    const extFilter = (name: string) =>
+      name.endsWith('.md') || name.endsWith('.mdx') || name.endsWith('.yaml');
     const files = data
-      .filter((file) => file.name.endsWith('.md') || file.name.endsWith('.mdx'))
+      .filter((file) => extFilter(file.name))
       .map((file) => ({
         name: file.name,
         sha: file.sha,

@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import type { MobileView } from './types';
+import type { CollectionTab, MobileView } from './types';
 import { useAdminToast } from './hooks/useAdminToast';
 import { useAdminAuth } from './hooks/useAdminAuth';
 import { useAdminEditor } from './hooks/useAdminEditor';
@@ -13,6 +13,8 @@ export interface AdminContextType extends ReturnType<typeof useAdminAuth>, Retur
   showRightPanel: boolean;
   setShowRightPanel: (v: boolean) => void;
   showToast: ReturnType<typeof useAdminToast>['showToast'];
+  currentCollection: CollectionTab;
+  setCurrentCollection: (v: CollectionTab) => void;
 }
 
 const AdminContext = createContext<AdminContextType | undefined>(undefined);
@@ -21,11 +23,12 @@ const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ children }) =>
   const [mobileView, setMobileView] = useState<MobileView>('editor');
   const [showLeftPanel, setShowLeftPanel] = useState(true);
   const [showRightPanel, setShowRightPanel] = useState(true);
+  const [currentCollection, setCurrentCollection] = useState<CollectionTab>('post');
 
   const { toasts, showToast } = useAdminToast();
   const auth = useAdminAuth(showToast);
   const editor = useAdminEditor(showToast);
-  const fileSystem = useAdminFileSystem(showToast, auth.getAuthHeaders, auth.handleLogout, editor, setMobileView);
+  const fileSystem = useAdminFileSystem(showToast, auth.getAuthHeaders, auth.handleLogout, editor, setMobileView, currentCollection, setCurrentCollection);
 
   useEffect(() => {
     if (auth.isLoggedIn) {
@@ -33,12 +36,19 @@ const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ children }) =>
     }
   }, [auth.isLoggedIn, fileSystem.fetchRemoteFiles]);
 
+  // Reset editor mode when switching collections
+  useEffect(() => {
+    if (!auth.isLoggedIn) return;
+    editor.setCurrentMode(currentCollection === 'friend' ? 'friend' : currentCollection === 'dynamic' ? 'dynamic' : 'post');
+  }, [currentCollection]);
+
   const value = {
     ...auth, ...editor, ...fileSystem,
     mobileView, setMobileView,
     showLeftPanel, setShowLeftPanel,
     showRightPanel, setShowRightPanel,
-    showToast
+    showToast,
+    currentCollection, setCurrentCollection,
   };
 
   return (
@@ -50,11 +60,11 @@ const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ children }) =>
           to { transform: translateY(0); opacity: 1; }
         }
       `}</style>
-      <div className="fixed bottom-12 left-6 z-[9999] flex flex-col gap-3 pointer-events-none">
+      <div className="fixed bottom-6 right-6 z-[9999] flex flex-col gap-3 pointer-events-none">
         {toasts.map(toast => (
           <div
             key={toast.id}
-            className="bg-background border border-border/40 px-4 py-3 rounded-lg text-sm font-medium shadow-lg flex items-center gap-3 pointer-events-auto"
+            className="bg-background border border-border/40 px-4 py-3 rounded-lg text-sm font-medium shadow-xl flex items-center gap-3 pointer-events-auto"
             style={{ animation: 'geist-toast-slide 0.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards' }}
           >
             <span className={`flex size-2 rounded-full shrink-0 ${

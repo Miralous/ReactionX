@@ -32,7 +32,7 @@ export default function QueuePanel() {
                         "text-[10px] font-semibold uppercase px-2 py-0.5 rounded-xs",
                         item.type === 'delete' ? 'text-red-600 bg-red-50 dark:text-red-400 dark:bg-red-500/10' : 'text-emerald-600 bg-emerald-50 dark:text-emerald-400 dark:bg-emerald-500/10'
                       )}>
-                        {item.type === 'delete' ? 'Delete' : 'Write'} • {'MD'}
+                        {item.type === 'delete' ? 'Delete' : 'Write'} • {item.filename?.endsWith('.yaml') ? 'YAML' : item.filename?.endsWith('.mdx') ? 'MDX' : 'MD'}
                       </span>
                       <div className="flex gap-1">
                         {item.type === 'write' && (
