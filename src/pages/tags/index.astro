@@ -1,4 +1,4 @@
-﻿---
+---
 import { TAGS_CONFIG } from '~/config.mjs'
 import Layout from '~/layouts/Layout.astro'
 import Aside from '~/components/base/Aside.astro'
@@ -23,19 +23,19 @@ const SECTION_NUM_CLASS =
 <Layout {title} {description}>
   <div class="relative font-sans flex flex-col xl:flex-row min-h-screen">
         <Aside
-      badge="Indexing"
+      statusText="Indexing"
       title={title}
       subtitleIcon="icon-[ph--tag] size-4"
       subtitleText="Tags Index"
-      description={introduce}
-      footerLeftValue={totalTags}
-      footerLeftLabel="Tags"
-      footerRightValue={totalPosts}
-      footerRightLabel="Posts"
+      intro={introduce}
+      stats={[
+        { value: totalTags, label: 'Tags' },
+        { value: totalPosts, label: 'Posts' },
+      ]}
     />
 
-    <main class="w-full min-w-0 xl:flex-1 z-10 flex flex-col fade-up animation-delay-150 mx-auto max-w-[1200px]">
-      <div class="p-6 lg:p-10 xl:p-16 2xl:p-20 flex-1">
+    <main class="w-full min-w-0 xl:flex-1 z-10 flex flex-col fade-up animation-delay-150">
+      <div class="w-full p-6 lg:p-10 xl:p-16 2xl:p-20 flex-1 md:px-12">
         <div class={SECTION_HEADER_CLASS}>
           <div class="flex items-center"><span class={SECTION_NUM_CLASS}>01</span><h2 class={SECTION_TITLE_CLASS}>All Tags</h2></div>
         </div>

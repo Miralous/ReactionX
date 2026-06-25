@@ -1,4 +1,4 @@
-﻿---
+---
 import type { GetStaticPaths, Page } from 'astro'
 import type { CollectionEntry } from 'astro:content'
 import { getCollection } from 'astro:content'
@@ -38,19 +38,19 @@ const SECTION_NUM_CLASS =
 <Layout title={`#${tag}`} {description}>
   <div class="relative font-sans flex flex-col xl:flex-row min-h-screen">
             <Aside
-      badge="Filter Active"
+      statusText="Filter Active"
       title={tag}
       subtitleIcon="icon-[ph--funnel] size-4"
       subtitleText="Query Results"
-      description={`home / tags / ${tag}`}
-      footerLeftValue={String(page.total)}
-      footerLeftLabel="Found"
-      footerRightValue={`${page.currentPage} / ${page.lastPage}`}
-      footerRightLabel="Page"
+      intro={`home / tags / ${tag}`}
+      stats={[
+        { value: String(page.total), label: 'Found' },
+        { value: `${page.currentPage} / ${page.lastPage}`, label: 'Page' },
+      ]}
     />
 
-    <main class="w-full min-w-0 xl:flex-1 z-10 flex flex-col fade-up animation-delay-100 mx-auto max-w-[1200px]">
-      <div class="p-6 lg:p-10 xl:p-16 2xl:p-20 flex-1 flex flex-col">
+    <main class="w-full min-w-0 xl:flex-1 z-10 flex flex-col fade-up animation-delay-100">
+      <div class="w-full p-6 lg:p-10 xl:p-16 2xl:p-20 flex-1 flex flex-col md:px-12">
         <div class={SECTION_HEADER_CLASS}>
           <div class="flex items-center">
             <span class={SECTION_NUM_CLASS}>01</span><h2 class={SECTION_TITLE_CLASS}>Filtered Results</h2>

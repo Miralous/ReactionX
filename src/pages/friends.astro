@@ -1,4 +1,4 @@
-﻿---
+---
 import { getCollection } from 'astro:content'
 import { FRIENDS_CONFIG, FRIENDS_CONTACT, FRIENDS_DIRECTORIES } from '~/config.mjs'
 import Layout from '~/layouts/Layout.astro'
@@ -76,20 +76,20 @@ const defaultImg = 'https://pic2.zhimg.com/50/v2-cc1a32fcb444fc9d5e23f2ee078dc6e
 <Layout {title} {description}>
   <div class="relative font-sans flex flex-col xl:flex-row min-h-screen">
         <Aside
-      badge="Connected"
-      badgeGreenDot={true}
+      statusText="Connected"
+      statusHasPing={true}
       title={title}
       subtitleIcon="icon-[ph--planet] size-4"
       subtitleText="Network & Signals"
-      description={introduce}
-      footerLeftValue={totalLinks}
-      footerLeftLabel="Active Nodes"
-      footerRightValue="HTTPS"
-      footerRightLabel="Protocol"
+      intro={introduce}
+      stats={[
+        { value: totalLinks, label: 'Active Nodes' },
+        { value: 'HTTPS', label: 'Protocol' },
+      ]}
     />
 
-    <main class="w-full min-w-0 xl:flex-1 z-10 flex flex-col fade-up animation-delay-100 mx-auto max-w-[1200px]">
-      <div class="p-6 lg:p-10 xl:p-16 2xl:p-20 flex-1">
+    <main class="w-full min-w-0 xl:flex-1 z-10 flex flex-col fade-up animation-delay-100">
+      <div class="w-full p-6 lg:p-10 xl:p-16 2xl:p-20 flex-1 md:px-12">
         <!-- Server-rendered friend cards -->
         <div set:html={sectionsHtml} />
 

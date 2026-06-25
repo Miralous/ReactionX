@@ -54,9 +54,9 @@ export const UI_CONFIG = {
   cardHover: {
     enabled: true,
     maxMove: 8,
-    maxRotate: 3,
+    maxRotate: 1,
     easing: 0.1,
-    scale: 1.02,
+    scale: 1.005,
     duration: 0.2,
   },
 }

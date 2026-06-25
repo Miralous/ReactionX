@@ -470,6 +470,15 @@
     flex: 0 0 33.333%;
     transition: flex-basis 0.3s ease;
   }
+  /* Hide scrollbar inside aside panel */
+  .aside-panel,
+  .aside-panel * {
+    scrollbar-width: none;
+  }
+  .aside-panel::-webkit-scrollbar,
+  .aside-panel *::-webkit-scrollbar {
+    display: none;
+  }
   body[data-sidebar-mode="compact"] .aside-panel,
   body[data-sidebar-mode="label"] .aside-panel {
     flex: 0 0 0%;
@@ -480,5 +489,17 @@
     border: 0 !important;
     opacity: 0;
     pointer-events: none;
+  }
+  /* Center content when aside is hidden */
+  body[data-sidebar-mode="compact"] .aside-panel ~ main,
+  body[data-sidebar-mode="label"] .aside-panel ~ main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  body[data-sidebar-mode="compact"] .aside-panel ~ main > div,
+  body[data-sidebar-mode="label"] .aside-panel ~ main > div {
+    width: 100%;
   }
 }
