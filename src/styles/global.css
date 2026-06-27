@@ -371,6 +371,21 @@
 .hoverStyle {
   cursor: pointer;
 }
+@media (min-width: 768px) and (hover: hover) and (pointer: fine) {
+  .hoverStyle:hover {
+    @apply bg-muted/20 border-border;
+  }
+}
+
+@media (max-width: 767px) {
+  .hoverStyle,
+  .hoverStyle:hover {
+    background-color: hsl(var(--background) / 0.5) !important;
+    border-color: hsl(var(--border) / 0.4) !important;
+    cursor: auto !important;
+    transform: none !important;
+  }
+}
 
 @media (prefers-reduced-motion: reduce) {
   .hoverStyle:hover {

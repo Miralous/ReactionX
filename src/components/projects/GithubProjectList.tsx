@@ -32,10 +32,7 @@ async function fetchRepos(username: string): Promise<Repository[]> {
   const token = import.meta.env.PUBLIC_GITHUB_TOKEN
   if (token) headers.Authorization = `Bearer ${token}`
 
-  const response = await fetch(
-    `https://api.github.com/users/${username}/repos?per_page=100&sort=pushed&type=owner`,
-    { headers }
-  )
+  const response = await fetch(`https://api.github.com/users/${username}/repos?per_page=100&sort=pushed&type=owner`, { headers })
   if (!response.ok) throw new Error(`GitHub API ${response.status}`)
 
   const all: Repository[] = await response.json()
@@ -130,8 +127,7 @@ export default function GithubProjectGrid({ username }: { username: string }) {
       {repos.map((repo, i) => (
         <div
           key={repo.name}
-          className="group relative flex flex-col bg-background/50 border border-border/40 rounded-lg hover:bg-muted/20 transition-all duration-300 fade-up"
-          style={{ animationDelay: `${i * 100}ms` }}
+          className="hoverStyle group relative flex flex-col bg-background/50 border border-border/40 rounded-lg hover:bg-muted/20 duration-300"
         >
           <div className="p-6 pb-2 relative z-10 flex justify-between items-start">
             <div className="size-12 flex items-center justify-center rounded-md bg-muted/30 border border-border/40">
@@ -165,9 +161,7 @@ export default function GithubProjectGrid({ username }: { username: string }) {
             <a href={repo.html_url} target="_blank" rel="noreferrer" className="block">
               <h3 className="text-base font-semibold text-foreground tracking-tight">{repo.name}</h3>
             </a>
-            <p className="text-xs text-muted-foreground leading-relaxed line-clamp-3">
-              {repo.description || 'No description'}
-            </p>
+            <p className="text-xs text-muted-foreground leading-relaxed line-clamp-3">{repo.description || 'No description'}</p>
           </div>
 
           <div className="mt-auto border-t border-border/40 px-6 py-2 bg-muted/10 rounded-b-lg flex items-center justify-between">

@@ -1,6 +1,12 @@
 import { GLOBAL_CONFIG } from "~/config.mjs";
 
 const THROTTLE_MS = 33;
+const HOVER_MEDIA_QUERY = "(hover: hover) and (pointer: fine)";
+const MIN_HOVER_WIDTH = 768;
+
+function canHoverStyle() {
+  return window.innerWidth >= MIN_HOVER_WIDTH && window.matchMedia(HOVER_MEDIA_QUERY).matches;
+}
 
 function attachHandlers(el: HTMLElement) {
   const cfg = GLOBAL_CONFIG.styles.visual.cardHover;
@@ -12,6 +18,13 @@ function attachHandlers(el: HTMLElement) {
   let lastMove = 0;
 
   const onMove = (e: MouseEvent) => {
+    if (!canHoverStyle()) {
+      el.style.zIndex = "";
+      el.style.isolation = "";
+      el.style.transform = "";
+      return;
+    }
+
     const now = performance.now();
     if (now - lastMove < THROTTLE_MS) return;
     lastMove = now;
@@ -31,14 +44,17 @@ function attachHandlers(el: HTMLElement) {
   };
 
   const onEnter = (e: MouseEvent) => {
+    if (!canHoverStyle()) return;
+
     if (getComputedStyle(el).position === "static") el.style.position = "relative";
-    el.style.zIndex = "9";
-    // Immediately set initial transform
+    el.style.zIndex = "50";
+    el.style.isolation = "isolate";
     onMove(e);
   };
 
   const onLeave = () => {
     el.style.zIndex = "";
+    el.style.isolation = "";
     el.style.transform = "perspective(1000px) translate(0,0) rotateX(0) rotateY(0) scale(1)";
   };
 
@@ -50,6 +66,7 @@ function attachHandlers(el: HTMLElement) {
 
 export function initCardHover() {
   if (!GLOBAL_CONFIG.styles.visual.cardHover.enabled) return;
+  if (!canHoverStyle()) return;
 
   document.querySelectorAll<HTMLElement>(".hoverStyle").forEach(attachHandlers);
 

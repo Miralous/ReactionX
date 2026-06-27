@@ -41,10 +41,72 @@ const SECTION_NUM_CLASS =
           </div>
         </div>
 
-        <DynamicFeed client:load items={feed} />
+        <DynamicFeed items={feed} />
       </div>
     </main>
   </div>
+
+  <script>
+    function initDynamicFeed() {
+      document.querySelectorAll<HTMLElement>('[data-dynamic-feed]').forEach((feed) => {
+        const perPage = Number(feed.dataset.itemsPerPage || 8)
+        const cards = Array.from(feed.querySelectorAll<HTMLElement>('[data-dynamic-card]'))
+        const loadMore = feed.querySelector<HTMLElement>('[data-dynamic-load-more]')
+        const loadMoreWrap = loadMore?.parentElement
+        const end = feed.querySelector<HTMLElement>('[data-dynamic-end]')
+        let visibleCount = cards.filter((card) => !card.classList.contains('hidden')).length || perPage
+
+        const updateVisibleCards = () => {
+          cards.forEach((card, index) => {
+            card.classList.toggle('hidden', index >= visibleCount)
+          })
+          const hasMore = visibleCount < cards.length
+          loadMoreWrap?.classList.toggle('hidden', !hasMore)
+          end?.classList.toggle('hidden', hasMore)
+          end?.classList.toggle('flex', !hasMore)
+        }
+
+        cards.forEach((card) => {
+          const collapse = card.querySelector<HTMLElement>('[data-dynamic-collapse]')
+          const content = card.querySelector<HTMLElement>('[data-dynamic-content]')
+          const toggle = card.querySelector<HTMLButtonElement>('[data-dynamic-toggle]')
+          const text = card.querySelector<HTMLElement>('[data-dynamic-toggle-text]')
+          const icon = card.querySelector<HTMLElement>('[data-dynamic-toggle-icon]')
+          const fade = card.querySelector<HTMLElement>('[data-dynamic-fade]')
+          if (!collapse || !content || !toggle || !text || !icon || !fade) return
+
+          const syncOverflow = () => {
+            const hasOverflow = content.scrollHeight > 160
+            toggle.classList.toggle('hidden', !hasOverflow)
+            toggle.classList.toggle('inline-flex', hasOverflow)
+            fade.classList.toggle('hidden', !hasOverflow || toggle.getAttribute('aria-expanded') === 'true')
+          }
+
+          toggle.onclick = () => {
+            const expanded = toggle.getAttribute('aria-expanded') === 'true'
+            toggle.setAttribute('aria-expanded', String(!expanded))
+            collapse.classList.toggle('max-h-[160px]', expanded)
+            collapse.classList.toggle('max-h-[3000px]', !expanded)
+            text.textContent = expanded ? 'Read more' : 'Show less'
+            icon.className = expanded ? 'icon-[ph--caret-down-bold] size-3.5' : 'icon-[ph--caret-up-bold] size-3.5'
+            fade.classList.toggle('hidden', !expanded)
+          }
+
+          syncOverflow()
+          new ResizeObserver(syncOverflow).observe(content)
+        })
+
+        loadMore?.addEventListener('click', () => {
+          visibleCount += perPage
+          updateVisibleCards()
+        })
+        updateVisibleCards()
+      })
+    }
+
+    initDynamicFeed()
+    document.addEventListener('astro:after-swap', initDynamicFeed)
+  </script>
 </Layout>
 
 

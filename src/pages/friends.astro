@@ -75,10 +75,10 @@ const defaultImg = 'https://pic2.zhimg.com/50/v2-cc1a32fcb444fc9d5e23f2ee078dc6e
 
 <Layout {title} {description}>
   <div class="relative font-sans flex flex-col xl:flex-row min-h-screen">
-        <Aside
+    <Aside
       statusText="Connected"
       statusHasPing={true}
-      title={title}
+      {title}
       subtitleIcon="icon-[ph--planet] size-4"
       subtitleText="Network & Signals"
       intro={introduce}
@@ -105,7 +105,7 @@ const defaultImg = 'https://pic2.zhimg.com/50/v2-cc1a32fcb444fc9d5e23f2ee078dc6e
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6 mt-4 fade-up animation-delay-200">
                   <div class="col-span-full">
-                    <div class="flex flex-col h-full rounded-lg border border-border/40 bg-background/50 overflow-hidden hoverStyle">
+                    <div class="flex flex-col h-full rounded-lg border border-border/40 bg-background/50 overflow-hidden">
                       <div class="px-5 py-4 border-b border-border/40 bg-muted/20 flex justify-between items-center">
                         <span class="font-semibold text-sm tracking-tight">Site Configuration</span>
                         <span class="text-xs font-medium text-muted-foreground bg-background border border-border/40 px-2 py-0.5 rounded-md">
@@ -121,7 +121,7 @@ const defaultImg = 'https://pic2.zhimg.com/50/v2-cc1a32fcb444fc9d5e23f2ee078dc6e
                           { label: 'Avatar', value: siteavatar },
                           { label: 'Description', value: myDescription },
                         ].map((item) => (
-                          <div class="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-4 p-2 rounded-lg hover:bg-muted/30 transition-colors">
+                          <div class="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-4 p-2 rounded-md hover:bg-muted/30 transition-colors">
                             <span class="text-muted-foreground text-xs font-medium w-20 shrink-0 pt-0.5 select-none">{item.label}</span>
                             <span class="text-foreground text-sm font-mono break-all select-all">{item.value}</span>
                           </div>
@@ -217,5 +217,3 @@ const defaultImg = 'https://pic2.zhimg.com/50/v2-cc1a32fcb444fc9d5e23f2ee078dc6e
     initAll()
   }
 </script>
-
-

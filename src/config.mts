@@ -29,7 +29,7 @@ export const UI_CONFIG = {
     // Base radius in rem. Controls all rounded-* utilities:
     // xs=0.25x, sm=0.5x, md=0.75x, lg=1x, xl=1.5x, 2xl=2x, 3xl=3x, 4xl=4x
     // Default: 0.5 (8px at 16px base → rounded-lg)
-    radius: 1.2,
+    radius: 1,
 
     // Base spacing unit in rem. Affects all p-*, m-*, gap-*, space-*, etc.
     // Default: 0.25 (4px at 16px base). e.g. p-4 = 4 × 0.25rem = 1rem
